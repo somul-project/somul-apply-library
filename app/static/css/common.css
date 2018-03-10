@@ -1,0 +1,42 @@
+html, body {
+  width: 100%;
+  margin: 0 auto;
+  background-color: #673AB7;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px dashed #ccc;
+}
+
+.paper {
+  background-color: #FFFFFF;
+  margin-top: 30px;
+  background: #fff;
+  box-shadow:
+    0 -1px 1px rgba(0,0,0,0.15),
+    0 -10px 0 -5px #eee,
+    0 -10px 1px -4px rgba(0,0,0,0.15),
+    0 -20px 0 -10px #eee,
+    0 -20px 1px -9px rgba(0,0,0,0.15);
+  padding: 30px;
+  margin: 32px 0;
+}
+
+.question {
+  margin-top: 30px;
+}
+
+.required {
+  color: red;
+}
+
+.comment {
+  display: block;
+  color: grey;
+  margin-bottom: 20px;
+}
+
+.btn-inside {
+  margin-bottom: 20px;
+}

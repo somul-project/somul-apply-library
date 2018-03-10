@@ -1,0 +1,43 @@
+<html lang="en" class="gr__localhost">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+
+    <title>도서관 신청 :: 5월, 소프트웨어에 물들다</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="paper">
+        <h1>제출 오류</h1>
+        <hr>
+        <p>
+          시스템 내부에서 오류가 발생하여 작성하신 정보가 정상적으로 제출되지 못했습니다. <br><br>
+          본 시스템 대신 E-mail을 통해서 도서관 신청을 하실 수 있습니다.<br>
+          somul.may@gmail.com로 도서관 정보와 함께 E-mail을 남겨주시면 담당자가 최대한 빠른 시일 안에 연락드리겠습니다.<br><br>
+          아래는 작성하신 제출 정보입니다. E-mail을 보내실 때 아래 정보를 복사해서 보내주십시오.<br>
+        </p>
+        <p>
+          도서관 이름 : {{name}}<br>
+          도로명 주소 : {{ location_road }}<br>
+          지번 주소 : {{ location_number }}<br>
+          상세 주소 : {{ location_detail }}<br>
+          담당자 이름 : {{ manager_name }}<br>
+          담당자 E-mail : {{ manager_email }}<br>
+          담당자 전화번호 : {{ manager_phone }}<br>
+          예상 청중 규모 : {{ audiences }}<br>
+          <br>
+          [도서관 제공 가능 시설]<br>
+          빔프로젝터 / 스크린 : {{ fac_beam_screen }}<br>
+          음향 시설 : {{ fac_sound }}<br>
+          녹화 시설 : {{ fac_record }}<br>
+          플래카드 : {{ fac_placard }}<br>
+          자체 홍보 : {{ fac_self_promo }}<br>
+          기타 : {{ fac_other }}<br>
+          <br>
+          봉사자 요구 사항 : {{ req_speaker }}
+        </p>
+      </div>
+  </body>
+</html>
