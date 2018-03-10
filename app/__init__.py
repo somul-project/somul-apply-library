@@ -60,6 +60,7 @@ def apply():
     try:
         args = json.loads(request.data.decode('utf-8'))
     except:
+        print("Invalid Request Payload")
         return json.dumps({
             "result": -1,
             "cause": "Invalid request payload"
@@ -93,7 +94,8 @@ def apply():
         return json.dumps({
             "result": 0
         })
-    except(Exception):
+    except:
+        print("Unexpected DB server error")
         return json.dumps({
             "result": 1,
             "cause": "Unexpected DB server error"

@@ -23,6 +23,7 @@ $(document).ready(function() {
   // jQuery selectors for UI
   var $search_postcode = $("#searchPostcode");
   var $submit = $("#submit");
+  var $loader = $("#loader");
 
   // Daum Postcode API
   var postcode = new daum.Postcode({
@@ -125,7 +126,8 @@ $(document).ready(function() {
       requirements: $requirements.val()
     }
 
-    // Request
+    // Loader animation & request
+    $('#loader').fadeIn("fast", function(){});
     $.ajax({
         type: "POST",
         url: '/api/v1/apply',
