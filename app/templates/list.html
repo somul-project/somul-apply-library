@@ -1,0 +1,100 @@
+<html lang="en" class="gr__localhost">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/list.css') }}">
+    <title>도서관 신청 :: 5월, 소프트웨어에 물들다</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="paper">
+        <h1>신청 도서관 리스트</h1>
+        <h4 class="comment">5월, 소프트웨어에 물들다 : 2018</h4>
+        <hr>
+        <p>
+          현재까지 신청된 도서관 리스트입니다. 
+          이 페이지는 관리자 확인 편의를 위해 임시로 개발된 페이지이며, 이후 리뉴얼될 예정입니다.
+        </p>
+        <hr>
+        <div class="list-wrapper">
+          {% for library in libraries %}
+          <div class="list card">
+            <div class="card-header">
+              <span class="library-name">{{ library.name }}</span>
+            </div>
+            <div class="card-body">
+              <table class="table table-bordered table-striped">
+                <tbody>
+                  <tr>
+                    <th scope="row">도로명 주소</th>
+                    <td>{{ library.location_road }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">지번 주소</th>
+                    <td>{{ library.location_number }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">상세 주소</th>
+                    <td>{{ library.location_detail }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">담당자 이름</th>
+                    <td>{{ library.manager_name }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">담당자 E-mail</th>
+                    <td>{{ library.manager_email }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">담당자 전화번호</th>
+                    <td>{{ library.manager_phone }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">예상 청중 규모</th>
+                    <td>{{ library.audiences }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">시설: 빔프로젝터 / 스크린</th>
+                    <td>{{ "가능" if library.fac_beam_screen else "불가능" }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">시설: 음향 시설</th>
+                    <td>{{ "가능" if library.fac_sound else "불가능" }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">시설: 녹화 시설</th>
+                    <td>{{ "가능" if library.fac_record else "불가능" }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">시설: 플래카드</th>
+                    <td>{{ "가능" if library.fac_placard else "불가능" }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">시설: 자체 홍보</th>
+                    <td>{{ "가능" if library.fac_self_promo else "불가능" }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">기타 제공 가능 시설</th>
+                    <td>{{ library.fac_other }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">봉사자 요구 사항</th>
+                    <td>{{ library.req_speaker }}</td>
+                  </tr>       
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <hr>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+  </body>
+</html>

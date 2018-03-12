@@ -55,6 +55,11 @@ def failure():
         req_speaker=session.get("req_speaker", "정보 없음")
     )
 
+@app.route("/applylist")
+def applylist():
+    libraries = db.query(Library)
+    return render_template("list.html", libraries=libraries)
+
 @app.route("/api/v1/apply", methods=["POST"])
 def apply():
     try:
