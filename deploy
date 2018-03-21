@@ -2,8 +2,8 @@
 # Deploy Script for Frontend and Backend
 cd ..
 zip -r upload.zip somul-apply-library
-scp upload.zip ubuntu@13.125.242.196:/home/ubuntu
-ssh -tt ubuntu@13.125.242.196 'bash -s' << 'DEPLOY'
+scp upload.zip ubuntu@libapply.somul.kr:/home/ubuntu
+ssh -tt ubuntu@libapply.somul.kr 'bash -s' << 'DEPLOY'
 sudo systemctl daemon-reload
 sudo systemctl stop nginx
 sudo systemctl stop somul-library
@@ -13,7 +13,7 @@ sudo rm -rf upload.zip
 
 sudo chmod 777 somul-apply-library
 
-sudo apt-get install python3-dev python3-pip
+sudo apt-get install -y python3-dev python3-pip
 sudo pip3 install -r somul-apply-library/requirements.txt
 
 sudo systemctl daemon-reload

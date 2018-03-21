@@ -1,5 +1,6 @@
 $(document).ready(function() {
   // jQuery selectors for input
+  
   var $name = $("#name");
   var $roadAddress = $("#roadAddress");
   var $numberAddress = $("#numberAddress");
@@ -106,6 +107,9 @@ $(document).ready(function() {
       alert("수용 가능 청중 규모를 적어주십시오.");
       return;
     }
+
+    $submit.html("제출 중입니다... 잠시만 기다려 주세요!");
+    $submit.attr("disabled", "disabled");
 
     // Payload build-up
     payload = {

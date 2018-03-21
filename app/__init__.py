@@ -4,6 +4,7 @@ from app.database import db
 from app.database.models import Library
 from app.config import Config
 import json
+import traceback
 
 app = Flask(__name__)
 app.secret_key = Config.secret_key
@@ -57,8 +58,11 @@ def failure():
 
 @app.route("/applylist")
 def applylist():
-    libraries = db.query(Library)
-    return render_template("list.html", libraries=libraries)
+    try:
+        libraries = db.query(Library)
+        return render_template("list.html", libraries=libraries)
+    except:
+        print(traceback.format_exc())
 
 @app.route("/api/v1/apply", methods=["POST"])
 def apply():
