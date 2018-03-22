@@ -60,7 +60,9 @@ def failure():
 def applylist():
     try:
         libraries = db.query(Library)
-        return render_template("list.html", libraries=libraries)
+        return render_template("list.html", 
+            libraries=libraries, 
+            length=len(list(libraries)))
     except:
         print(traceback.format_exc())
 
@@ -104,6 +106,7 @@ def apply():
             "result": 0
         })
     except:
+        db.rollback()
         print("Unexpected DB server error")
         return json.dumps({
             "result": 1,

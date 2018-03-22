@@ -15,16 +15,17 @@
         <hr>
         <p>
           현재까지 신청된 도서관 리스트입니다. 
-          이 페이지는 관리자 확인 편의를 위해 임시로 개발된 페이지이며, 이후 리뉴얼될 예정입니다.
+          이 페이지는 관리자 확인 편의를 위해 임시로 개발된 페이지이며, 이후 리뉴얼될 예정입니다.<br>
+          현재까지 총 <b>{{ length }}</b>개의 도서관이 신청되었습니다.
         </p>
         <hr>
         <div class="list-wrapper">
           {% for library in libraries %}
           <div class="list card">
-            <div class="card-header">
+            <div class="collapse-handler card-header" data-handle="{{ library._id }}">
               <span class="library-name">{{ library.name }}</span>
             </div>
-            <div class="card-body">
+            <div class="card-body collapse" id="{{ library._id }}">
               <table class="table table-bordered table-striped">
                 <tbody>
                   <tr>
@@ -95,6 +96,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/list.js') }}"></script>
   </body>
 </html>

@@ -6,13 +6,13 @@ class Library(Base):
     __tablename__ = 'Libraries'
 
     _id = Column('id', Integer, primary_key=True, autoincrement=True)
-    name = Column('name', String(50))
+    name = Column('name', String)
     location_road = Column('location_road', String)
     location_number = Column('location_number', String)
     location_detail = Column('location_detail', String)
-    manager_name = Column('manager_name', String(10))
-    manager_email = Column('manager_email', String(100))
-    manager_phone = Column('manager_phone', String(11))
+    manager_name = Column('manager_name', String)
+    manager_email = Column('manager_email', String)
+    manager_phone = Column('manager_phone', String)
     audiences = Column('audiences', String)
     fac_beam_screen = Column('fac_beam_screen', TINYINT)
     fac_sound = Column('fac_sound', TINYINT)

@@ -2,3 +2,13 @@
   font-size: 1.5em;
   font-weight: bold;
 }
+
+.collapse-handler {
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.collapse-handler:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 5px black;
+}
