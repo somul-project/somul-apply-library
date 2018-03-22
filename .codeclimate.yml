@@ -1,0 +1,100 @@
+version: "2"
+
+# https://docs.codeclimate.com/docs/list-of-engines
+plugins:
+  # https://docs.codeclimate.com/docs/eslint
+  # https://eslint.org/docs/user-guide/configuring#configuring-rules
+  eslint:
+    enabled: false
+
+  # https://github.com/CSSLint/csslint/wiki/Rules
+  # https://docs.codeclimate.com/docs/csslint
+  csslint:
+    enabled: true
+
+  # https://docs.codeclimate.com/docs/duplication
+  # https://docs.codeclimate.com/docs/duplication-concept
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript:
+      - python:
+
+  # https://docs.codeclimate.com/docs/pep8
+  # https://www.python.org/dev/peps/pep-0008/
+  pep8:
+    enabled: true
+
+  # https://docs.codeclimate.com/docs/sonar-python
+  # https://rules.sonarsource.com/python/
+  sonar-python:
+    enabled: true
+    config:
+      minimum_severity: info
+
+
+exclude_patterns:
+- "venv/"
+#- "config/"
+#- "**/node_modules/"
+#- "script/"
+#- "**/test/"
+#- "**/vendor/"
+#- "**/*.d.ts"
+
+
+checks:
+  # Default Checks
+  argument-count:
+    config:
+      threshold: 4
+  complex-logic:
+    config:
+      threshold: 4
+  file-lines:
+    config:
+      threshold: 250
+  method-complexity:
+    config:
+      threshold: 5
+  method-count:
+    config:
+      threshold: 20
+  method-lines:
+    config:
+      threshold: 25
+  nested-control-flow:
+    config:
+      threshold: 4
+  return-statements:
+    config:
+      threshold: 4
+  similar-code:
+    config:
+      threshold: # language-specific defaults. an override will affect all languages.
+  identical-code:
+    config:
+      threshold: # language-specific defaults. an override will affect all languages.
+
+  # Maintainability Checks
+  argument-count:
+    enabled: false
+  complex-logic:
+    enabled: false
+  file-lines:
+    enabled: false
+  method-complexity:
+    enabled: false
+  method-count:
+    enabled: false
+  method-lines:
+    enabled: false
+  nested-control-flow:
+    enabled: false
+  return-statements:
+    enabled: false
+  similar-code:
+    enabled: false
+  identical-code:
+    enabled: false
