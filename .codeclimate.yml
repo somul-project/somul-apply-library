@@ -5,7 +5,7 @@ plugins:
   # https://docs.codeclimate.com/docs/eslint
   # https://eslint.org/docs/user-guide/configuring#configuring-rules
   eslint:
-    enabled: false
+    enabled: true
 
   # https://github.com/CSSLint/csslint/wiki/Rules
   # https://docs.codeclimate.com/docs/csslint
