@@ -3,6 +3,7 @@ import os
 
 load_dotenv(find_dotenv())
 
+
 class Config:
     secret_key = os.environ.get("SECRET_KEY")
     db_host = os.environ.get("DB_HOST")
