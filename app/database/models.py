@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, BLOB, DateTime
 from sqlalchemy.dialects.mysql import TINYINT
 from app.database import db, Base
 
+
 class Library(Base):
     __tablename__ = 'Libraries'
 
