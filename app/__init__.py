@@ -69,7 +69,7 @@ def applylist():
         return render_template("list.html",
                                libraries=libraries,
                                length=len(list(libraries)))
-    except:
+    except:  # noqa: E722
         print(traceback.format_exc())
 
 
@@ -77,7 +77,7 @@ def applylist():
 def apply():
     try:
         args = json.loads(request.data.decode('utf-8'))
-    except:
+    except:  # noqa: E722
         print("Invalid Request Payload")
         return json.dumps({
             "result": -1,
@@ -112,7 +112,7 @@ def apply():
         return json.dumps({
             "result": 0
         })
-    except:
+    except:  # noqa: E722
         db.rollback()
         print("Unexpected DB server error")
         return json.dumps({
