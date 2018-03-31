@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String, BLOB, DateTime
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.dialects.mysql import TINYINT
-from app.database import db, Base
+from app.database import Base
 
 
 class Library(Base):
