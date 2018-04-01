@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.secret_key = Config.secret_key
 CORS(app, resources={r"/apply": {"origins": "*"}})
 
+
 def register_session(args):
     session["name"] = args["name"]
     session["location_road"] = args["roadAddress"]
@@ -27,13 +28,16 @@ def register_session(args):
     session["fac_other"] = args["facilityOther"]
     session["req_speaker"] = args["requirements"]
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
 
+
 @app.route("/success")
 def success():
     return render_template("success.html")
+
 
 @app.route("/failure")
 def failure():
@@ -47,30 +51,33 @@ def failure():
         manager_email=session.get("manager_email", "정보 없음"),
         manager_phone=session.get("manager_phone", "정보 없음"),
         audiences=session.get("audiences", "정보 없음"),
-        fac_beam_screen = "가능" if session.get("fac_beam_screen", False) else "불가",
-        fac_sound = "가능" if session.get("fac_sound", False) else "불가",
-        fac_record = "가능" if session.get("fac_record", False) else "불가",
-        fac_placard = "가능" if session.get("fac_placard", False) else "불가",
-        fac_self_promo = "가능" if session.get("fac_self_promo", False) else "불가",
+        fac_beam_screen="가능" if session.get(
+            "fac_beam_screen", False) else "불가",
+        fac_sound="가능" if session.get("fac_sound", False) else "불가",
+        fac_record="가능" if session.get("fac_record", False) else "불가",
+        fac_placard="가능" if session.get("fac_placard", False) else "불가",
+        fac_self_promo="가능" if session.get("fac_self_promo", False) else "불가",
         fac_other=session.get("fac_other", "정보 없음"),
         req_speaker=session.get("req_speaker", "정보 없음")
     )
+
 
 @app.route("/applylist")
 def applylist():
     try:
         libraries = db.query(Library)
-        return render_template("list.html", 
-            libraries=libraries, 
-            length=len(list(libraries)))
-    except:
+        return render_template("list.html",
+                               libraries=libraries,
+                               length=len(list(libraries)))
+    except:  # noqa: E722
         print(traceback.format_exc())
+
 
 @app.route("/api/v1/apply", methods=["POST"])
 def apply():
     try:
         args = json.loads(request.data.decode('utf-8'))
-    except:
+    except:  # noqa: E722
         print("Invalid Request Payload")
         return json.dumps({
             "result": -1,
@@ -89,11 +96,11 @@ def apply():
             manager_email=args["managerEmail"],
             manager_phone=args["managerPhone"],
             audiences=args["capacity"],
-            fac_beam_screen = 1 if args["facilityBeamOrScreen"] else 0,
-            fac_sound = 1 if args["facilitySound"] else 0,
-            fac_record = 1 if args["facilityRecord"] else 0,
-            fac_placard = 1 if args["facilityPlacard"] else 0,
-            fac_self_promo = 1 if args["facilitySelfPromo"] else 0,
+            fac_beam_screen=1 if args["facilityBeamOrScreen"] else 0,
+            fac_sound=1 if args["facilitySound"] else 0,
+            fac_record=1 if args["facilityRecord"] else 0,
+            fac_placard=1 if args["facilityPlacard"] else 0,
+            fac_self_promo=1 if args["facilitySelfPromo"] else 0,
             fac_other=args["facilityOther"],
             req_speaker=args["requirements"]
         )
@@ -105,7 +112,7 @@ def apply():
         return json.dumps({
             "result": 0
         })
-    except:
+    except:  # noqa: E722
         db.rollback()
         print("Unexpected DB server error")
         return json.dumps({
