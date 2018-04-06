@@ -10,6 +10,8 @@ app = Flask(__name__)
 app.secret_key = Config.secret_key
 CORS(app, resources={r"/apply": {"origins": "*"}})
 
+libraries = db.query(Library)
+
 def register_session(args):
     session["name"] = args["name"]
     session["location_road"] = args["roadAddress"]
@@ -29,7 +31,7 @@ def register_session(args):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("done.html")
 
 @app.route("/success")
 def success():
@@ -59,7 +61,6 @@ def failure():
 @app.route("/applylist")
 def applylist():
     try:
-        libraries = db.query(Library)
         return render_template("list.html", 
             libraries=libraries, 
             length=len(list(libraries)))
