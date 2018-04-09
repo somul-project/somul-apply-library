@@ -27,7 +27,7 @@ class Library(Base):
     req_speaker = Column('req_speaker', String)
 
     @validates('name')
-    def validate_not_emtpy(self, key, field):
+    def validate_not_empty(self, key, field):
         if not field:
             raise InvalidArgumentError("{} must be not empty.".format(key))
 

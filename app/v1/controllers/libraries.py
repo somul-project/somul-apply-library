@@ -5,7 +5,8 @@ from sqlalchemy.exc import IntegrityError
 
 from app.database import db
 from app.database.models import Library
-from app.utils.errors import DataNotFoundError, DuplicatedDataError
+from app.utils.errors import DuplicatedDataError
+from app.v1.controllers import get_or_404
 
 library_fields = {
     '_id': fields.Integer,
@@ -90,14 +91,6 @@ libraryReqparse.add_argument('fac_other', type=str, trim=True,
 libraryReqparse.add_argument('req_speaker', type=str, trim=True,
                              location=['form', 'json'],
                              required=False)
-
-
-def get_or_404(clazz, pk):
-    instance = db.query(clazz).filter_by(_id=pk).first()
-    if instance is None:
-        raise DataNotFoundError("Library {} Not found".format(pk))
-
-    return instance
 
 
 class LibraryListResource(Resource):
