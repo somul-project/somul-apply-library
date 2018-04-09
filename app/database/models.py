@@ -1,6 +1,9 @@
 from sqlalchemy import Column, Text
 from sqlalchemy.dialects.mysql import TINYINT, INTEGER
+from sqlalchemy.orm import validates
+
 from app.database import Base
+from app.utils.errors import InvalidArgumentError
 
 
 class Library(Base):
@@ -28,3 +31,10 @@ class Library(Base):
 
     fac_other = Column('fac_other', Text)
     req_speaker = Column('req_speaker', Text)
+
+    @validates('name')
+    def validate_not_empty(self, key, field):
+        if not field:
+            raise InvalidArgumentError("{} must be not empty.".format(key))
+
+        return field
