@@ -15,6 +15,7 @@ app.register_blueprint(libraries_api, url_prefix='/api/v1')
 
 libraries = db.query(Library)
 
+
 def register_session(args):
     session["name"] = args["name"]
     session["location_road"] = args["roadAddress"]
@@ -69,10 +70,10 @@ def failure():
 @app.route("/applylist")
 def applylist():
     try:
-        return render_template("list.html", 
-            libraries=libraries, 
-            length=len(list(libraries)))
-    except:
+        return render_template("list.html",
+                               libraries=libraries,
+                               length=len(list(libraries)))
+    except:  # noqa: E722
         print(traceback.format_exc())
 
 
