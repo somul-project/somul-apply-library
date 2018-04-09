@@ -1,9 +1,11 @@
 from flask import Blueprint
 from flask_restful import (Resource, reqparse, fields,
                            marshal_with, Api)
+from sqlalchemy.exc import IntegrityError
 
 from app.database import db
 from app.database.models import Library
+from app.utils.errors import DataNotFoundError, DuplicatedDataError
 
 library_fields = {
     '_id': fields.Integer,
@@ -90,6 +92,14 @@ libraryReqparse.add_argument('req_speaker', type=str, trim=True,
                              required=False)
 
 
+def get_or_404(clazz, pk):
+    instance = db.query(clazz).filter_by(_id=pk).first()
+    if instance is None:
+        raise DataNotFoundError("Library {} Not found".format(pk))
+
+    return instance
+
+
 class LibraryListResource(Resource):
     def __init__(self):
         super().__init__()
@@ -109,6 +119,10 @@ class LibraryListResource(Resource):
         try:
             db.add(library)
             db.commit()
+        except IntegrityError as e:
+            print(str(e))
+            db.rollback()
+            raise DuplicatedDataError(str(e.orig))
         except Exception as e:
             print(str(e))
             db.rollback()
@@ -120,18 +134,14 @@ class LibraryListResource(Resource):
 class LibraryResource(Resource):
     @marshal_with(library_fields)
     def get(self, pk):
-        library = db.query(Library).filter_by(_id=pk).first()
-        if library is None:
-            return "Library {} Not found".format(pk), 404
+        library = get_or_404(Library, pk)
 
         return library
 
     @marshal_with(library_fields)
     def put(self, pk):
         args = libraryReqparse.parse_args()
-        library = db.query(Library).filter_by(_id=pk).first()
-        if library is None:
-            return "Library {} Not found".format(pk), 404
+        library = get_or_404(Library, pk)
 
         for key, value in args.items():
             if value is None:
@@ -142,6 +152,10 @@ class LibraryResource(Resource):
         try:
             db.merge(library)
             db.commit()
+        except IntegrityError as e:
+            print(str(e))
+            db.rollback()
+            raise DuplicatedDataError(str(e.orig))
         except Exception as e:
             print(str(e))
             db.rollback()
@@ -150,9 +164,7 @@ class LibraryResource(Resource):
         return library
 
     def delete(self, pk):
-        library = db.query(Library).filter_by(_id=pk).first()
-        if library is None:
-            return "Library {} Not found".format(pk), 404
+        library = get_or_404(Library, pk)
 
         try:
             db.delete(library)
