@@ -1,6 +1,9 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.dialects.mysql import TINYINT
+from sqlalchemy.orm import validates
+
 from app.database import Base
+from app.utils.errors import InvalidArgumentError
 
 
 class Library(Base):
@@ -22,3 +25,10 @@ class Library(Base):
     fac_self_promo = Column('fac_self_promo', TINYINT)
     fac_other = Column('fac_other', String)
     req_speaker = Column('req_speaker', String)
+
+    @validates('name')
+    def validate_not_emtpy(self, key, field):
+        if not field:
+            raise InvalidArgumentError("{} must be not empty.".format(key))
+
+        return field
