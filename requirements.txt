@@ -3,3 +3,4 @@ flask_cors==3.0.2
 PyMySQL==0.7.11
 SQLAlchemy==1.1.15
 python_dotenv==0.8.2
+Flask-RESTful==0.3.6

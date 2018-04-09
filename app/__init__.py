@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template, session
 from flask_cors import CORS
+
+from app.v1.controllers.libraries import libraries_api
 from app.database import db
 from app.database.models import Library
 from app.config import Config
@@ -9,6 +11,7 @@ import traceback
 app = Flask(__name__)
 app.secret_key = Config.secret_key
 CORS(app, resources={r"/apply": {"origins": "*"}})
+app.register_blueprint(libraries_api, url_prefix='/api/v1')
 
 libraries = db.query(Library)
 
