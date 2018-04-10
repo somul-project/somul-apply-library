@@ -11,3 +11,7 @@ class DataNotFoundError(HTTPException):
 
 class DuplicatedDataError(HTTPException):
     code = 400
+
+
+class WrongSecretkeyError(HTTPException):
+    code = 400

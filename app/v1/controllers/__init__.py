@@ -4,7 +4,7 @@ from flask_restful import reqparse
 
 from app.config import Config
 from app.database import db
-from app.utils.errors import DataNotFoundError
+from app.utils.errors import DataNotFoundError, WrongSecretkeyError
 
 
 def get_or_404(model_clazz, pk):
@@ -35,4 +35,7 @@ def get_is_admin():
     disgested = digest_from_plainstr(args.secretkey)
     stored_digested = digest_from_plainstr(Config.secret_key)
 
-    return disgested == stored_digested
+    if disgested == stored_digested:
+        return True
+    else:
+        raise WrongSecretkeyError("Secretkey is incorrect.")
