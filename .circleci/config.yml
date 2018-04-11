@@ -24,7 +24,7 @@ jobs:
           name: run lint
           command: |
             . venv/bin/activate
-            flake8 --exclude venv
+            flake8 --exclude venv,migrations
 
 workflows:
   version: 2
