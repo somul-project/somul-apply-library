@@ -35,7 +35,8 @@ def upgrade():
     sa.Column('fac_self_promo', mysql.TINYINT(display_width=1), nullable=True),
     sa.Column('fac_other', sa.Text(), nullable=True),
     sa.Column('req_speaker', sa.Text(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    mysql_charset='utf8'
     )
     # ### end Alembic commands ###
 

@@ -32,7 +32,8 @@ def upgrade():
     sa.Column('library_id', mysql.INTEGER(display_width=11, unsigned=True), nullable=False),
     sa.ForeignKeyConstraint(['library_id'], ['Libraries.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email')
+    sa.UniqueConstraint('email'),
+    mysql_charset='utf8'
     )
     op.alter_column('Libraries', 'name',
                existing_type=mysql.VARCHAR(length=20),
