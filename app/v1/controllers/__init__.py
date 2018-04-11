@@ -3,7 +3,6 @@ from hashlib import sha256
 from flask_restful import reqparse
 
 from app.config import Config
-from app.database import db
 from app.utils.errors import DataNotFoundError, WrongSecretkeyError
 
 
