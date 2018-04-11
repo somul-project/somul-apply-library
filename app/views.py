@@ -3,7 +3,8 @@ import traceback
 
 from flask import request, render_template, session, Blueprint
 
-from app import Library, db
+from app import db
+from app.database.models import Library
 
 views = Blueprint('views', __name__)
 

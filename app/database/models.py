@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Text
+from sqlalchemy import Text
 from sqlalchemy.dialects.mysql import TINYINT, INTEGER
 from sqlalchemy.orm import validates
 

@@ -3,7 +3,6 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 
 from app.database import db
-from app.database.models import Library
 
 
 def create_app(config):

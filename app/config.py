@@ -12,5 +12,6 @@ class Config:
     db_name = os.environ.get("DB_NAME")
     db_port = int(os.environ.get("DB_PORT"))
     SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
-    SQLALCHEMY_TRACK_MODIFICATIONS = bool(os.environ.get("SQLALCHEMY_TRACK_MODIFICATIONS"))
+    SQLALCHEMY_TRACK_MODIFICATIONS\
+        = bool(os.environ.get("SQLALCHEMY_TRACK_MODIFICATIONS"))
     SQLALCHEMY_ECHO = bool(os.environ.get("SQLALCHEMY_ECHO"))
