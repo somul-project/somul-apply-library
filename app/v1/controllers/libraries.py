@@ -102,7 +102,7 @@ class LibraryListResource(Resource):
         super().__init__()
 
     def get(self):
-        libraries = db.query(Library).all()
+        libraries = Library.query.all()
 
         resp_fields = library_fields
         if get_is_admin():
@@ -117,15 +117,15 @@ class LibraryListResource(Resource):
         library = Library(**args)
 
         try:
-            db.add(library)
-            db.commit()
+            db.session.add(library)
+            db.session.commit()
         except IntegrityError as e:
             print(str(e))
-            db.rollback()
+            db.session.rollback()
             raise DuplicatedDataError(str(e.orig))
         except Exception as e:
             print(str(e))
-            db.rollback()
+            db.session.rollback()
             raise e
 
         return library
@@ -153,15 +153,15 @@ class LibraryResource(Resource):
             setattr(library, key, value)
 
         try:
-            db.merge(library)
-            db.commit()
+            db.session.merge(library)
+            db.session.commit()
         except IntegrityError as e:
             print(str(e))
-            db.rollback()
+            db.session.rollback()
             raise DuplicatedDataError(str(e.orig))
         except Exception as e:
             print(str(e))
-            db.rollback()
+            db.session.rollback()
             raise e
 
         return library
@@ -170,11 +170,11 @@ class LibraryResource(Resource):
         library = get_or_404(Library, pk)
 
         try:
-            db.delete(library)
-            db.commit()
+            db.session.delete(library)
+            db.session.commit()
         except Exception as e:
             print(str(e))
-            db.rollback()
+            db.session.rollback()
             raise e
 
         return '', 204

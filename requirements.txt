@@ -4,3 +4,4 @@ PyMySQL==0.7.11
 SQLAlchemy==1.1.15
 python_dotenv==0.8.2
 Flask-RESTful==0.3.6
+Flask-Migrate==2.1.1
