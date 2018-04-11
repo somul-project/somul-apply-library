@@ -21,7 +21,8 @@ class MapListResource(Resource):
         libraries = Library.query.all()
 
         for library in libraries:
-            library.province = library.location_road[0:2]
+            if library.location_road:
+                library.province = library.location_road[0:2]
 
         return libraries
 
