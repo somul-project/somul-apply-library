@@ -7,3 +7,12 @@
 ```
 cat ~/.ssh/id_rsa.pub | sudo ssh -i <PEM_FILE_NAME>.pem ubuntu@18.219.223.174 "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys"
 ```
+
+
+## Database migration 가이드
+
+migrations 스크립트를 수행하려면 터미널에서 아래 명령어 실행
+```
+export FLASK_APP=wsgi.py
+flask db upgrade
+```

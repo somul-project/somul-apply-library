@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_migrate import Migrate
 
 from app.database import db
 from app.database.models import Library
@@ -20,5 +21,6 @@ def create_app(config):
     _app.register_blueprint(maps_api, url_prefix='/api/v1')
 
     db.init_app(_app)
+    Migrate(_app, db)
 
     return _app
