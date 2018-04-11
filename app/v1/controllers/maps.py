@@ -2,7 +2,6 @@ from flask import Blueprint
 from flask_restful import (Resource, fields, marshal_with,
                            Api)
 
-from app.database import db
 from app.database.models import Library
 
 map_fields = {
@@ -19,7 +18,7 @@ class MapListResource(Resource):
 
     @marshal_with(map_fields)
     def get(self):
-        libraries = db.query(Library).all()
+        libraries = Library.query.all()
 
         for library in libraries:
             library.province = library.location_road[0:2]

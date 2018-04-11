@@ -19,4 +19,6 @@ def create_app(config):
     _app.register_blueprint(libraries_api, url_prefix='/api/v1')
     _app.register_blueprint(maps_api, url_prefix='/api/v1')
 
+    db.init_app(_app)
+
     return _app

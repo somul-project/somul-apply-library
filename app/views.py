@@ -6,7 +6,6 @@ from flask import request, render_template, session, Blueprint
 from app import Library, db
 
 views = Blueprint('views', __name__)
-libraries = db.query(Library)
 
 
 def register_session(args):
@@ -63,6 +62,8 @@ def failure():
 @views.route("/applylist")
 def applylist():
     try:
+        libraries = Library.query.all()
+
         return render_template("list.html",
                                libraries=libraries,
                                length=len(list(libraries)))
