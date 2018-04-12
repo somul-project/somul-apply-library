@@ -46,8 +46,7 @@ jobs:
           name: run unittest
           command: |
             . venv/bin/activate
-            export FLASK_APP=wsgi.py
-            flask unittest
+            python -m unittest discover
 
 workflows:
   version: 2
