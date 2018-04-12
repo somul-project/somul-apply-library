@@ -106,7 +106,7 @@ class Speaker(db.Model, TimestampMixin):
                                 PASSWORD_LENGTH_MINIMUM,
                                 PASSWORD_LENGTH_MAXIMUM):
             raise InvalidArgumentError(
-                "{}'s length must be {0} ~ {0}.".format(
+                "{}'s length must be {} ~ {}.".format(
                     key, PASSWORD_LENGTH_MINIMUM, PASSWORD_LENGTH_MAXIMUM))
 
         return field
