@@ -18,7 +18,7 @@ class InvalidRelationDataError(HTTPException):
 
 
 class UnknownDataError(HTTPException):
-    codd = 400
+    code = 400
 
 
 class WrongSecretkeyError(HTTPException):
