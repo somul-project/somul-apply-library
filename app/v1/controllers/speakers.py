@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 
 from app.database import db
 from app.database.models import Speaker, session_time_choices
-from app.utils.errors import DuplicatedDataError
+from app.utils.errors import abort_with_integrityerror
 from app.v1.controllers import get_or_404, get_is_admin
 
 
@@ -88,7 +88,7 @@ class SpeakerListResource(Resource):
         except IntegrityError as e:
             print(str(e))
             db.session.rollback()
-            raise DuplicatedDataError(str(e.orig))
+            abort_with_integrityerror(e)
         except Exception as e:
             print(str(e))
             db.session.rollback()
@@ -124,7 +124,7 @@ class SpeakerResource(Resource):
         except IntegrityError as e:
             print(str(e))
             db.session.rollback()
-            raise DuplicatedDataError(str(e.orig))
+            abort_with_integrityerror(e)
         except Exception as e:
             print(str(e))
             db.session.rollback()

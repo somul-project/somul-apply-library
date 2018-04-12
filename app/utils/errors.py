@@ -13,5 +13,22 @@ class DuplicatedDataError(HTTPException):
     code = 400
 
 
+class InvalidRelationDataError(HTTPException):
+    code = 400
+
+
+class UnknownDataError(HTTPException):
+    codd = 400
+
+
 class WrongSecretkeyError(HTTPException):
     code = 400
+
+
+def abort_with_integrityerror(e):
+    if e.orig.args[0] == 1452:
+        raise InvalidRelationDataError(str(e.orig.args[1]))
+    elif e.orig.args[0] == 1062:
+        raise DuplicatedDataError(str(e.orig.args[1]))
+
+    raise UnknownDataError(str(e.orig))
