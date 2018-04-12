@@ -1,4 +1,3 @@
-import enum
 from datetime import datetime
 
 from pytz import timezone
@@ -52,9 +51,7 @@ class Library(db.Model):
         return '<Library %r>' % self.name
 
 
-class SessionEnum(enum.Enum):
-    first = "09:00"
-    second = "10:00"
+session_time_choices = ["09:00", "10:00"]
 
 
 def now_at_seoul():
@@ -80,7 +77,8 @@ class Speaker(db.Model, TimestampMixin):
     password = db.Column(db.String(30), nullable=False)
     is_email_verified = db.Column(db.Boolean, default=False)
     email_sended_at = db.Column(db.DateTime, nullable=True)
-    session_time = db.Column(db.Enum(SessionEnum), nullable=False)
+    session_time = db.Column(db.Enum(*session_time_choices),
+                             nullable=False)
     library_id = db.Column(INTEGER(11, unsigned=True),
                            db.ForeignKey('Libraries.id'),
                            nullable=False)
