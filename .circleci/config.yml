@@ -47,7 +47,7 @@ jobs:
           command: |
             . venv/bin/activate
             export FLASK_APP=wsgi.py
-            flask run unittest
+            flask unittest
 
 workflows:
   version: 2
