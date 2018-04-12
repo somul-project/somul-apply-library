@@ -26,6 +26,13 @@ jobs:
             . venv/bin/activate
             flake8 --exclude venv,migrations
 
+      - run:
+          name: run unittest
+          command: |
+            . venv/bin/activate
+            export FLASK_APP=wsgi.py
+            flask run unittest
+
 workflows:
   version: 2
   tests:
