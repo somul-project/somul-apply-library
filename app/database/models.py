@@ -136,8 +136,6 @@ class SpeakerInfo(db.Model, TimestampMixin):
     keynote_link = db.Column(db.String(256), nullable=False, default="")
 
     admin_approved = db.Column(db.String(30), nullable=False, default=False)
-    has_experienced_somul = db.Column(db.Boolean,
-                                      nullable=False, default=False)
 
     @validates('session_time')
     def validate_session_time(self, key, field):
