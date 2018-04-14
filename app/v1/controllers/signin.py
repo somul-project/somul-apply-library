@@ -3,6 +3,7 @@ from flask_restful import (Resource, reqparse, marshal_with,
                            Api)
 
 from app.database.models import User
+from app.managers.signin import SigninManager
 from app.utils.errors import UserDoesntExistsError, UserPasswordIncorrectError
 from app.v1.controllers.users import user_fields
 
@@ -33,6 +34,9 @@ class SigninResource(Resource):
         if not get_is_identified(user, args["password"]):
             raise UserPasswordIncorrectError(
                 "User password is incorrect.")
+
+        SigninManager.set_is_signed_in(True)
+        SigninManager.set_user_id(user._id)
 
         return user
 

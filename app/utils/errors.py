@@ -37,6 +37,14 @@ class UserPasswordIncorrectError(HTTPException):
     code = 400
 
 
+class SigninRequiredError(HTTPException):
+    code = 400
+
+
+class UserSessionEmptyError(HTTPException):
+    code = 400
+
+
 def abort_with_integrityerror(e):
     if e.orig.args[0] == 1452:
         raise InvalidRelationDataError(str(e.orig.args[1]))
