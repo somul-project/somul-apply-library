@@ -26,18 +26,18 @@
           {% for speaker in speakers %}
           <div class="library card">
             <div class="card-body">
-              <h4 class="card-title">{% speaker.user.name %} ({% speaker.user.library.name %}, {% speaker.session_time %})</h4>
+              <h4 class="card-title">{{ speaker.user.name }} ({{ speaker.user.library.name }}, {{ speaker.session_time }})</h4>
               <h5>자기소개</h5>
               <p class="card-text">
-                {% speaker.introduce %}
+                {{ speaker.introduce }}
               </p>
               <h5>약력</h5>
               <p class="card-text">
-                {% speaker.history %}
+                {{ speaker.history }}
               </p>
               <h5>강의 정보</h5>
-              <h6>제목 : {% speaker.title %}</h6>
-              <p class="card-text">{% speaker.description %}</p>
+              <h6>제목 : {{ speaker.title }}</h6>
+              <p class="card-text">{{ speaker.description }}</p>
               <a href="#" class="card-link">승인</a>
               <a href="#" class="card-link text-danger">거절</a>
             </div>
