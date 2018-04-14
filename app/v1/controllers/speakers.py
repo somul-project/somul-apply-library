@@ -3,10 +3,10 @@ from flask_restful import (Resource, reqparse, fields,
                            marshal_with, Api, marshal)
 from sqlalchemy.exc import IntegrityError
 
-from app.database import db
+from app.database import db, get_or_404
 from app.database.models import Speaker, session_time_choices
 from app.utils.errors import abort_with_integrityerror
-from app.v1.controllers import get_or_404, get_is_admin
+from app.managers.credential import CredentialManager
 
 
 speaker_fields = {
@@ -72,7 +72,7 @@ class SpeakerListResource(Resource):
         speakers = Speaker.query.all()
 
         resp_fields = speaker_fields
-        if get_is_admin() or get_is_identified():
+        if CredentialManager.get_is_admin() or get_is_identified():
             resp_fields = speaker_fields_including_protected
 
         return marshal(speakers, resp_fields)
@@ -102,7 +102,7 @@ class SpeakerResource(Resource):
         speaker = get_or_404(Speaker, pk)
 
         resp_fields = speaker_fields
-        if get_is_admin():
+        if CredentialManager.get_is_admin():
             resp_fields = speaker_fields_including_protected
 
         return marshal(speaker, resp_fields)
