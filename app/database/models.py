@@ -1,9 +1,17 @@
+from datetime import datetime
+
+from pytz import timezone
 from sqlalchemy import Text
 from sqlalchemy.dialects.mysql import TINYINT, INTEGER
 from sqlalchemy.orm import validates
 
 from app.utils.errors import InvalidArgumentError
 from app.database import db
+from app.utils.validators import is_valid_email, has_valid_length, \
+    is_valid_phone
+
+PASSWORD_LENGTH_MINIMUM = 4
+PASSWORD_LENGTH_MAXIMUM = 8
 
 
 class Library(db.Model):
@@ -41,3 +49,75 @@ class Library(db.Model):
 
     def __repr__(self):
         return '<Library %r>' % self.name
+
+
+session_time_choices = ["09:00", "10:00"]
+
+
+def now_at_seoul():
+    return datetime.now(tz=timezone('Asia/Seoul'))
+
+
+class TimestampMixin(object):
+    created_at = db.Column(db.DateTime,
+                           nullable=False,
+                           default=now_at_seoul)
+    updated_at = db.Column(db.DateTime,
+                           nullable=True,
+                           onupdate=now_at_seoul)
+
+
+class Speaker(db.Model, TimestampMixin):
+    _id = db.Column('id', db.Integer, primary_key=True,
+                    autoincrement=True)
+    name = db.Column(db.String(30), nullable=False)
+    email = db.Column(db.String(30), nullable=False, unique=True)
+    phone = db.Column(db.String(30), nullable=False)
+
+    password = db.Column(db.String(30), nullable=False)
+    is_email_verified = db.Column(db.Boolean, default=False)
+    email_sended_at = db.Column(db.DateTime, nullable=True)
+    session_time = db.Column(db.Enum(*session_time_choices),
+                             nullable=False)
+    library_id = db.Column(INTEGER(11, unsigned=True),
+                           db.ForeignKey('Libraries.id'),
+                           nullable=False)
+    library = db.relationship('Library', lazy=True,
+                              backref=db.backref('speakers', lazy=True))
+
+    @validates('name')
+    def validate_not_empty(self, key, field):
+        if not field:
+            raise InvalidArgumentError("{} must be not empty.".format(key))
+
+        return field
+
+    @validates('email')
+    def validate_email_format(self, key, field):
+        if not is_valid_email(field):
+            raise InvalidArgumentError(
+                "{} must be fitted in email format.".format(key))
+
+        return field
+
+    @validates('password')
+    def validate_password_length(self, key, field):
+        if not has_valid_length(field,
+                                PASSWORD_LENGTH_MINIMUM,
+                                PASSWORD_LENGTH_MAXIMUM):
+            raise InvalidArgumentError(
+                "{}'s length must be {} ~ {}.".format(
+                    key, PASSWORD_LENGTH_MINIMUM, PASSWORD_LENGTH_MAXIMUM))
+
+        return field
+
+    @validates('phone')
+    def validate_phone_format(self, key, field):
+        if not is_valid_phone(field):
+            raise InvalidArgumentError(
+                "{} must be fitted in phone number format.".format(key))
+
+        return field
+
+    def __repr__(self):
+        return '<%r %r>' % (self.__class__.__name__, self.name)
