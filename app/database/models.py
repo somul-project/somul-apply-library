@@ -81,7 +81,7 @@ class User(db.Model, TimestampMixin):
                            db.ForeignKey('Libraries.id'),
                            nullable=True)
     library = db.relationship('Library', lazy=True,
-                              backref=db.backref('speakers', lazy=True))
+                              backref=db.backref('users', lazy=True))
 
     @validates('name')
     def validate_not_empty(self, key, field):
