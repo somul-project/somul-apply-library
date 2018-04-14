@@ -15,11 +15,9 @@ def create_app(config):
 
     from app.v1.controllers.libraries import libraries_api
     from app.v1.controllers.maps import maps_api
-    from app.v1.controllers.speakers import speakers_api
 
     _app.register_blueprint(libraries_api, url_prefix='/api/v1')
     _app.register_blueprint(maps_api, url_prefix='/api/v1')
-    _app.register_blueprint(speakers_api, url_prefix='/api/v1')
 
     db.init_app(_app)
     Migrate(_app, db)

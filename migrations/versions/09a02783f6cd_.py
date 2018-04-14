@@ -1,7 +1,7 @@
 """empty message
 
 Revision ID: 09a02783f6cd
-Revises: ba0d91c0bfc5
+Revises: ad3c95a8a551
 Create Date: 2018-04-14 21:12:27.049898
 
 """
@@ -11,7 +11,7 @@ from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
 revision = '09a02783f6cd'
-down_revision = 'ba0d91c0bfc5'
+down_revision = 'ad3c95a8a551'
 branch_labels = None
 depends_on = None
 
@@ -30,7 +30,8 @@ def upgrade():
     sa.Column('library_id', mysql.INTEGER(display_width=11, unsigned=True), nullable=False),
     sa.ForeignKeyConstraint(['library_id'], ['Libraries.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email')
+    sa.UniqueConstraint('email'),
+    mysql_charset='utf8'
     )
     # ### end Alembic commands ###
 
