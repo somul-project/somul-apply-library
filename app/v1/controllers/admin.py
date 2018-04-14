@@ -68,7 +68,7 @@ class AdminRejectResource(Resource):
         return speaker
 
 
-admin_api = Blueprint('resources.maps', __name__)
+admin_api = Blueprint('resources.admin', __name__)
 api = Api(admin_api)
 api.add_resource(
     AdminApproveResource,
