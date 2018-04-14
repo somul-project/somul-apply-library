@@ -18,10 +18,12 @@ def create_app(config):
     from app.v1.controllers.libraries import libraries_api
     from app.v1.controllers.maps import maps_api
     from app.v1.controllers.users import users_api
+    from app.v1.controllers.admin import admin_api
 
     _app.register_blueprint(libraries_api, url_prefix='/api/v1/library')
     _app.register_blueprint(maps_api, url_prefix='/api/v1/map')
     _app.register_blueprint(users_api, url_prefix='/api/v1/user')
+    _app.register_blueprint(admin_api, url_prefix="/api/v1/admin")
 
     db.init_app(_app)
     Migrate(_app, db)
