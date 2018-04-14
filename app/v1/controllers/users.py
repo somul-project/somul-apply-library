@@ -46,20 +46,16 @@ user_reqparser.add_argument('has_experienced_somul', type=bool,
                             help='No user has_experienced_somul provided')
 
 
-def get_is_identified():
-    return True
-
-
 class UserListResource(Resource):
     def __init__(self):
         super().__init__()
 
     @marshal_with(user_fields)
     def get(self):
-        users = User.query.all()
-
         if not CredentialManager.get_is_admin():
             raise UnauthorizedError("Unauthorized.")
+
+        users = User.query.all()
 
         return users
 
@@ -87,10 +83,10 @@ class UserListResource(Resource):
 class UserResource(Resource):
     @marshal_with(user_fields)
     def get(self, pk):
-        user = get_or_404(User, pk)
-
-        if not (CredentialManager.get_is_admin() or get_is_identified()):
+        if not CredentialManager.get_is_admin():
             raise UnauthorizedError("Unauthorized.")
+
+        user = get_or_404(User, pk)
 
         return user
 
@@ -120,6 +116,9 @@ class UserResource(Resource):
         return user
 
     def delete(self, pk):
+        if not CredentialManager.get_is_admin():
+            raise UnauthorizedError("Unauthorized.")
+
         user = get_or_404(User, pk)
 
         try:
@@ -137,7 +136,7 @@ users_api = Blueprint('resources.users', __name__)
 api = Api(users_api)
 api.add_resource(
     UserListResource,
-    '/',
+    '',
     endpoint='users'
 )
 
