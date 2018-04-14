@@ -137,12 +137,12 @@ users_api = Blueprint('resources.users', __name__)
 api = Api(users_api)
 api.add_resource(
     UserListResource,
-    '/user',
+    '',
     endpoint='users'
 )
 
 api.add_resource(
     UserResource,
-    '/user/<int:pk>',
+    '/<int:pk>',
     endpoint='user'
 )

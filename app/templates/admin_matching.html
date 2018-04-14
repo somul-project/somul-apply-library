@@ -1,0 +1,53 @@
+<html lang="ko" class="gr__localhost">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/index.css') }}">
+
+    <title>도서관 매칭 검수 :: 5월, 소프트웨어에 물들다</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="paper">
+        <h1>도서관 매칭 정보 검수</h1>
+        <h4 class="comment">5월, 소프트웨어에 물들다 : 2018</h4>
+
+        <hr>
+
+        <h3>안내</h3>
+        <p>새로 만들어진 강연자 매칭에 대해서 검수합니다. 승인 혹은 거절 버튼을 눌러 응답해주십시오.</p>
+        
+        <hr>
+
+        <div class="library-container">
+          <div class="library card">
+            <div class="card-body">
+              <h4 class="card-title">홍승환 (정독 도서관, 3시)</h4>
+              <h5>자기소개</h5>
+              <p class="card-text">
+                안녕하세요, 홍승환입니다. <br>
+                저는 국민대학교에서 소프트웨어학부 3학년에 재학 중이며, 이전에 Jininsa Company, 정부 사업 등에 근무했었습니다.<br>
+                소프트웨어가 무엇인지 탐구해보고 훌륭한 소프트웨어 엔지니어가 되려면 어떻게 해야 하는지 강의하기 위해서 지원하였습니다.
+              </p>
+              <h5>약력</h5>
+              <p class="card-text">
+                (현) 국민대학교 소프트웨어학부 3학년 재학<br>
+                (전) Jininsa Company 개발자<br>
+                (전) 2016년도 SW R&D 지원 사업 총괄책임자
+              </p>
+              <h5>강의 정보</h5>
+              <h6>제목 : 소프트웨어란 무엇인가?</h6>
+              <p class="card-text">소프트웨어가 무엇인지 탐구해보고 훌륭한 소프트웨어 엔지니어가 되려면 어떻게 해야 하는지 알아봅니다.</p>
+              <a href="#" class="card-link">승인</a>
+              <a href="#" class="card-link text-danger">거절</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

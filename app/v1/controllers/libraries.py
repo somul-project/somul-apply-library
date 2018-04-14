@@ -182,12 +182,12 @@ libraries_api = Blueprint('resources.libraries', __name__)
 api = Api(libraries_api)
 api.add_resource(
     LibraryListResource,
-    '/library',
+    '',
     endpoint='libraries'
 )
 
 api.add_resource(
     LibraryResource,
-    '/library/<int:pk>',
+    '/<int:pk>',
     endpoint='library'
 )
