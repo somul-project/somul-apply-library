@@ -118,3 +118,32 @@ class User(db.Model, TimestampMixin):
 
     def __repr__(self):
         return '<%r %r>' % (self.__class__.__name__, self.name)
+
+
+class SpeakerInfo(db.Model, TimestampMixin):
+    _id = db.Column('id', db.Integer, primary_key=True,
+                    autoincrement=True)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('user.id'),
+                        nullable=False)
+    user = db.relationship('user', lazy=True,
+                           backref=db.backref('speakerinfos', lazy=True))
+
+    session_time = db.Column(db.String(15), nullable=False, default="")
+    introduce = db.Column(db.Text, nullable=False, default="")
+    history = db.Column(db.Text, nullable=False, default="")
+    keynote_link = db.Column(db.String(256), nullable=False, default="")
+
+    admin_approved = db.Column(db.String(30), nullable=False, default=False)
+    has_experienced_somul = db.Column(db.Boolean, nullable=False, default=False)
+
+    @validates('session_time')
+    def validate_session_time(self, key, field):
+        if field in session_time_choices:
+            raise InvalidArgumentError("{} must be in {}."
+                                       .format(key, session_time_choices))
+
+        return field
+
+    def __repr__(self):
+        return '<%r %r>' % (self.__class__.__name__, self.name)
