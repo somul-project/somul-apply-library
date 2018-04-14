@@ -12,8 +12,8 @@ speaker_fields = {
     '_id': fields.Integer,
     'user_id': fields.Integer,
     'session_time': fields.String,
-    'introduce': fields.Text,
-    'history': fields.Text,
+    'introduce': fields.String,
+    'history': fields.String,
     'keynote_link': fields.String,
     'admin_approved': fields.String
 }
