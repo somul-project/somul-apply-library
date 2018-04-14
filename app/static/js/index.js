@@ -134,7 +134,7 @@ $(document).ready(function() {
     $('#loader').fadeIn("fast", function(){});
     $.ajax({
         type: "POST",
-        url: '/api/v1/apply',
+        url: '/api/v1/library/apply',
         dataType: 'json',
         async: false,
         data: JSON.stringify(payload),
