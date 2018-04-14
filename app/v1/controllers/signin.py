@@ -1,9 +1,11 @@
-from flask import Blueprint
+from flask import Blueprint, session
 from flask_restful import (Resource, reqparse, marshal_with,
                            Api)
 
 from app.database.models import User
 from app.utils.errors import UserDoesntExistsError, UserPasswordIncorrectError
+from app.v1.controllers.consts import SESSIONKEY_IS_LOGGED_IN, \
+    SESSIONKEY_USER_ID
 from app.v1.controllers.users import user_fields
 
 signin_reqparser = reqparse.RequestParser()
@@ -33,6 +35,9 @@ class SigninResource(Resource):
         if not get_is_identified(user, args["password"]):
             raise UserPasswordIncorrectError(
                 "User password is incorrect.")
+
+        session[SESSIONKEY_IS_LOGGED_IN] = True
+        session[SESSIONKEY_USER_ID] = user._id
 
         return user
 
