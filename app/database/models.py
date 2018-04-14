@@ -78,7 +78,7 @@ class User(db.Model, TimestampMixin):
     has_experienced_somul = db.Column(db.Boolean, nullable=False, default=False)
     library_id = db.Column(INTEGER(11, unsigned=True),
                            db.ForeignKey('Libraries.id'),
-                           nullable=False)
+                           nullable=True)
     library = db.relationship('Library', lazy=True,
                               backref=db.backref('speakers', lazy=True))
 
@@ -126,7 +126,7 @@ class SpeakerInfo(db.Model, TimestampMixin):
     user_id = db.Column(db.Integer,
                         db.ForeignKey('user.id'),
                         nullable=False)
-    user = db.relationship('user', lazy=True,
+    user = db.relationship('User', lazy=True,
                            backref=db.backref('speakerinfos', lazy=True))
 
     session_time = db.Column(db.String(15), nullable=False, default="")
@@ -155,7 +155,7 @@ class VerifyEmail(db.Model):
     user_id = db.Column(db.Integer,
                         db.ForeignKey('user.id'),
                         nullable=False)
-    user = db.relationship('user', lazy=True,
+    user = db.relationship('User', lazy=True,
                            backref=db.backref('verifyemails', lazy=True))
 
     key = db.Column(db.String(256), unique=True, nullable=False, default="")
