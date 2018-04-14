@@ -77,7 +77,7 @@ api.add_resource(
 )
 
 api.add_resource(
-    AdminApproveResource,
+    AdminRejectResource,
     '/reject/<int:pk>',
     endpoint='admin'
 )
