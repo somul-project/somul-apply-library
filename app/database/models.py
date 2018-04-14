@@ -121,3 +121,56 @@ class Speaker(db.Model, TimestampMixin):
 
     def __repr__(self):
         return '<%r %r>' % (self.__class__.__name__, self.name)
+
+
+class User(db.Model, TimestampMixin):
+    _id = db.Column('id', db.Integer, primary_key=True,
+                    autoincrement=True)
+    name = db.Column(db.String(30), nullable=False)
+    email = db.Column(db.String(30), nullable=False, unique=True)
+    phone = db.Column(db.String(30), nullable=False)
+
+    password = db.Column(db.String(30), nullable=False)
+    has_experienced_somul = db.Column(db.Boolean, nullable=False, default=False)
+    library_id = db.Column(INTEGER(11, unsigned=True),
+                           db.ForeignKey('Libraries.id'),
+                           nullable=False)
+    library = db.relationship('Library', lazy=True,
+                              backref=db.backref('speakers', lazy=True))
+
+    @validates('name')
+    def validate_not_empty(self, key, field):
+        if not field:
+            raise InvalidArgumentError("{} must be not empty.".format(key))
+
+        return field
+
+    @validates('email')
+    def validate_email_format(self, key, field):
+        if not is_valid_email(field):
+            raise InvalidArgumentError(
+                "{} must be fitted in email format.".format(key))
+
+        return field
+
+    @validates('password')
+    def validate_password_length(self, key, field):
+        if not has_valid_length(field,
+                                PASSWORD_LENGTH_MINIMUM,
+                                PASSWORD_LENGTH_MAXIMUM):
+            raise InvalidArgumentError(
+                "{}'s length must be {} ~ {}.".format(
+                    key, PASSWORD_LENGTH_MINIMUM, PASSWORD_LENGTH_MAXIMUM))
+
+        return field
+
+    @validates('phone')
+    def validate_phone_format(self, key, field):
+        if not is_valid_phone(field):
+            raise InvalidArgumentError(
+                "{} must be fitted in phone number format.".format(key))
+
+        return field
+
+    def __repr__(self):
+        return '<%r %r>' % (self.__class__.__name__, self.name)
