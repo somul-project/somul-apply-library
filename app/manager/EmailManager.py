@@ -3,9 +3,10 @@ import uuid
 import sendgrid
 from sendgrid.helpers.mail import Email, Content, Mail
 
+
 class EmailManager:
     sg = sendgrid.SendGridAPIClient(apikey=Config.sendgrid_api_key)
-    
+
     @classmethod
     def send_mail(cls, from_email, to_email, subject, content):
         """
@@ -20,7 +21,7 @@ class EmailManager:
         content = Content("text/plain", content)
         mail = Mail(from_email, subject, to_email, content)
         response = cls.sg.client.mail.send.post(request_body=mail.get())
-        
+
         return response.status_code % 100 == 2
 
     @classmethod
