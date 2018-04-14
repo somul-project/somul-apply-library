@@ -20,8 +20,8 @@ def create_app(config):
     from app.v1.controllers.users import users_api
 
     _app.register_blueprint(libraries_api, url_prefix='/api/v1/library')
-    _app.register_blueprint(maps_api, url_prefix='/api/v1')
-    _app.register_blueprint(users_api, url_prefix='/api/v1')
+    _app.register_blueprint(maps_api, url_prefix='/api/v1/map')
+    _app.register_blueprint(users_api, url_prefix='/api/v1/user')
 
     db.init_app(_app)
     Migrate(_app, db)

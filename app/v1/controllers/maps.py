@@ -31,6 +31,6 @@ maps_api = Blueprint('resources.maps', __name__)
 api = Api(maps_api)
 api.add_resource(
     MapListResource,
-    '/map',
+    '/',
     endpoint='maps'
 )
