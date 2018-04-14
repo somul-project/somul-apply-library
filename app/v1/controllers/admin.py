@@ -73,11 +73,11 @@ api = Api(admin_api)
 api.add_resource(
     AdminApproveResource,
     '/approve/<int:pk>',
-    endpoint='admin'
+    endpoint='approve'
 )
 
 api.add_resource(
     AdminRejectResource,
     '/reject/<int:pk>',
-    endpoint='admin'
+    endpoint='reject'
 )
