@@ -41,6 +41,6 @@ signin_api = Blueprint('resources.signin', __name__)
 api = Api(signin_api)
 api.add_resource(
     SigninResource,
-    '/signin',
+    '',
     endpoint='signin'
 )
