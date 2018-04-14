@@ -18,7 +18,7 @@ signin_reqparser.add_argument('password', type=str, trim=False,
 
 
 def get_is_identified(user, password):
-    return user["password"] == password
+    return user.password == password
 
 
 class SigninResource(Resource):
