@@ -6,7 +6,7 @@ from flask import request, render_template, session, Blueprint
 from app import db
 from app.database.models import Library
 
-views = Blueprint('views', __name__)
+library = Blueprint('views.library', __name__)
 
 
 def register_session(args):
@@ -27,20 +27,20 @@ def register_session(args):
     session["req_speaker"] = args["requirements"]
 
 
-@views.route("/")
+@library.route("/")
 def index():
-    return render_template("done.html")
+    return render_template("library_done.html")
 
 
-@views.route("/success")
+@library.route("/success")
 def success():
-    return render_template("success.html")
+    return render_template("library_success.html")
 
 
-@views.route("/failure")
+@library.route("/failure")
 def failure():
     return render_template(
-        "failure.html",
+        "library_failure.html",
         name=session.get("name", "정보 없음"),
         location_road=session.get("location_road", "정보 없음"),
         location_number=session.get("location_number", "정보 없음"),
@@ -60,19 +60,20 @@ def failure():
     )
 
 
-@views.route("/applylist")
+@library.route("/applylist")
 def applylist():
+    # TODO(@harrydrippin): Basic Authentication 적용
     try:
         libraries = Library.query.all()
 
-        return render_template("list.html",
+        return render_template("library_list.html",
                                libraries=libraries,
                                length=len(list(libraries)))
     except:  # noqa: E722
         print(traceback.format_exc())
 
 
-@views.route("/api/v1/apply", methods=["POST"])
+@library.route("/apply", methods=["POST"])
 def apply():
     try:
         args = json.loads(request.data.decode('utf-8'))
