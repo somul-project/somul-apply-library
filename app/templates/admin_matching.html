@@ -22,28 +22,28 @@
         <hr>
 
         <div class="library-container">
+          {% autoescape false %}
+          {% for speaker in speakers %}
           <div class="library card">
             <div class="card-body">
-              <h4 class="card-title">홍승환 (정독 도서관, 3시)</h4>
+              <h4 class="card-title">{% speaker.user.name %} ({% speaker.user.library.name %}, {% speaker.session_time %})</h4>
               <h5>자기소개</h5>
               <p class="card-text">
-                안녕하세요, 홍승환입니다. <br>
-                저는 국민대학교에서 소프트웨어학부 3학년에 재학 중이며, 이전에 Jininsa Company, 정부 사업 등에 근무했었습니다.<br>
-                소프트웨어가 무엇인지 탐구해보고 훌륭한 소프트웨어 엔지니어가 되려면 어떻게 해야 하는지 강의하기 위해서 지원하였습니다.
+                {% speaker.introduce %}
               </p>
               <h5>약력</h5>
               <p class="card-text">
-                (현) 국민대학교 소프트웨어학부 3학년 재학<br>
-                (전) Jininsa Company 개발자<br>
-                (전) 2016년도 SW R&D 지원 사업 총괄책임자
+                {% speaker.history %}
               </p>
               <h5>강의 정보</h5>
-              <h6>제목 : 소프트웨어란 무엇인가?</h6>
-              <p class="card-text">소프트웨어가 무엇인지 탐구해보고 훌륭한 소프트웨어 엔지니어가 되려면 어떻게 해야 하는지 알아봅니다.</p>
+              <h6>제목 : {% speaker.title %}</h6>
+              <p class="card-text">{% speaker.description %}</p>
               <a href="#" class="card-link">승인</a>
               <a href="#" class="card-link text-danger">거절</a>
             </div>
           </div>
+          {% endfor %}
+          {% endautoescape %}
         </div>
       </div>
     </div>
