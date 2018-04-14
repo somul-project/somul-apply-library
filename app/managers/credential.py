@@ -6,8 +6,9 @@ from app.config import Config
 from app.utils.errors import WrongSecretkeyError
 
 
+HEADER_SECRET_KEY = "Secret-Key"
 secretkey_reqparser = reqparse.RequestParser()
-secretkey_reqparser.add_argument('Secret-Key', type=str,
+secretkey_reqparser.add_argument(HEADER_SECRET_KEY, type=str,
                                  location='headers')
 
 
@@ -21,7 +22,7 @@ class CredentialManager:
     @classmethod
     def get_is_admin(cls):
         args = secretkey_reqparser.parse_args()
-        if args.secretkey is None:
+        if args[HEADER_SECRET_KEY] is None:
             return False
 
         disgested = cls.digest_from_plainstr(args.secretkey)
@@ -30,4 +31,5 @@ class CredentialManager:
         if disgested == stored_digested:
             return True
         else:
-            raise WrongSecretkeyError("Secretkey is incorrect.")
+            raise WrongSecretkeyError(
+                "{} is incorrect.".format(HEADER_SECRET_KEY))
