@@ -27,7 +27,7 @@ class AdminApproveResource(Resource):
 
         speaker = get_or_404(SpeakerInfo, pk)
 
-        speaker.admin_approved = "True"
+        speaker.admin_approved = True
 
         try:
             db.session.merge(speaker)
@@ -50,6 +50,21 @@ class AdminRejectResource(Resource):
             raise UnauthorizedError("Unauthorized.")
 
         speaker = get_or_404(SpeakerInfo, pk)
+
+        speaker.admin_approved = False
+
+        try:
+            db.session.merge(speaker)
+            db.session.commit()
+        except IntegrityError as e:
+            print(str(e))
+            db.session.rollback()
+            abort_with_integrityerror(e)
+        except Exception as e:
+            print(str(e))
+            db.session.rollback()
+            raise e
+
         return speaker
 
 
