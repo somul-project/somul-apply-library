@@ -147,3 +147,22 @@ class SpeakerInfo(db.Model, TimestampMixin):
 
     def __repr__(self):
         return '<%r %r>' % (self.__class__.__name__, self.name)
+
+
+class VerifyEmail(db.Model):
+    _id = db.Column('id', db.Integer, primary_key=True,
+                    autoincrement=True)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('user.id'),
+                        nullable=False)
+    user = db.relationship('user', lazy=True,
+                           backref=db.backref('verifyemails', lazy=True))
+
+    key = db.Column(db.String(256), unique=True, nullable=False, default="")
+    is_verified = db.Column(db.Boolean, nullable=False, default=False)
+    sended_at = db.Column(db.DateTime, nullable=True)
+    verified_at = db.Column(db.DateTime, nullable=True)
+    expired = db.Column(db.Boolean, nullable=False, default=False)
+
+    def __repr__(self):
+        return '<%r %r>' % (self.__class__.__name__, self.name)
