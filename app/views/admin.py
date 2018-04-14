@@ -1,7 +1,9 @@
 from flask import render_template, Blueprint
 
-admin = Blueprint('views.admin', __name__)
+from app import db
+from app.database.models import Library
 
+admin = Blueprint('views.admin', __name__)
 
 @admin.route("/")
 def index():
