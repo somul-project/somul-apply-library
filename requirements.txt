@@ -5,3 +5,5 @@ SQLAlchemy==1.1.15
 python_dotenv==0.8.2
 Flask-RESTful==0.3.6
 Flask-Migrate==2.1.1
+sendgrid==5.3.0
+uuid==1.30
