@@ -51,7 +51,7 @@ class Library(db.Model):
         return '<Library %r>' % self.name
 
 
-session_time_choices = ["09:00", "10:00"]
+session_time_choices = ["14:00", "15:00"]
 
 
 def now_at_seoul():
@@ -75,7 +75,8 @@ class User(db.Model, TimestampMixin):
     phone = db.Column(db.String(30), nullable=False)
 
     password = db.Column(db.String(30), nullable=False)
-    has_experienced_somul = db.Column(db.Boolean, nullable=False, default=False)
+    has_experienced_somul = db.Column(db.Boolean, nullable=False,
+                                      default=False)
     library_id = db.Column(INTEGER(11, unsigned=True),
                            db.ForeignKey('Libraries.id'),
                            nullable=True)
@@ -135,7 +136,8 @@ class SpeakerInfo(db.Model, TimestampMixin):
     keynote_link = db.Column(db.String(256), nullable=False, default="")
 
     admin_approved = db.Column(db.String(30), nullable=False, default=False)
-    has_experienced_somul = db.Column(db.Boolean, nullable=False, default=False)
+    has_experienced_somul = db.Column(db.Boolean,
+                                      nullable=False, default=False)
 
     @validates('session_time')
     def validate_session_time(self, key, field):
