@@ -12,6 +12,7 @@ from app.utils.validators import is_valid_email, has_valid_length, \
 
 PASSWORD_LENGTH_MINIMUM = 4
 PASSWORD_LENGTH_MAXIMUM = 8
+TIMEZONE_ASIA_SEOUL = "Asia/Seoul"
 
 
 class Library(db.Model):
@@ -55,7 +56,14 @@ session_time_choices = ["14:00", "15:00"]
 
 
 def now_at_seoul():
-    return datetime.now(tz=timezone('Asia/Seoul'))
+    return datetime.now(tz=timezone(TIMEZONE_ASIA_SEOUL))
+
+
+def elapsed_datetime_at_seoul(seoultime):
+    if seoultime.tzinfo is None:
+        seoultime = seoultime.replace(tzinfo=timezone(TIMEZONE_ASIA_SEOUL))
+
+    return seoultime - now_at_seoul()
 
 
 class TimestampMixin(object):
