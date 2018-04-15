@@ -8,6 +8,7 @@ from app.database import db
 def create_app(config):
     _app = Flask(__name__)
     _app.config.from_object(config)
+    _app.secret_key = config.secret_key
     CORS(_app, resources={r"/apply": {"origins": "*"}})
 
     from app.views.library import library
