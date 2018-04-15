@@ -14,9 +14,11 @@ def create_app(config):
     from app.views.library import library
     from app.views.admin import admin
     from app.views.verify import verify
+    from app.views.volunteer import volunteer
     _app.register_blueprint(library, url_prefix="/library")
     _app.register_blueprint(admin, url_prefix="/admin")
     _app.register_blueprint(verify, url_prefix="/verify")
+    _app.register_blueprint(volunteer, url_prefix="/volunteer")
 
     from app.v1.controllers.libraries import libraries_api
     from app.v1.controllers.maps import maps_api
