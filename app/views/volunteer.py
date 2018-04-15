@@ -22,3 +22,8 @@ def success():
 @volunteer.route("/privacy_policy")
 def privacy_policy():
     return render_template("volunteer/privacy_policy.html")
+
+
+@volunteer.route("/information")
+def information():
+    return render_template("volunteer/information.html")
