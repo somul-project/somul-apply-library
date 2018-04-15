@@ -27,3 +27,8 @@ def privacy_policy():
 @volunteer.route("/information")
 def information():
     return render_template("volunteer/information.html")
+
+
+@volunteer.route("/library_list")
+def library_list():
+    return render_template("volunteer/library_list.html")
