@@ -88,7 +88,7 @@ function submit() {
     
     $.ajax({
         type: "POST",
-        url: "http://13.124.202.225/api/v1/user",
+        url: "/api/v1/user",
         data: JSON.stringify(dict),
         error: function(err) {
             console.log(err);
@@ -105,6 +105,7 @@ function submit() {
                 $(".paper").fadeIn("slow");
             });   
         },
+        contentType: 'application/json; charset=UTF-8',
         dataType: "json"
     });
 }
