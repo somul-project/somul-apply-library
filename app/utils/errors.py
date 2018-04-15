@@ -44,6 +44,9 @@ class SigninRequiredError(HTTPException):
 class UserSessionEmptyError(HTTPException):
     code = 400
 
+class EmailNotSendedError(HTTPException):
+    code = 400
+
 
 def abort_with_integrityerror(e):
     if e.orig.args[0] == 1452:
