@@ -4,6 +4,7 @@ from sendgrid.helpers.mail import Email, Content, Mail
 from app.database.models import VerifyEmail
 import uuid
 
+
 class EmailManager:
     sg = sendgrid.SendGridAPIClient(apikey=Config.sendgrid_api_key)
 
