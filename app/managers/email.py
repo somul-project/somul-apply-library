@@ -14,7 +14,7 @@ class EmailManager:
         인증 메일을 전송합니다.
         """
         from_email = "somul.may@gmail.com"
-        subject, content = cls.get_uuid_content(uuid)
+        subject, content = cls.get_uuid_content(uuid, Config.server_host)
         return cls._send_mail(from_email, to_email, subject, content)
 
     @classmethod

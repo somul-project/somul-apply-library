@@ -6,6 +6,7 @@ load_dotenv(find_dotenv())
 
 class Config:
     secret_key = os.environ.get("SECRET_KEY")
+    server_host = os.environ.get("SERVER_HOST")
     db_host = os.environ.get("DB_HOST")
     db_username = os.environ.get("DB_USERNAME")
     db_password = os.environ.get("DB_PASSWORD")
