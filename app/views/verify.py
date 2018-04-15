@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint
+from flask import Blueprint
 from flask_restful import reqparse
 from sqlalchemy.exc import IntegrityError
 

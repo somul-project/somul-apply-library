@@ -24,6 +24,12 @@ def get_is_identified(user, password):
 
 class SigninResource(Resource):
     @marshal_with(user_fields)
+    def get(self):
+        user = User.query.filter_by(_id=SigninManager.get_user_id()).first()
+
+        return user
+
+    @marshal_with(user_fields)
     def post(self):
         args = signin_reqparser.parse_args()
         user = User.query.filter_by(email=args["email"]).first()
