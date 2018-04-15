@@ -4,6 +4,7 @@ from sendgrid.helpers.mail import Email, Content, Mail
 from app.database.models import VerifyEmail
 import uuid
 
+
 class EmailManager:
     sg = sendgrid.SendGridAPIClient(apikey=Config.sendgrid_api_key)
 
@@ -14,7 +15,7 @@ class EmailManager:
         """
         from_email = "somul.may@gmail.com"
         subject, content = cls.get_uuid_content(uuid)
-        return _send_mail(from_email, to_email, subject, content)
+        return cls._send_mail(from_email, to_email, subject, content)
 
     @classmethod
     def _send_mail(cls, from_email, to_email, subject, content):
@@ -27,7 +28,6 @@ class EmailManager:
         """
         from_email = Email(from_email)
         to_email = Email(to_email)
-        content = Content("text/plain", content)
         mail = Mail(from_email, subject, to_email, content)
         response = cls.sg.client.mail.send.post(request_body=mail.get())
 
@@ -40,8 +40,11 @@ class EmailManager:
         """
         while True:
             gen_uuid = str(uuid.uuid4())
-            emails = VerifyEmail.query.filter_by(key=gen_uuid)
-            if len(emails) == 0: break
+            duplicated_email\
+                = VerifyEmail.query.filter_by(key=gen_uuid).first()
+            if duplicated_email is None:
+                break
+
         return gen_uuid
 
     @classmethod
@@ -54,6 +57,6 @@ class EmailManager:
         안녕하세요, 5월 소프트웨어에 물들다 운영진입니다.
 
         다음 링크를 클릭하시면 E-mail을 인증할 수 있습니다. 감사합니다.
-        http://libapply.somul.kr/verify?key=%s
-        """.format(uuid))
+        http://libapply.somul.kr/verify?key={uuid}
+        """.format(uuid=uuid))
         return subject, content

@@ -25,7 +25,7 @@ class CredentialManager:
         if args[HEADER_SECRET_KEY] is None:
             return False
 
-        disgested = cls.digest_from_plainstr(args.secretkey)
+        disgested = cls.digest_from_plainstr(args[HEADER_SECRET_KEY])
         stored_digested = cls.digest_from_plainstr(Config.secret_key)
 
         if disgested == stored_digested:

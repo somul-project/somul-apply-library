@@ -4,12 +4,11 @@ from flask_restful import (Resource, reqparse, fields,
 from sqlalchemy.exc import IntegrityError
 
 from app.database import db, get_or_404
-from app.database.models import User, now_at_seoul
-from app.utils.errors import abort_with_integrityerror, UnauthorizedError
+from app.database.models import User, now_at_seoul, VerifyEmail
+from app.utils.errors import abort_with_integrityerror, UnauthorizedError, \
+    EmailNotSendedError
 from app.managers.credential import CredentialManager
 from app.managers.email import EmailManager
-
-import uuid
 
 
 user_fields = {
@@ -103,7 +102,7 @@ class UserListResource(Resource):
             print(str(e))
             db.session.rollback()
             raise e
-        
+
         return user
 
 

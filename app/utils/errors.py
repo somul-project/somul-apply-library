@@ -44,6 +44,7 @@ class SigninRequiredError(HTTPException):
 class UserSessionEmptyError(HTTPException):
     code = 400
 
+
 class EmailNotSendedError(HTTPException):
     code = 400
 
