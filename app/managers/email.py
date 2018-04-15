@@ -48,7 +48,7 @@ class EmailManager:
         return gen_uuid
 
     @classmethod
-    def get_uuid_content(cls, uuid):
+    def get_uuid_content(cls, uuid, host):
         """
         UUID를 만들고 이에 해당하는 E-mail 제목 및 본문을 만듭니다.
         """
@@ -57,6 +57,6 @@ class EmailManager:
         안녕하세요, 5월 소프트웨어에 물들다 운영진입니다.
 
         다음 링크를 클릭하시면 E-mail을 인증할 수 있습니다. 감사합니다.
-        http://libapply.somul.kr/verify?key={uuid}
-        """.format(uuid=uuid))
+        http://{host}/verify?key={uuid}
+        """.format(uuid=uuid, host=host))
         return subject, content
