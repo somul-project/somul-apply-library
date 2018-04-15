@@ -83,6 +83,11 @@ class User(db.Model, TimestampMixin):
     library = db.relationship('Library', lazy=True,
                               backref=db.backref('users', lazy=True))
 
+    verifyemails = db.relationship('VerifyEmail',
+                                   backref='user',
+                                   lazy=True,
+                                   cascade="delete")
+
     @validates('name')
     def validate_not_empty(self, key, field):
         if not field:
@@ -157,8 +162,6 @@ class VerifyEmail(db.Model):
     user_id = db.Column(db.Integer,
                         db.ForeignKey('user.id'),
                         nullable=False)
-    user = db.relationship('User', lazy=True,
-                           backref=db.backref('verifyemails', lazy=True))
 
     key = db.Column(db.String(40), unique=True, nullable=False, default="")
     is_verified = db.Column(db.Boolean, nullable=False, default=False)

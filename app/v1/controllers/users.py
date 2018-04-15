@@ -4,9 +4,11 @@ from flask_restful import (Resource, reqparse, fields,
 from sqlalchemy.exc import IntegrityError
 
 from app.database import db, get_or_404
-from app.database.models import User
-from app.utils.errors import abort_with_integrityerror, UnauthorizedError
+from app.database.models import User, now_at_seoul, VerifyEmail
+from app.utils.errors import abort_with_integrityerror, UnauthorizedError, \
+    EmailNotSendedError
 from app.managers.credential import CredentialManager
+from app.managers.email import EmailManager
 
 
 user_fields = {
@@ -67,6 +69,30 @@ class UserListResource(Resource):
 
         try:
             db.session.add(user)
+            db.session.commit()
+        except IntegrityError as e:
+            print(str(e))
+            db.session.rollback()
+            abort_with_integrityerror(e)
+        except Exception as e:
+            print(str(e))
+            db.session.rollback()
+            raise e
+
+        # E-mail Integration
+        gen_uuid = EmailManager.get_unique_uuid()
+        email = VerifyEmail(
+            user_id=user._id,
+            key=gen_uuid
+        )
+
+        if EmailManager.send_verify_email(user.email, gen_uuid):
+            email.sended_at = now_at_seoul()
+        else:
+            raise EmailNotSendedError()
+
+        try:
+            db.session.add(email)
             db.session.commit()
         except IntegrityError as e:
             print(str(e))
