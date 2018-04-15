@@ -12,3 +12,8 @@ def application():
 @volunteer.route("/status")
 def status():
     return render_template("volunteer/application_status.html")
+
+
+@volunteer.route("/success")
+def success():
+    return render_template("volunteer/application_success.html")
