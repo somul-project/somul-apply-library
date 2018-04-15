@@ -17,3 +17,8 @@ def status():
 @volunteer.route("/success")
 def success():
     return render_template("volunteer/application_success.html")
+
+
+@volunteer.route("/privacy_policy")
+def privacy_policy():
+    return render_template("volunteer/privacy_policy.html")
