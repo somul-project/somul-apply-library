@@ -31,16 +31,17 @@ def create_app(config):
     from app.v1.controllers.logger import logger_api
 
     _app.register_blueprint(libraries_api, url_prefix='/api/v1/library')
-    _app.register_blueprint(maps_api, url_prefix='/api/v1/map')
-    _app.register_blueprint(users_api, url_prefix='/api/v1/user')
-    _app.register_blueprint(admin_api, url_prefix="/api/v1/admin")
-    _app.register_blueprint(signin_api, url_prefix='/api/v1/signin')
-    _app.register_blueprint(logger_api, url_prefix='/api/v1/logger')
     add_request_hook(libraries_api)
+    _app.register_blueprint(maps_api, url_prefix='/api/v1/map')
     add_request_hook(maps_api)
+    _app.register_blueprint(users_api, url_prefix='/api/v1/user')
     add_request_hook(users_api)
+    _app.register_blueprint(admin_api, url_prefix="/api/v1/admin")
     add_request_hook(admin_api)
+    _app.register_blueprint(signin_api, url_prefix='/api/v1/signin')
     add_request_hook(signin_api)
+
+    _app.register_blueprint(logger_api, url_prefix='/api/v1/logger')
 
     db.init_app(_app)
     Migrate(_app, db)

@@ -38,6 +38,7 @@ def _convert_request_to_log_object(_request):
         "values",
         "is_json",
         "json",
+        "form",
     ]
 
     _log_req = {}
