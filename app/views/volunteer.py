@@ -75,6 +75,10 @@ def library_list():
     if not SigninManager.get_is_signed_in():
         return redirect("/volunteer/login")
 
+    user = User.query.filter_by(_id=SigninManager.get_user_id()).first()
+    if user.library_id is not None:
+        return redirect("/volunteer/information")
+
     libraries = Library.query.all()
 
     lib_dict = dict()
