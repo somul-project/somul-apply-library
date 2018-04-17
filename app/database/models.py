@@ -1,18 +1,14 @@
-from datetime import datetime
-
-from pytz import timezone
 from sqlalchemy import Text
 from sqlalchemy.dialects.mysql import TINYINT, INTEGER
 from sqlalchemy.orm import validates
 
 from app.utils.errors import InvalidArgumentError
-from app.database import db
+from app.database import db, TimestampMixin
 from app.utils.validators import is_valid_email, has_valid_length, \
     is_valid_phone
 
 PASSWORD_LENGTH_MINIMUM = 4
 PASSWORD_LENGTH_MAXIMUM = 8
-TIMEZONE_ASIA_SEOUL = "Asia/Seoul"
 
 
 class Library(db.Model):
@@ -53,26 +49,6 @@ class Library(db.Model):
 
 
 session_time_choices = ["14:00", "15:00"]
-
-
-def now_at_seoul():
-    return datetime.now(tz=timezone(TIMEZONE_ASIA_SEOUL))
-
-
-def elapsed_datetime_at_seoul(seoultime):
-    if seoultime.tzinfo is None:
-        seoultime = seoultime.replace(tzinfo=timezone(TIMEZONE_ASIA_SEOUL))
-
-    return seoultime - now_at_seoul()
-
-
-class TimestampMixin(object):
-    created_at = db.Column(db.DateTime,
-                           nullable=False,
-                           default=now_at_seoul)
-    updated_at = db.Column(db.DateTime,
-                           nullable=True,
-                           onupdate=now_at_seoul)
 
 
 class User(db.Model, TimestampMixin):

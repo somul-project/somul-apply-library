@@ -2,9 +2,8 @@ from flask import Blueprint
 from flask_restful import reqparse
 from sqlalchemy.exc import IntegrityError
 
-from app.database.models import VerifyEmail, now_at_seoul, \
-    elapsed_datetime_at_seoul
-from app.database import db
+from app.database.models import VerifyEmail
+from app.database import db, elapsed_datetime_at_seoul, now_at_seoul
 from app.utils.errors import abort_with_integrityerror
 
 verify = Blueprint('views.verify', __name__)

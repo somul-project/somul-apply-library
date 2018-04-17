@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 
 from app.database import db
+from app.utils.hooks import add_before_and_after_hook
 
 
 def create_app(config):
@@ -36,5 +37,6 @@ def create_app(config):
 
     db.init_app(_app)
     Migrate(_app, db)
+    add_before_and_after_hook(_app)
 
     return _app
