@@ -81,5 +81,16 @@
 <script src="{{ url_for('static', filename='js/volunteer/default.js') }}"></script>
 <script src="{{ url_for('static', filename='js/volunteer/additional_info.js') }}"></script>
 
+<script>
+    $(document).ready(function () {
+        $("#introduce").val("{{ speaker.introduce }}");
+        $("#history").val("{{ speaker.history }}");
+        $("#title").val("{{ speaker.title }}");
+        $("#description").val("{{ speaker.description }}");
+        {% if speaker.keynote_link != None %}
+        $("#keynote_link").val("{{ speaker.keynote_link }}");
+        {% endif %}
+    });
+</script>
 </body>
 </html>

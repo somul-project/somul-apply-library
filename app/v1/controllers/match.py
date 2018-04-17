@@ -62,8 +62,8 @@ class MatchSpeakerResource(Resource):
         session_t = list()
         for user in user_list:
             # TODO(@harrydrippin): Verify that below if line works
-            if user.speakerinfos:
-                speaker_info = user.speakerinfos
+            if user.speakerinfo:
+                speaker_info = user.speakerinfo
                 session_t.append(speaker_info.session_time)
 
         if session_t.count(args["time"] + ":00") != 0:

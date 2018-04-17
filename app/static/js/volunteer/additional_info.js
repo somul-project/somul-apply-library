@@ -11,11 +11,12 @@ function submit() {
       'title': $('#title').val(),
       'description': $('#description').val(),
       'keynote_link': $('#keynote_link').val(),
+      'session_time': null
   };
   
   $.ajax({
       type: "POST",
-      url: "/api/v1/speaker/modify",
+      url: "/api/v1/speaker",
       data: JSON.stringify(dict),
       error: function(err) {
           alert("오류가 발생하였습니다. 운영자에게 문의하십시오.");

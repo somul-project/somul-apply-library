@@ -17,7 +17,10 @@
         <hr>
 
         <h3>안내</h3>
-        <p>새로 만들어진 강연자 매칭에 대해서 검수합니다. 승인 혹은 거절 버튼을 눌러 응답해주십시오.</p>
+        <p>
+          새로 만들어진 강연자 매칭에 대해서 검수합니다. 승인 혹은 반려 버튼을 눌러 응답해주십시오.<br>
+          강연자를 반려하게 되면 리스트에서 해당 강연자가 사라지지만 매칭은 예약되어 있는 그대로 유지됩니다.<br>따라서 반려하시기 전에 해당 강연자의 연락처를 메모하시기 바랍니다.
+        </p>
         
         <hr>
 
@@ -27,6 +30,11 @@
           <div class="library card">
             <div class="card-body">
               <h4 class="card-title">{{ speaker.user.name }} ({{ speaker.user.library.name }}, {{ speaker.session_time }})</h4>
+              <h5>강연자 연락처</h5>
+              <p class="card-text">
+                휴대전화 : {{ speaker.user.phone }}<br>
+                E-mail : {{ speaker.user.email }}
+              </p>
               <h5>자기소개</h5>
               <p class="card-text">
                 {{ speaker.introduce }}
@@ -37,9 +45,14 @@
               </p>
               <h5>강의 정보</h5>
               <h6>제목 : {{ speaker.title }}</h6>
+              {% autoescape false %}
               <p class="card-text">{{ speaker.description }}</p>
-              <a style="pointer: cursor;" onclick="approve({{ speaker._id }})" class="card-link">승인</a>
-              <a style="pointer: cursor;" onclick="reject({{ speaker._id }})" class="card-link text-danger">반려</a>
+              {% endautoescape %}
+              {% if speaker.keynote_link != None %}
+              <a href="{{ speaker.keynote_link }}" target="_blank">발표 자료 링크</a><br><br>
+              {% endif %}
+              <a style="cursor: pointer;" onclick="approve({{ speaker._id }})" class="card-link text-primary">승인</a>
+              <a style="cursor: pointer;" onclick="reject({{ speaker._id }})" class="card-link text-danger">반려</a>
             </div>
           </div>
           {% endfor %}
@@ -68,7 +81,7 @@
         },
         success: function(data) {
             alert("해당 강연자를 승인하였습니다.");
-            document.reload();
+            location.reload();
         },
         complete : function() {
             $(".spinner-preloader").fadeOut("slow", function () {
@@ -80,7 +93,7 @@
       });
     }
 
-    function approve(id) {
+    function reject(id) {
       $.ajax({
         type: "GET",
         url: "/api/v1/admin/reject/" + id,
@@ -97,7 +110,7 @@
         },
         success: function(data) {
             alert("해당 강연자를 반려하였습니다.");
-            document.reload();
+            location.reload();
         },
         complete : function() {
             $(".spinner-preloader").fadeOut("slow", function () {

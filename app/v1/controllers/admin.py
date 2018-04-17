@@ -27,7 +27,7 @@ class AdminApproveResource(Resource):
 
         speaker = get_or_404(SpeakerInfo, pk)
 
-        speaker.admin_approved = True
+        speaker.admin_approved = 0
 
         try:
             db.session.merge(speaker)
@@ -53,7 +53,7 @@ class AdminRejectResource(Resource):
 
         speaker = get_or_404(SpeakerInfo, pk)
 
-        speaker.admin_approved = False
+        speaker.admin_approved = 1
 
         try:
             db.session.merge(speaker)

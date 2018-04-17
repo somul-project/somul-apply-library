@@ -44,11 +44,13 @@ class SpeakerInfoRepo:
             db.session.rollback()
             raise e
 
+        print(speakerinfo)
+
         return speakerinfo
 
     @classmethod
     def get_with_user_id(cls, user_id):
-        return get_or_none(User, user_id)
+        return get_or_none(SpeakerInfo, user_id)
 
     @classmethod
     def delete(cls, speakerinfo):
