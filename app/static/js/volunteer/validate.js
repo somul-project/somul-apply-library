@@ -80,6 +80,11 @@ function validateRadio() {
 }
 
 function validatePasswordCheck() {
+    if (document.getElementById("password") == "") {
+        alert("비밀번호를 입력해주십시오.");
+        return false;
+    }
+
     if (document.getElementById("password").value == document.getElementById("check_password").value) {
         return true;
     } else {

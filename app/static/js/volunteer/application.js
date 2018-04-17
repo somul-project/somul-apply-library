@@ -91,14 +91,14 @@ function submit() {
         url: "/api/v1/user",
         data: JSON.stringify(dict),
         error: function(err) {
-            console.log(err);
+            alert("오류가 발생하였습니다. 운영자에게 문의하십시오.");
         },
         beforeSend: function() {
             $(".paper").hide();
             $(".spinner-preloader").show();
         },
         success: function(data) {
-            
+            location.href = "/volunteer/success";
         },
         complete : function() {
             $(".spinner-preloader").fadeOut("slow", function () {

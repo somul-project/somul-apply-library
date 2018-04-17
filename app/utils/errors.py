@@ -49,6 +49,10 @@ class EmailNotSendedError(HTTPException):
     code = 400
 
 
+class EmailNotVerifiedError(HTTPException):
+    code = 400
+
+
 def abort_with_integrityerror(e):
     if e.orig.args[0] == 1452:
         raise InvalidRelationDataError(str(e.orig.args[1]))

@@ -27,7 +27,7 @@ class AdminApproveResource(Resource):
 
         speaker = get_or_404(SpeakerInfo, pk)
 
-        speaker.admin_approved = True
+        speaker.admin_approved = 0
 
         try:
             db.session.merge(speaker)
@@ -41,7 +41,9 @@ class AdminApproveResource(Resource):
             db.session.rollback()
             raise e
 
-        return speaker
+        return {
+            "result": 0
+        }
 
 
 class AdminRejectResource(Resource):
@@ -51,7 +53,7 @@ class AdminRejectResource(Resource):
 
         speaker = get_or_404(SpeakerInfo, pk)
 
-        speaker.admin_approved = False
+        speaker.admin_approved = 1
 
         try:
             db.session.merge(speaker)
@@ -65,7 +67,9 @@ class AdminRejectResource(Resource):
             db.session.rollback()
             raise e
 
-        return speaker
+        return {
+            "result": 0
+        }
 
 
 admin_api = Blueprint('resources.admin', __name__)
