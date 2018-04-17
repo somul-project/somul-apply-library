@@ -80,17 +80,40 @@ function validateRadio() {
 }
 
 function validatePasswordCheck() {
+    var field = document.getElementById("password").value;
+
     if (document.getElementById("password") == "") {
         alert("비밀번호를 입력해주십시오.");
         return false;
     }
 
-    if (document.getElementById("password").value == document.getElementById("check_password").value) {
-        return true;
-    } else {
+    if (field != document.getElementById("check_password").value) {
         alert("비밀번호와 비밀번호 확인의 값이 다릅니다.");
         return false;
     }
+
+    if (!validatePasswordLength(field)) {
+        return false;
+    }
+
+    return true;
+}
+
+function validatePasswordLength(field) {
+    var PASSWORD_LENGTH_MINIMUM = 8;
+    var PASSWORD_LENGTH_MAXIMUM = 20;
+
+    var errorMessage = "비밀번호는 " + PASSWORD_LENGTH_MINIMUM + "자 이상 " +
+            PASSWORD_LENGTH_MAXIMUM + "자 이하로 입력해주세요.";
+
+    if (!(PASSWORD_LENGTH_MINIMUM <= field.length
+        && field.length <= PASSWORD_LENGTH_MAXIMUM)) {
+        alert(errorMessage);
+
+        return false;
+    }
+
+    return true;
 }
 
 function validateCheckBox() {

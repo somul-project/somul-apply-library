@@ -26,7 +26,7 @@ class CredentialManager:
             return False
 
         disgested = cls.digest_from_plainstr(args[HEADER_SECRET_KEY])
-        stored_digested = cls.digest_from_plainstr(Config.secret_key)
+        stored_digested = cls.digest_from_plainstr(Config.admin_key)
 
         if disgested == stored_digested:
             return True
