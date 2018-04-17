@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/volunteer/default.css') }}">
+
+    <title>소프트웨어에 물들다</title>
+</head>
+<body>
+
+
+<div class="preloader-wrapper">
+    <div class="spinner-preloader">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+    </div>
+</div>
+
+
+<div class="container paper" style="display: none;">
+    <div class="jumbotron shadow">
+        <div class="container">
+            <h1>강연자, 봉사자<br>매칭 시스템</h1>
+        </div>
+        <hr>
+        <div class="container card-columns">
+            {% for library in libraries %}
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <h3 class="card-title">{{ library.name }}</h3>
+                        <p class="card-text">
+                            {{ library.location_road }}
+                        </p>
+                    </div>
+                    <hr>
+                    <div>
+                        <h5 class="card-text">강연자 신청</h5>
+                        <div>
+                            {% if lib_dict[library._id]["14:00"] == 0 %}
+                            <button onclick="sendSpeakerRequest({{ library._id }}, '14')" type="button" class="btn btn-primary btn-sm">2시 신청가능</button>
+                            {% elif lib_dict[library._id]["14:00"] == 1 %}
+                            <button type="button" class="btn btn-warning btn-sm" disabled>2시 예약대기</button>
+                            {% else %}
+                            <button type="button" class="btn btn-danger btn-sm" disabled>2시 강연확정</button>
+                            {% endif %}
+
+                            {% if lib_dict[library._id]["15:00"] == 0 %}
+                            <button onclick="sendSpeakerRequest({{ library._id }}, '15')" type="button" class="btn btn-primary btn-sm">3시 신청가능</button>
+                            {% elif lib_dict[library._id]["15:00"] == 1 %}
+                            <button type="button" class="btn btn-warning btn-sm" disabled>3시 예약대기</button>
+                            {% else %}
+                            <button type="button" class="btn btn-danger btn-sm" disabled>3시 강연확정</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <h5 class="card-text">봉사자 신청</h5>
+                        <div>
+                            {% if lib_dict[library._id]["volunteer"] < 2 %}
+                            <button onclick="sendVolunteerRequest({{ library._id }})" type="button" class="btn btn-success btn-sm">
+                                봉사 신청 <span class="badge badge-light">{{ 2 - (lib_dict[library._id]["volunteer"]) }}</span> 명 가능
+                            </button>
+                            {% else %}
+                            <button type="button" class="btn btn-disabled btn-sm" disabled>
+                                모집 완료
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/volunteer/match.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".paper").hide();
+        $(".spinner-preloader").show();
+        setTimeout(function () {
+            $(".spinner-preloader").fadeOut("slow", function () {
+                $(".paper").fadeIn("slow");
+            });
+        }, 1000);
+    });
+</script>
+</body>
+</html>

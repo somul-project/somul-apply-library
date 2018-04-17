@@ -27,12 +27,16 @@ def create_app(config):
     from app.v1.controllers.users import users_api
     from app.v1.controllers.admin import admin_api
     from app.v1.controllers.signin import signin_api
+    from app.v1.controllers.match import match_api
+    from app.v1.controllers.speakerinfo import speaker_api
 
     _app.register_blueprint(libraries_api, url_prefix='/api/v1/library')
     _app.register_blueprint(maps_api, url_prefix='/api/v1/map')
     _app.register_blueprint(users_api, url_prefix='/api/v1/user')
     _app.register_blueprint(admin_api, url_prefix="/api/v1/admin")
     _app.register_blueprint(signin_api, url_prefix='/api/v1/signin')
+    _app.register_blueprint(match_api, url_prefix='/api/v1/match')
+    _app.register_blueprint(speaker_api, url_prefix="/api/v1/speaker")
 
     db.init_app(_app)
     Migrate(_app, db)

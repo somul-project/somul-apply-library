@@ -41,7 +41,9 @@ class AdminApproveResource(Resource):
             db.session.rollback()
             raise e
 
-        return speaker
+        return {
+            "result": 0
+        }
 
 
 class AdminRejectResource(Resource):
@@ -65,7 +67,9 @@ class AdminRejectResource(Resource):
             db.session.rollback()
             raise e
 
-        return speaker
+        return {
+            "result": 0
+        }
 
 
 admin_api = Blueprint('resources.admin', __name__)

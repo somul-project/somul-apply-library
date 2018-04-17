@@ -3,7 +3,7 @@ from flask_restful import (Resource, reqparse, Api)
 from sqlalchemy.exc import IntegrityError
 
 from app.database import db, get_or_404
-from app.database.models import Library, User
+from app.database.models import Library, User, SpeakerInfo
 from app.managers.signin import SigninManager
 from app.utils.errors import abort_with_integrityerror
 
@@ -59,14 +59,14 @@ class MatchSpeakerResource(Resource):
         user_list = library.users
 
         args = matchspeaker_reqparser.parse_args()
-        session_time = list()
+        session_t = list()
         for user in user_list:
             # TODO(@harrydrippin): Verify that below if line works
             if user.speakerinfos:
                 speaker_info = user.speakerinfos
-                session_time.append(speaker_info.session_time)
+                session_t.append(speaker_info.session_time)
 
-        if session_time.count(args["time"]) != 0:
+        if session_t.count(args["time"] + ":00") != 0:
             return {
                 "result": 1,
                 "cause": "이미 할당된 세션입니다. 다른 세션을 선택해주세요."
@@ -74,11 +74,15 @@ class MatchSpeakerResource(Resource):
 
         user_id = SigninManager.get_user_id()
         user = get_or_404(User, user_id)
+        user.library_id = library._id
 
-        user.speakerinfos.session_time = args["time"]
+        speakerinfo = SpeakerInfo()
+        speakerinfo.user_id = user._id
+        speakerinfo.session_time = args["time"] + ":00"
 
         try:
             db.session.merge(user)
+            db.session.add(speakerinfo)
             db.session.commit()
         except IntegrityError as e:
             print(str(e))
@@ -98,12 +102,10 @@ match_api = Blueprint('resources.match', __name__)
 api = Api(match_api)
 api.add_resource(
     MatchVolunteerResource,
-    '/volunteer/<int:pk>',
-    endpoint='libraries'
+    '/volunteer/<int:pk>'
 )
 
 api.add_resource(
     MatchSpeakerResource,
-    '/speaker/<int:pk>',
-    endpoint='library'
+    '/speaker/<int:pk>'
 )

@@ -25,6 +25,12 @@
         </div>
         <hr>
 
+        <p>
+            아래의 양식을 채우고 완료 버튼을 눌러주십시오.<br>
+            혹시 이미 신청하셨다면, <a href="/volunteer/login">여기를 눌러 로그인하십시오.</a>
+        </p>
+
+        <hr>
         <form>
             <div class="form-group">
                 <label for="username">이름</label>
@@ -47,27 +53,28 @@
                 <label for="userpasswordconfirm">비밀번호를 재입력</label>
                 <input type="password" class="form-control input" id="check_password" placeholder="비밀번호를 재입력해주세요.">
             </div>
+
+            <div class="form-group">
+                    <label for="exampleInputPassword1">이전에 소프트웨어에 물들다에 봉사자 / 강연자로 참가하신 경험이 있나요?</label>
+                    <br>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label id="option1" class="btn btn-light">
+                            <input type="radio" name="options" autocomplete="off"> 네
+                        </label>
+                        <label id="option2" class="btn btn-light active">
+                            <input type="radio" name="options" autocomplete="off" checked> 아니요
+                        </label>
+                    </div>
+                </div>
+
             <div id="check-form" class="form-group">
-                <a href="privacy_policy.html" target="_blank">
+                <a href="/volunteer/privacy_policy" target="_blank">
                     <button type="button" class="btn btn-success">개인정보 처리방침</button>
                     <br>
                 </a>
-                <div class="custom-control custom-checkbox">
+                <div class="custom-control custom-checkbox" style="margin-top: 10px;">
                     <input type="checkbox" class="custom-control-input" id="check">
                     <label class="custom-control-label" for="check">위 약관을 자세히 읽었으며, 개인정보이용에 동의합니다.</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="exampleInputPassword1">소프트웨어에 물들다에 참가하신 경험이 있나요?</label>
-                <br>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label id="option1" class="btn btn-light">
-                        <input type="radio" name="options" autocomplete="off"> 네
-                    </label>
-                    <label id="option2" class="btn btn-light active">
-                        <input type="radio" name="options" autocomplete="off" checked> 아니요
-                    </label>
                 </div>
             </div>
 

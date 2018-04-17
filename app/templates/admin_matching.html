@@ -38,8 +38,8 @@
               <h5>강의 정보</h5>
               <h6>제목 : {{ speaker.title }}</h6>
               <p class="card-text">{{ speaker.description }}</p>
-              <a href="#" class="card-link">승인</a>
-              <a href="#" class="card-link text-danger">거절</a>
+              <a style="pointer: cursor;" onclick="approve({{ speaker._id }})" class="card-link">승인</a>
+              <a style="pointer: cursor;" onclick="reject({{ speaker._id }})" class="card-link text-danger">반려</a>
             </div>
           </div>
           {% endfor %}
@@ -49,5 +49,66 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+    
+    function approve(id) {
+      $.ajax({
+        type: "GET",
+        url: "/api/v1/admin/approve/" + id,
+        error: function(err) {
+            alert("서버에 장애가 발생하였습니다.\n잠시 후에 다시 시도하시거나 운영진에게 직접 접수해주세요.");
+            location.reload();
+        },
+        beforeSend: function() {
+            $(".paper").hide();
+            $(".spinner-preloader").show();
+        },
+        headers: {
+          "Secret-Key": "dhdnjfthanf"
+        },
+        success: function(data) {
+            alert("해당 강연자를 승인하였습니다.");
+            document.reload();
+        },
+        complete : function() {
+            $(".spinner-preloader").fadeOut("slow", function () {
+                $(".paper").fadeIn("slow");
+            });   
+        },
+        contentType: 'application/json; charset=UTF-8',
+        dataType: "json"
+      });
+    }
+
+    function approve(id) {
+      $.ajax({
+        type: "GET",
+        url: "/api/v1/admin/reject/" + id,
+        error: function(err) {
+            alert("서버에 장애가 발생하였습니다.\n잠시 후에 다시 시도하시거나 운영진에게 직접 접수해주세요.");
+            location.reload();
+        },
+        beforeSend: function() {
+            $(".paper").hide();
+            $(".spinner-preloader").show();
+        },
+        headers: {
+          "Secret-Key": "dhdnjfthanf"
+        },
+        success: function(data) {
+            alert("해당 강연자를 반려하였습니다.");
+            document.reload();
+        },
+        complete : function() {
+            $(".spinner-preloader").fadeOut("slow", function () {
+                $(".paper").fadeIn("slow");
+            });   
+        },
+        contentType: 'application/json; charset=UTF-8',
+        dataType: "json"
+      });
+    }
+
+    </script>
   </body>
 </html>
