@@ -1,3 +1,5 @@
+import json
+
 from pymysql import IntegrityError
 
 from app import db
@@ -17,7 +19,7 @@ def _log_on_stdout(content):
 
 
 def _log_on_db(logtype, content):
-    instance = Log(logtype=logtype, content=content)
+    instance = Log(logtype=logtype, content=json.dumps(content))
     try:
         db.session.add(instance)
         db.session.commit()
