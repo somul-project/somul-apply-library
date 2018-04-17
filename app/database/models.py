@@ -10,8 +10,8 @@ from app.database import db
 from app.utils.validators import is_valid_email, has_valid_length, \
     is_valid_phone
 
-PASSWORD_LENGTH_MINIMUM = 4
-PASSWORD_LENGTH_MAXIMUM = 8
+PASSWORD_LENGTH_MINIMUM = 8
+PASSWORD_LENGTH_MAXIMUM = 20
 TIMEZONE_ASIA_SEOUL = "Asia/Seoul"
 
 
