@@ -95,6 +95,8 @@ function validatePasswordCheck() {
     if (!validatePasswordLength(field)) {
         return false;
     }
+
+    return true;
 }
 
 function validatePasswordLength(field) {
