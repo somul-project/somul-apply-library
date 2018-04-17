@@ -4,7 +4,6 @@ from flask_restful import Resource, Api
 from app.database.logger_models import Log
 from app.utils.errors import UnauthorizedError
 from app.managers.credential import CredentialManager
-from app.utils.hooks import donot_stack_log
 
 
 class LoggerResource(Resource):
@@ -27,7 +26,6 @@ class LoggerResource(Resource):
 
 
 logger_api = Blueprint('resources.logger', __name__)
-donot_stack_log(logger_api)
 
 api = Api(logger_api)
 api.add_resource(

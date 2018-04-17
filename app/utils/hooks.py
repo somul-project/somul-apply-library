@@ -7,7 +7,7 @@ from app.managers.signin import (SESSIONKEY_IS_SIGNED_IN,
 from app.utils.loggers import log_request, log_response
 
 
-EXCLUDES_REQUEST_HOOK = []
+ALLOWED_REQUEST_HOOK = []
 
 
 def _convert_session_to_log_object():
@@ -17,7 +17,8 @@ def _convert_session_to_log_object():
         SESSIONKEY_USER_ID
     ]
     for arg in session_args:
-        _log_session[arg] = session[arg]
+        if hasattr(session, arg):
+            _log_session[arg] = session[arg]
 
     return _log_session
 
@@ -80,7 +81,7 @@ def _convert_response_to_log_object(_response):
 def add_before_and_after_hook(app):
     @app.before_request
     def before_request():
-        if request.blueprint in EXCLUDES_REQUEST_HOOK:
+        if request.blueprint not in ALLOWED_REQUEST_HOOK:
             return
 
         request_log = _convert_request_to_log_object(request)
@@ -89,7 +90,7 @@ def add_before_and_after_hook(app):
 
     @app.after_request
     def after_request(response):
-        if request.blueprint in EXCLUDES_REQUEST_HOOK:
+        if request.blueprint not in ALLOWED_REQUEST_HOOK:
             return response
 
         response_log = _convert_response_to_log_object(response)
@@ -99,7 +100,7 @@ def add_before_and_after_hook(app):
         return response
 
 
-def donot_stack_log(api):
+def add_request_hook(api):
     from flask import Blueprint
     if isinstance(api, Blueprint):
-        EXCLUDES_REQUEST_HOOK.append(api.name)
+        ALLOWED_REQUEST_HOOK.append(api.name)

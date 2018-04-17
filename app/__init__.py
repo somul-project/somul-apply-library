@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 
 from app.database import db
-from app.utils.hooks import add_before_and_after_hook
+from app.utils.hooks import add_before_and_after_hook, add_request_hook
 
 
 def create_app(config):
@@ -36,6 +36,11 @@ def create_app(config):
     _app.register_blueprint(admin_api, url_prefix="/api/v1/admin")
     _app.register_blueprint(signin_api, url_prefix='/api/v1/signin')
     _app.register_blueprint(logger_api, url_prefix='/api/v1/logger')
+    add_request_hook(libraries_api)
+    add_request_hook(maps_api)
+    add_request_hook(users_api)
+    add_request_hook(admin_api)
+    add_request_hook(signin_api)
 
     db.init_app(_app)
     Migrate(_app, db)
