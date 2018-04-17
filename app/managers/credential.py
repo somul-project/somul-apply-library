@@ -9,7 +9,7 @@ from app.utils.errors import WrongSecretkeyError
 HEADER_SECRET_KEY = "Secret-Key"
 secretkey_reqparser = reqparse.RequestParser()
 secretkey_reqparser.add_argument(HEADER_SECRET_KEY, type=str,
-                                 location='headers')
+                                 location=['headers', 'args'])
 
 
 class CredentialManager:

@@ -3,8 +3,8 @@ from flask_restful import (Resource, reqparse, fields,
                            marshal_with, Api)
 from sqlalchemy.exc import IntegrityError
 
-from app.database import db, get_or_404
-from app.database.models import User, now_at_seoul, VerifyEmail
+from app.database import db, get_or_404, now_at_seoul
+from app.database.models import User, VerifyEmail
 from app.utils.errors import abort_with_integrityerror, UnauthorizedError, \
     EmailNotSendedError
 from app.managers.credential import CredentialManager
