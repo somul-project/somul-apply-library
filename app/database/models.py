@@ -68,8 +68,8 @@ class User(db.Model, TimestampMixin):
                               backref=db.backref('users', lazy=True))
 
     verifyemails = db.relationship('VerifyEmail',
-                                   backref='user',
-                                   lazy=True,
+                                   backref=db.backref('user', uselist=False),
+                                   lazy='dynamic',
                                    cascade="delete")
 
     @validates('name')
@@ -117,7 +117,8 @@ class SpeakerInfo(db.Model, TimestampMixin):
                         db.ForeignKey('user.id'),
                         nullable=False)
     user = db.relationship('User', lazy=True,
-                           backref=db.backref('speakerinfos', lazy=True))
+                           backref=db.backref('speakerinfo',
+                                              lazy=True, uselist=False))
 
     session_time = db.Column(db.String(15), nullable=False, default="")
     introduce = db.Column(db.Text, nullable=False, default="")
@@ -130,7 +131,7 @@ class SpeakerInfo(db.Model, TimestampMixin):
 
     @validates('session_time')
     def validate_session_time(self, key, field):
-        if field in session_time_choices:
+        if field not in session_time_choices:
             raise InvalidArgumentError("{} must be in {}."
                                        .format(key, session_time_choices))
 

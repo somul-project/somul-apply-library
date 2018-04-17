@@ -18,6 +18,11 @@
             <h1>소프트웨어에 물들다<br>강연 및 봉사 신청 현황</h1>
         </div>
         <hr>
+        <span>{{ user.name }} ({{ user.email }}) (으)로 로그인되었습니다. </span><br><br>
+        <!--<a href="/volunteer/modify" style="cursor: pointer;" class="btn btn-primary text-white">개인정보 수정</a>-->
+        <a style="cursor: pointer;" class="btn btn-danger text-white" onclick="logout()">로그아웃</a>
+        <hr>
+        {% if speakerinfo != None %}
         <div class="container">
             <div class="card">
                 <div class="card-header">
@@ -25,20 +30,46 @@
                 </div>
                 <div class="card-body">
                     <dl class="row">
-                        <dt class="col-sm-3">강연 장소</dt>
-                        <dd class="col-sm-9">성곡도서관</dd>
+                            <dt class="col-sm-3">도서관 이름</dt>
+                            <dd class="col-sm-9">{{ user.library.name }}</dd>
+    
+                            <dt class="col-sm-3">도서관 주소</dt>
+                            <dd class="col-sm-9">{{ user.library.location_road }}</dd>
+                            {% if speakerinfo.admin_approved == 0 %}
+                            <dt class="col-sm-3">도서관 담당자 정보</dt>
+                            <dd class="col-sm-9">{{ user.library.manager_name }} / {{ user.library.manager_phone }}</dd>
+                            {% endif %}
+                            <dt class="col-sm-3">강연 시간</dt>
+                            <dd class="col-sm-9">{{ speakerinfo.session_time }}</dd>
 
-                        <dt class="col-sm-3">강연 시간</dt>
-                        <dd class="col-sm-9">2018년 5월 26일 오후 2시 ~ 오후 4시</dd>
-
-                        <dt class="col-sm-3">확정여부</dt>
-                        <dd class="col-sm-9">
-                            <p>V하지마 임마!</p>
+                            <dt class="col-sm-3">신청 진행 상황</dt>
+                            <dd class="col-sm-9">
+                            {% if speakerinfo.admin_approved == 0 %}
+                                <p>
+                                    운영자가 귀하의 신청을 확인하였고 승인하였습니다.<br>
+                                    도서관 담당자의 정보가 공개되었습니다. 본 연락처는 당일 연락을 위하여 제공되며, 행사 관련 문의는 somul.may@gmail.com으로 보내주시기 바랍니다. 
+                                </p>
+                            {% elif speakerinfo.admin_approved == 1 %}
+                                <p>
+                                    귀하의 신청은 운영진의 검수 절차에 의해 반려되었습니다.<br>
+                                    운영진에서 별도의 연락을 취할 예정이오니 기다려주십시오.<br>
+                                    추가적인 문의가 있으실 경우 somul.may@gmail.com으로 문의 바랍니다.
+                                </p>
+                            {% else %}
+                                <p>
+                                    귀하의 신청이 완료되었고, 운영자가 강의 가능 여부를 확인할 예정입니다.<br>
+                                    24시간 이내로 하단의 강연 정보 입력 버튼을 눌러 내용을 채워주십시오.<br>
+                                    추가적인 문의가 있으실 경우 somul.may@gmail.com으로 문의 바랍니다.
+                                </p>
+                            {% endif %}
                         </dd>
                     </dl>
+
+                    <a href="/volunteer/speaker_info" class="btn btn-dark" data-toggle="tooltip">강연 정보 입력</a>
                 </div>
             </div>
         </div>
+        {% elif user.library %}
         <div class="container">
             <div class="card">
                 <div class="card-header">
@@ -46,24 +77,44 @@
                 </div>
                 <div class="card-body">
                     <dl class="row">
-                        <dt class="col-sm-3">타임</dt>
-                        <dd class="col-sm-9">알아서해 임마!</dd>
+                        <dt class="col-sm-3">도서관 이름</dt>
+                        <dd class="col-sm-9">{{ user.library.name }}</dd>
 
-                        <dt class="col-sm-3">확정여부</dt>
+                        <dt class="col-sm-3">도서관 주소</dt>
+                        <dd class="col-sm-9">{{ user.library.location_road }}</dd>
+
+                        <dt class="col-sm-3">도서관 담당자 정보</dt>
+                        <dd class="col-sm-9">{{ user.library.manager_name }} / {{ user.library.manager_phone }}</dd>
+
+                        <dt class="col-sm-3">안내</dt>
                         <dd class="col-sm-9">
-                            <p>V하지마 임마!</p>
+                            <p>
+                                신청이 정상적으로 접수되었습니다. <br>
+                                귀하가 입력하신 정보와 연락처는 도서관 관리자에게 보여지며, 행사 전 별도 공지가 있을 예정입니다.<br>
+                                지원해주셔서 대단히 감사합니다.
+                            </p>
                         </dd>
                     </dl>
                 </div>
             </div>
         </div>
+        {% else %}
         <div class="container">
-            <a href="#" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Tooltip oadfafn top">개인정보
-                수정</a>
-            <a href="#" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Tooltip oadfafn top">강연자/봉사자
+            <div class="card">
+                <div class="card-body">
+                    신청 정보가 없습니다.<br>
+                    강연자 / 봉사자 매칭을 신청해주십시오.
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="container">
+            <!-- <a href="/volunteer/modify" class="btn btn-primary">개인정보
+                수정</a> -->
+            {% if user.library_id == None %}
+            <a href="/volunteer/match" class="btn btn-success">강연자 / 봉사자
                 매칭</a>
-            <a href="#" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Tooltip oadfafn top">추가정보
-                입력</a>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -71,13 +122,5 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-
-<script>
-    $(document).ready(function () {
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-    });
-</script>
 </body>
 </html>

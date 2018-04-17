@@ -21,15 +21,8 @@
 <div class="container paper">
     <div class="jumbotron shadow">
         <div class="container">
-            <h1>소프트웨어에<br>물들다<br>참가신청서</h1>
+            <h1>개인정보 수정</h1>
         </div>
-        <hr>
-
-        <p>
-            아래의 양식을 채우고 완료 버튼을 눌러주십시오.<br>
-            혹시 이미 신청하셨다면, <a href="/volunteer/login">여기를 눌러 로그인하십시오.</a>
-        </p>
-
         <hr>
         <form>
             <div class="form-group">
@@ -37,45 +30,25 @@
                 <input type="text" class="form-control input" id="name" aria-describedby="emailHelp"
                        placeholder="이름을 입력해주세요.">
             </div>
+
             <div class="form-group">
                 <label for="useremail">이메일</label>
-                <input type="tel" class="form-control input" id="email" placeholder="인증 메일을 발송할 예정이니 유효한 메일을 입력해주세요.">
+                <input type="tel" class="form-control input" id="email" placeholder="E-mail을 입력해주세요.">
             </div>
+
             <div class="form-group">
                 <label for="userphone">휴대폰 번호</label>
                 <input type="tel" class="form-control input" id="phone" placeholder="휴대폰 번호를 입력해주세요.">
             </div>
+
             <div class="form-group">
-                <label for="userpassword">비밀번호 (8자 이상)</label>
-                <input type="password" class="form-control input" id="password" placeholder="비밀번호를 입력해주세요.">
-            </div>
-            <div class="form-group">
-                <label for="userpasswordconfirm">비밀번호를 재입력</label>
-                <input type="password" class="form-control input" id="check_password" placeholder="비밀번호를 재입력해주세요.">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control input" id="password" placeholder="*********">
             </div>
 
             <div class="form-group">
-                    <label for="exampleInputPassword1">이전에 소프트웨어에 물들다에 봉사자 / 강연자로 참가하신 경험이 있나요?</label>
-                    <br>
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label id="option1" class="btn btn-light">
-                            <input type="radio" name="options" autocomplete="off"> 네
-                        </label>
-                        <label id="option2" class="btn btn-light active">
-                            <input type="radio" name="options" autocomplete="off" checked> 아니요
-                        </label>
-                    </div>
-                </div>
-
-            <div id="check-form" class="form-group">
-                <a href="/volunteer/privacy_policy" target="_blank">
-                    <button type="button" class="btn btn-success">개인정보 처리방침</button>
-                    <br>
-                </a>
-                <div class="custom-control custom-checkbox" style="margin-top: 10px;">
-                    <input type="checkbox" class="custom-control-input" id="check">
-                    <label class="custom-control-label" for="check">위 약관을 자세히 읽었으며, 개인정보이용에 동의합니다.</label>
-                </div>
+                <label for="check_password">비밀번호를 재입력</label>
+                <input type="password" class="form-control input" id="check_password" placeholder="*********">
             </div>
 
             <a type="button" onclick="submit()">
@@ -83,7 +56,6 @@
             </a>
         </form>
     </div>
-
 </div>
 
 <!-- Optional JavaScript -->
@@ -98,7 +70,17 @@
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/volunteer/validate.js') }}"></script>
 <script src="{{ url_for('static', filename='js/volunteer/default.js') }}"></script>
-<script src="{{ url_for('static', filename='js/volunteer/application.js') }}"></script>
+<script src="{{ url_for('static', filename='js/volunteer/modify_user.js') }}"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#name").val("{{ user.name }}");
+        $("#email").val("{{ user.email }}");
+        $("#phone").val("{{ user.phone }}");
+    });
+
+</script>
 
 </body>
 </html>

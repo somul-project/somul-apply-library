@@ -1,7 +1,7 @@
 from sqlalchemy.exc import IntegrityError
 
 from app.database import db, get_or_none
-from app.database.models import SpeakerInfo, User
+from app.database.models import SpeakerInfo
 from app.utils.errors import abort_with_integrityerror
 
 
@@ -44,11 +44,13 @@ class SpeakerInfoRepo:
             db.session.rollback()
             raise e
 
+        print(speakerinfo)
+
         return speakerinfo
 
     @classmethod
     def get_with_user_id(cls, user_id):
-        return get_or_none(User, user_id)
+        return get_or_none(SpeakerInfo, user_id)
 
     @classmethod
     def delete(cls, speakerinfo):

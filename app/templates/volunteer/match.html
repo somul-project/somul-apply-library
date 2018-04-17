@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/volunteer/default.css') }}">
+
+    <title>소프트웨어에 물들다</title>
+</head>
+<body>
+
+
+<div class="preloader-wrapper">
+    <div class="spinner-preloader">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-forall" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">참여 신청 시 안내 사항</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                소프트웨어에 물들다는 참여자에게 어떠한 금전적 보상/지원이 없습니다. <br>
+                즉 강의 콘텐츠 준비 과정에서 필요한 비용은 물론, 도서관까지의 교통비, 숙식비 등등 소요되는 모든 비용을 스스로 조달하셔야 합니다.<br>
+                <br>
+                또한 최상의 강의 환경이 도서관에 준비될 수 있도록 주최측에서 각 도서관에 요청하지만, 현장에 따라 그 수준이 미흡할 수도 있습니다.<br>
+                <br>
+                위 내용에 동의 하신 분들만 강연/봉사(도우미)에 신청해주시길 부탁드립니다.                 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-speaker" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">강연자 신청 안내 사항</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <div class="modal-body">
+            소프트웨어에 물들다는 소프트웨어 확산을 목표로 합니다. 그리고 그 목표를 실현해가는 과정에서 우리를 구분짓는 여러 편향성(정치, 이념, 성, 종교, 인종 등등)들이 배제되어야 한다는 철학을 참가자들이 공유하길 바라는 운동입니다. 
+            본인이 소물의 목표와 철학에 동의하고 아래 사항에 해당되는지 한번만 더 생각해보시고 강연을 신청해주시길 부탁드립니다.
+            <br><br>
+            소프트웨어에 물들다는 강연자에게 아래와 같은 내용을 바라고 있습니다.
+            <br><br>
+            <ul>
+                    <li>단 한 줄이라도 내가 작성한(기획한,리뷰한) 코드가 어떤 서비스, 제품(가전, 자동차...), 게임(모바일, PC, ..) 등에 사용된 적이 있는 개발자</li>
+                    <li>그래서 '이게 제가 만든건데요'를 작은 소리로라도 주장하실 수 있거나, 강연 때 직접 보여주실 수 있는 분.</li>
+                    <li>미래 소프트웨어에 대한 완전 흥미 있는 이야기 거리를 가지신 분.</li>
+                    <li>소프트웨어를 활용한 예술이나 Maker 활동을 하시는 분.</li>
+                    <li>주변에 자기 빼고 전부 소프트웨어 개발자여서 그들에 대하여 아주 잘 이야기하실 수 있는 분</li>
+                    <li>아무 준비없이 온 어린 친구들이 40분(!) 이내로 Unplugged 경험을 할 수 있는 활동 contents를 가지신 분</li>
+                    <li>멋진 시연으로 소프트웨어의 놀라움을 느낄 수 있게 해주실 수 있는 분</li>
+                    <li>초등 1학년도 이해할 수 있게 알고리즘을 아주 쉽게 설명하실 수 있는 분</li>
+                    <li>소프트웨어가 자기 인생을 살린 것이 확실하다고 믿는 분</li>
+                    <li>소프트웨어로 큰 부자가 되신 분</li>
+            </ul>
+        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                <button type="button" id="speaker-run" class="btn btn-primary">이해하였으며, 신청하겠습니다.</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container paper" style="display: none;">
+    <div class="jumbotron shadow">
+        <div class="container">
+            <h1>강연자, 봉사자<br>매칭 시스템</h1>
+        </div>
+        <hr>
+        <div class="container card-columns">
+            {% for library in libraries %}
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <h3 class="card-title">{{ library.name }}</h3>
+                        <p class="card-text">
+                            {{ library.location_road }}
+                        </p>
+                    </div>
+                    <hr>
+                    <div>
+                        <h5 class="card-text">강연자 신청</h5>
+                        <div>
+                            {% if lib_dict[library._id]["14:00"] == 0 %}
+                            <button onclick="sendSpeakerRequest({{ library._id }}, '14')" type="button" class="btn btn-primary btn-sm">2시 신청가능</button>
+                            {% elif lib_dict[library._id]["14:00"] == 1 %}
+                            <button type="button" class="btn btn-warning btn-sm" disabled>2시 예약대기</button>
+                            {% else %}
+                            <button type="button" class="btn btn-danger btn-sm" disabled>2시 강연확정</button>
+                            {% endif %}
+
+                            {% if lib_dict[library._id]["15:00"] == 0 %}
+                            <button onclick="sendSpeakerRequest({{ library._id }}, '15')" type="button" class="btn btn-primary btn-sm">3시 신청가능</button>
+                            {% elif lib_dict[library._id]["15:00"] == 1 %}
+                            <button type="button" class="btn btn-warning btn-sm" disabled>3시 예약대기</button>
+                            {% else %}
+                            <button type="button" class="btn btn-danger btn-sm" disabled>3시 강연확정</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <h5 class="card-text">봉사자 신청</h5>
+                        <div>
+                            {% if lib_dict[library._id]["volunteer"] < 2 %}
+                            <button onclick="sendVolunteerRequest({{ library._id }})" type="button" class="btn btn-success btn-sm">
+                                봉사 신청 <span class="badge badge-light">{{ 2 - (lib_dict[library._id]["volunteer"]) }}</span> 명 가능
+                            </button>
+                            {% else %}
+                            <button type="button" class="btn btn-disabled btn-sm" disabled>
+                                모집 완료
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/volunteer/match.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".paper").hide();
+        $(".spinner-preloader").show();
+        setTimeout(function () {
+            $(".spinner-preloader").fadeOut("slow", function () {
+                $(".paper").fadeIn("slow");
+            });
+        }, 1000);
+        $("#modal-forall").modal();
+    });
+</script>
+</body>
+</html>

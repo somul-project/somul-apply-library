@@ -28,6 +28,8 @@ def create_app(config):
     from app.v1.controllers.users import users_api
     from app.v1.controllers.admin import admin_api
     from app.v1.controllers.signin import signin_api
+    from app.v1.controllers.match import match_api
+    from app.v1.controllers.speakerinfo import speaker_api
     from app.v1.controllers.logger import logger_api
 
     _app.register_blueprint(libraries_api, url_prefix='/api/v1/library')
@@ -40,6 +42,10 @@ def create_app(config):
     add_request_hook(admin_api)
     _app.register_blueprint(signin_api, url_prefix='/api/v1/signin')
     add_request_hook(signin_api)
+    _app.register_blueprint(match_api, url_prefix='/api/v1/match')
+    add_request_hook(match_api)
+    _app.register_blueprint(speaker_api, url_prefix="/api/v1/speaker")
+    add_request_hook(speaker_api)
 
     _app.register_blueprint(logger_api, url_prefix='/api/v1/logger')
 

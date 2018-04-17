@@ -44,7 +44,7 @@ user_reqparser.add_argument('password', type=str, trim=False,
                             help='No user password provided')
 user_reqparser.add_argument('has_experienced_somul', type=bool,
                             location=['form', 'json'],
-                            required=True, nullable=False,
+                            required=False, nullable=False,
                             help='No user has_experienced_somul provided')
 
 
