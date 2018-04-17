@@ -114,3 +114,6 @@ venv.bak/
 *.iml
 out
 gen
+
+# Custom files
+gmail-client-secret.json
