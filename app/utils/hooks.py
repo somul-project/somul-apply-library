@@ -5,13 +5,10 @@ from flask import session
 
 from app.managers.signin import (SESSIONKEY_IS_SIGNED_IN,
                                  SESSIONKEY_USER_ID)
-from app.utils.loggers import log_request
+from app.utils.loggers import log_request, log_response
 
 
-def _convert_to_log_object(_session, _request):
-    log_object = {}
-    log_object["base_url"] = _request.base_url
-
+def _convert_session_to_log_object():
     _log_session = {}
     session_args = [
         SESSIONKEY_IS_SIGNED_IN,
@@ -20,9 +17,14 @@ def _convert_to_log_object(_session, _request):
     for arg in session_args:
         _log_session[arg] = session[arg]
 
-    log_object["session"] = _log_session
+    return _log_session
 
-    log_object["headers"] = request.headers.to_list()
+
+def _convert_request_to_log_object(_request):
+    log_object = {}
+    log_object["session"] = _convert_session_to_log_object()
+    log_object["headers"] = _request.headers.to_list()
+    log_object["base_url"] = _request.base_url
 
     request_args = [
         "cookies",
@@ -48,30 +50,42 @@ def _convert_to_log_object(_session, _request):
     return log_object
 
 
+def _convert_response_to_log_object(_response):
+    log_object = {}
+    log_object["session"] = _convert_session_to_log_object()
+
+    response_args = [
+        "headers",
+        "status",
+        "status_code",
+        "data",
+        "content_type",
+    ]
+
+    _log_res = {}
+    for arg in response_args:
+        _log_res[arg] = getattr(_response, arg)
+        try:
+            json.dumps(_log_res[arg])
+        except Exception as e:
+            _log_res[arg] = str(_log_res[arg])
+
+    log_object["response"] = _log_res
+
+    return log_object
+
+
 def add_before_and_after_hook(app):
     @app.before_request
     def before_request():
-        request_log = _convert_to_log_object(session, request)
-        if log_request(request_log):
-            print(request_log)
-        else:
-            print("Fail")
+        request_log = _convert_request_to_log_object(request)
+        if not log_request(request_log):
+            print("log_request Fail")
 
     @app.after_request
     def after_request(response):
-        print("after")
-        ## headers
-        # Content-Type: application/json
-        # Content-Length: 82
-        ## status
-        #  '400 BAD REQUEST'
-        ## status_code
-        # 400
-        ## data
-        # b'{\n    "message": "Duplicate entry \'swe.jaeyoungpark@gmail.com\' for key \'email\'"\n}\n'
-        ## content_type
-        # 'application/json'
-        session[SESSIONKEY_IS_SIGNED_IN]
-        session[SESSIONKEY_USER_ID]
+        response_log = _convert_response_to_log_object(response)
+        if not log_response(response_log):
+            print("log_response Fail")
 
         return response
