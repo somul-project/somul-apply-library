@@ -28,12 +28,14 @@ def create_app(config):
     from app.v1.controllers.users import users_api
     from app.v1.controllers.admin import admin_api
     from app.v1.controllers.signin import signin_api
+    from app.v1.controllers.logger import logger_api
 
     _app.register_blueprint(libraries_api, url_prefix='/api/v1/library')
     _app.register_blueprint(maps_api, url_prefix='/api/v1/map')
     _app.register_blueprint(users_api, url_prefix='/api/v1/user')
     _app.register_blueprint(admin_api, url_prefix="/api/v1/admin")
     _app.register_blueprint(signin_api, url_prefix='/api/v1/signin')
+    _app.register_blueprint(logger_api, url_prefix='/api/v1/logger')
 
     db.init_app(_app)
     Migrate(_app, db)

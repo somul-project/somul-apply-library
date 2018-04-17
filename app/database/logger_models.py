@@ -14,4 +14,5 @@ class Log(db.Model, TimestampMixin):
     content = db.Column(db.JSON, nullable=False, default="")
 
     def __repr__(self):
-        return '<%r %r %d>' % (self.__class__.__name__, self.log_type, self._id)
+        return '<%r %r %d>' % (self.__class__.__name__,
+                               self.log_type, self._id)
