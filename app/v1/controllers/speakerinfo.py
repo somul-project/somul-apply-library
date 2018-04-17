@@ -8,7 +8,9 @@ from app.database.speakerinfo import SpeakerInfoRepo
 from app.managers.credential import CredentialManager
 from app.managers.signin import SigninManager
 from sqlalchemy.exc import IntegrityError
-from app.utils.errors import UnauthorizedError, SigninRequiredError
+from app.utils.errors import UnauthorizedError, \
+                             SigninRequiredError, \
+                             abort_with_integrityerror
 
 import json
 
@@ -135,6 +137,7 @@ class SpeakerInfoResource(Resource):
         SpeakerInfoRepo.delete(speakerinfo)
 
         return '', 204
+
 
 speaker_api = Blueprint('resources.speakerinfos', __name__)
 api = Api(speaker_api)

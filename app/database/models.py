@@ -141,7 +141,8 @@ class SpeakerInfo(db.Model, TimestampMixin):
                         db.ForeignKey('user.id'),
                         nullable=False)
     user = db.relationship('User', lazy=True,
-                           backref=db.backref('speakerinfo', lazy=True, uselist=False))
+                           backref=db.backref('speakerinfo',
+                                              lazy=True, uselist=False))
 
     session_time = db.Column(db.String(15), nullable=False, default="")
     introduce = db.Column(db.Text, nullable=False, default="")

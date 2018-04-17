@@ -1,7 +1,7 @@
 from sqlalchemy.exc import IntegrityError
 
 from app.database import db, get_or_none
-from app.database.models import SpeakerInfo, User
+from app.database.models import SpeakerInfo
 from app.utils.errors import abort_with_integrityerror
 
 

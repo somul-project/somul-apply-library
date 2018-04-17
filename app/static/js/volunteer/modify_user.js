@@ -4,14 +4,9 @@ $(document).ready(function () {
 });
 
 function submit() {
-  if (!validateEmail()) {
-    if ($("#email").val() != "") {
-      
-    }
-  };
+  if (!validateEmail()) return false;
   if (!validatePhone()) return false;
   if (!validatePasswordCheck()) return false;
-  
   // send
   
   var dict = {
@@ -26,7 +21,9 @@ function submit() {
       url: "/api/v1/user",
       data: JSON.stringify(dict),
       error: function(err) {
-          console.log(err);
+          if (err.status == 400) {
+              alert("오류가 발생하였습니다. 운영자에게 문의해주십시오.");
+          }
       },
       beforeSend: function() {
           $(".paper").hide();

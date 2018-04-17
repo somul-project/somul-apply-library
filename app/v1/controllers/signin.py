@@ -4,8 +4,9 @@ from flask_restful import (Resource, reqparse, marshal_with,
 
 from app.database.models import User
 from app.managers.signin import SigninManager
-from app.utils.errors import UserDoesntExistsError, UserPasswordIncorrectError, \
-                            EmailNotVerifiedError
+from app.utils.errors import UserDoesntExistsError, \
+                             UserPasswordIncorrectError, \
+                             EmailNotVerifiedError
 from app.v1.controllers.users import user_fields
 
 signin_reqparser = reqparse.RequestParser()
@@ -43,7 +44,7 @@ class SigninResource(Resource):
                 "User password is incorrect.")
 
         # E-mail verification check
-        if user.verifyemails.first().is_verified == False:
+        if user.verifyemails.first().is_verified is False:
             raise EmailNotVerifiedError("User email was not verified.")
 
         SigninManager.set_is_signed_in(True)

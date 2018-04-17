@@ -59,7 +59,7 @@ class EmailManager:
         본 메일은 소물 참여신청을 확인하기 위한 인증 메일입니다.
         아래 링르를 클릭 하시면 인증이 마무리됩니다.
         소물에 참여주신 모든 분들께 다시 한번 감사의 말씀을 드립니다.
-        
+
         http://{host}/verify?key={uuid}
         """.format(uuid=uuid, host=host))
         return subject, content

@@ -48,6 +48,7 @@ class UserSessionEmptyError(HTTPException):
 class EmailNotSendedError(HTTPException):
     code = 400
 
+
 class EmailNotVerifiedError(HTTPException):
     code = 400
 

@@ -18,7 +18,9 @@
             <h1>소프트웨어에 물들다<br>강연 및 봉사 신청 현황</h1>
         </div>
         <hr>
-        <span>{{ user.name }} ({{ user.email }}) (으)로 로그인되었습니다. </span><br><br><a style="cursor: pointer;" class="btn btn-primary text-white">개인정보 수정</a> <a style="cursor: pointer;" class="btn btn-danger text-white" onclick="logout()">로그아웃</a>
+        <span>{{ user.name }} ({{ user.email }}) (으)로 로그인되었습니다. </span><br><br>
+        <!--<a href="/volunteer/modify" style="cursor: pointer;" class="btn btn-primary text-white">개인정보 수정</a>-->
+        <a style="cursor: pointer;" class="btn btn-danger text-white" onclick="logout()">로그아웃</a>
         <hr>
         {% if speakerinfo != None %}
         <div class="container">
@@ -33,26 +35,31 @@
     
                             <dt class="col-sm-3">도서관 주소</dt>
                             <dd class="col-sm-9">{{ user.library.location_road }}</dd>
-    
+                            {% if speakerinfo.admin_approved == 0 %}
                             <dt class="col-sm-3">도서관 담당자 정보</dt>
                             <dd class="col-sm-9">{{ user.library.manager_name }} / {{ user.library.manager_phone }}</dd>
-
+                            {% endif %}
                             <dt class="col-sm-3">강연 시간</dt>
                             <dd class="col-sm-9">{{ speakerinfo.session_time }}</dd>
 
                             <dt class="col-sm-3">신청 진행 상황</dt>
                             <dd class="col-sm-9">
                             {% if speakerinfo.admin_approved == 0 %}
-                                <p>운영자가 귀하의 신청을 확인하였고 승인하였습니다.</p>
+                                <p>
+                                    운영자가 귀하의 신청을 확인하였고 승인하였습니다.<br>
+                                    도서관 담당자의 정보가 공개되었습니다. 본 연락처는 당일 연락을 위하여 제공되며, 행사 관련 문의는 somul.may@gmail.com으로 보내주시기 바랍니다. 
+                                </p>
                             {% elif speakerinfo.admin_approved == 1 %}
                                 <p>
                                     귀하의 신청은 운영진의 검수 절차에 의해 반려되었습니다.<br>
-                                    운영진에서 별도의 연락을 취할 예정이오니 기다려주십시오.
+                                    운영진에서 별도의 연락을 취할 예정이오니 기다려주십시오.<br>
+                                    추가적인 문의가 있으실 경우 somul.may@gmail.com으로 문의 바랍니다.
                                 </p>
                             {% else %}
                                 <p>
                                     귀하의 신청이 완료되었고, 운영자가 강의 가능 여부를 확인할 예정입니다.<br>
-                                    24시간 이내로 하단의 강연 정보 입력 버튼을 눌러 내용을 채워주십시오.
+                                    24시간 이내로 하단의 강연 정보 입력 버튼을 눌러 내용을 채워주십시오.<br>
+                                    추가적인 문의가 있으실 경우 somul.may@gmail.com으로 문의 바랍니다.
                                 </p>
                             {% endif %}
                         </dd>
