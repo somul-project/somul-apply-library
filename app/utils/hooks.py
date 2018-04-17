@@ -43,11 +43,12 @@ def _convert_request_to_log_object(_request):
 
     _log_req = {}
     for arg in request_args:
-        _log_req[arg] = getattr(_request, arg)
-        try:
-            json.dumps(_log_req[arg])
-        except Exception:
-            _log_req[arg] = str(_log_req[arg])
+        if hasattr(_request, arg):
+            _log_req[arg] = getattr(_request, arg)
+            try:
+                json.dumps(_log_req[arg])
+            except Exception:
+                _log_req[arg] = str(_log_req[arg])
 
     log_object["request"] = _log_req
 
@@ -68,11 +69,12 @@ def _convert_response_to_log_object(_response):
 
     _log_res = {}
     for arg in response_args:
-        _log_res[arg] = getattr(_response, arg)
-        try:
-            json.dumps(_log_res[arg])
-        except Exception:
-            _log_res[arg] = str(_log_res[arg])
+        if hasattr(_response, arg):
+            _log_res[arg] = getattr(_response, arg)
+            try:
+                json.dumps(_log_res[arg])
+            except Exception:
+                _log_res[arg] = str(_log_res[arg])
 
     log_object["response"] = _log_res
 
@@ -82,21 +84,28 @@ def _convert_response_to_log_object(_response):
 def add_before_and_after_hook(app):
     @app.before_request
     def before_request():
-        if request.blueprint not in ALLOWED_REQUEST_HOOK:
-            return
+        try:
+            if request.blueprint not in ALLOWED_REQUEST_HOOK:
+                return
 
-        request_log = _convert_request_to_log_object(request)
-        if not log_request(request_log):
-            print("log_request Fail")
+            request_log = _convert_request_to_log_object(request)
+            if not log_request(request_log):
+                print("log_request Fail")
+        except Exception as e:
+            print("log_request Fail, e = " + str(e))
 
     @app.after_request
     def after_request(response):
-        if request.blueprint not in ALLOWED_REQUEST_HOOK:
-            return response
+        try:
+            if request.blueprint not in ALLOWED_REQUEST_HOOK:
+                return response
 
-        response_log = _convert_response_to_log_object(response)
-        if not log_response(response_log):
-            print("log_response Fail")
+            response_log = _convert_response_to_log_object(response)
+            if not log_response(response_log):
+                print("log_response Fail")
+
+        except Exception as e:
+            print("log_request Fail, e = " + str(e))
 
         return response
 
