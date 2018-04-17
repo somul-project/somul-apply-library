@@ -1,9 +1,14 @@
 #!/bin/bash
 # Deploy Script for Frontend and Backend
+
+SERVER_HOST=apply.somul.kr
+
 cd ..
 zip -r upload.zip somul-apply-library
-scp upload.zip ubuntu@libapply.somul.kr:/home/ubuntu
-ssh -tt ubuntu@libapply.somul.kr 'bash -s' << 'DEPLOY'
+scp upload.zip ubuntu@$SERVER_HOST:/home/ubuntu
+ssh -tt ubuntu@$SERVER_HOST 'bash -s' << 'DEPLOY'
+
+export LC_ALL=C
 sudo systemctl daemon-reload
 sudo systemctl stop nginx
 sudo systemctl stop somul-library

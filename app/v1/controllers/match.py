@@ -14,7 +14,7 @@ class MatchVolunteerResource(Resource):
         library = get_or_404(Library, pk)
         user_list = list()
         for user in library.users:
-            if not user.speakerinfos:
+            if not user.speakerinfo:
                 user_list.append(user)
 
         if len(user_list) >= 2:
