@@ -1,3 +1,34 @@
+function libraryInfoModal(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/v1/library/" + id,
+        success: function(data) {
+            console.log(data);
+            Object.keys(data).forEach(function (value, index, array) {
+                var val = data[value];
+                if (value.search("fac_other") != -1 || value.search("req_speaker") != -1) {
+                    if (val == "") val = "없음";
+                } else if (value.search("fac_") != -1) {
+                    val = val ? "제공 가능" : "제공 불가"; 
+                }
+                $("#modal-library-factor-" + value).html(val);
+            });
+            $("#modal-library").modal();
+        },
+        error: function(err) {
+            alert("서버에 장애가 발생하였습니다.\n잠시 후에 다시 시도하시거나 운영진에게 문의해주세요.");
+        },
+        beforeSend: function() {
+            $(".spinner-preloader").show();
+        },
+        complete : function() {
+            $(".spinner-preloader").fadeOut("slow");   
+        },
+        contentType: 'application/json; charset=UTF-8',
+        dataType: "json"
+    });
+}
+
 function sendSpeakerRequest(id, time) {
     $("#modal-speaker").modal();
     $("#speaker-run").attr("onclick", "runSpeakerRequest(" + id + ", '" + time + "');");

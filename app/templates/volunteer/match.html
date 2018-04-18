@@ -83,6 +83,60 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-library" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-library-factor-name"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <h5>도로명 주소</h5>
+                    <p id="modal-library-factor-location_road"></p>
+
+                    <h5>지번 주소</h5>
+                    <p id="modal-library-factor-location_number"></p>
+
+                    <h5>상세 주소</h5>
+                    <p id="modal-library-factor-location_detail"></p>
+
+                    <h5>예상 청중 규모</h5>
+                    <p id="modal-library-factor-audiences"></p>
+
+                    <h5>시설: 빔프로젝터 / 스크린</h5>
+                    <p id="modal-library-factor-fac_beam_screen"></p>
+
+                    <h5>시설: 음향 시설</h5>
+                    <p id="modal-library-factor-fac_sound"></p>
+
+                    <h5>시설: 녹화 시설</h5>
+                    <p id="modal-library-factor-fac_record"></p>
+
+                    <h5>시설: 플래카드</h5>
+                    <p id="modal-library-factor-fac_placard"></p>
+ 
+                    <h5>시설: 자체 홍보</h5>
+                    <p id="modal-library-factor-fac_self_promo"></p>
+        
+                    <h5>기타 제공 가능 시설</h5>
+                    <p id="modal-library-factor-fac_other"></p>
+                  
+                    <h5>봉사자 요구 사항</h5>
+                    <p id="modal-library-factor-req_speaker"></p>
+                </tbody>
+              </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+</div>
+
 
 <div class="container paper" style="display: none;">
     <div class="jumbotron shadow">
@@ -97,7 +151,7 @@
                     <div>
                         <h3 class="card-title">{{ library.name }}</h3>
                         <p class="card-text">
-                            {{ library.location_road }}
+                            <button onclick="libraryInfoModal({{ library._id }});" type="button" class="btn btn-light btn-sm">도서관 정보 보기</button>
                         </p>
                     </div>
                     <hr>
