@@ -60,6 +60,7 @@ p.text-muted > b {
     bottom: 60px;
     right: 0;
     margin: auto;
+    z-index: 5;
 }
 
 .spinner-preloader {
