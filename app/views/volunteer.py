@@ -8,9 +8,6 @@ volunteer = Blueprint('views.volunteer', __name__)
 
 @volunteer.route("/")
 def application():
-    if SigninManager.get_is_signed_in():
-        return redirect("/volunteer/information")
-
     return render_template("volunteer/application.html")
 
 

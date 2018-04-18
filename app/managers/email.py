@@ -52,7 +52,7 @@ class EmailManager:
         """
         UUID를 만들고 이에 해당하는 E-mail 제목 및 본문을 만듭니다.
         """
-        subject = "[5월, 소프트웨어에 물들다] 가입 인증 메일입니다."
+        subject = "5월, 소프트웨어에 물들다 - 가입 인증 메일입니다."
         content = Content("text/plain", """
         소프트웨어에 물들다(이하 소물)에 참여해주신 여러분들 환영합니다.
 
