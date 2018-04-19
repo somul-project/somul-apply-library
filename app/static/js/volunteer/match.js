@@ -34,6 +34,11 @@ function sendSpeakerRequest(id, time) {
     $("#speaker-run").attr("onclick", "runSpeakerRequest(" + id + ", '" + time + "');");
 }
 
+function sendVolunteerRequest(id, time) {
+    $("#modal-volunteer").modal();
+    $("#volunteer-run").attr("onclick", "runVolunteerRequest(" + id + ");");
+}
+
 function runSpeakerRequest(id, time) {
     $.ajax({
         type: "GET",
@@ -67,7 +72,7 @@ function runSpeakerRequest(id, time) {
     });
 }
 
-function sendVolunteerRequest(id) {
+function runVolunteerRequest(id) {
   $.ajax({
     type: "GET",
     url: "/api/v1/match/volunteer/" + id,
