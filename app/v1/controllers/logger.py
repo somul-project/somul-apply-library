@@ -1,9 +1,48 @@
+import json
+
 from flask import Blueprint
 from flask_restful import Resource, Api
 
 from app.database.logger_models import Log
 from app.utils.errors import UnauthorizedError
 from app.managers.credential import CredentialManager
+
+
+def cleanup_rawbytestr(raw_data):
+    special_charactor_removed = raw_data \
+        .replace("\\n", "") \
+        .replace("\\u", "u") \
+        .replace("\\'", "\'") \
+        .replace("b'{", "{") \
+        .replace("b'[", "[") \
+        .replace("]'", "]") \
+        .replace("}'", "}")
+    return special_charactor_removed
+
+
+def raw_logitem_to_dict(logitem):
+    result = {}
+
+    fields = [
+        "_id",
+        "logtype",
+        "created_at",
+        "content",
+    ]
+
+    for field in fields:
+        result[field] = getattr(logitem, field)
+
+    content = json.loads(logitem.content)
+    if "response" in content:
+        cleanedup_rawbytestr = cleanup_rawbytestr(content["response"]["data"])
+        content["response"]["data"] = \
+            json.loads(cleanedup_rawbytestr)
+
+    result["content"] = content
+    result["created_at"] = str(result["created_at"])
+
+    return result
 
 
 class LoggerResource(Resource):
@@ -15,12 +54,7 @@ class LoggerResource(Resource):
 
         results = []
         for item in logs:
-            results.append({
-                "_id": item._id,
-                "type": item.logtype,
-                "content": item.content,
-                "created_at": str(item.created_at),
-            })
+            results.append(raw_logitem_to_dict(item))
 
         return results
 
