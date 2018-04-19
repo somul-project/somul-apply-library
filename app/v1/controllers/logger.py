@@ -11,9 +11,11 @@ from app.managers.credential import CredentialManager
 def cleanup_rawbytestr(raw_data):
     special_charactor_removed = raw_data \
         .replace("\\n", "") \
-        .replace("\\\\", "\\") \
+        .replace("\\'", "\'") \
+        .replace("b'{", "{") \
         .replace("b'[", "[") \
-        .replace("]'", "]")
+        .replace("]'", "]") \
+        .replace("}'", "}")
     return special_charactor_removed
 
 
@@ -32,8 +34,9 @@ def raw_logitem_to_dict(logitem):
 
     content = json.loads(logitem.content)
     if "response" in content:
+        cleanedup_rawbytestr = cleanup_rawbytestr(content["response"]["data"])
         content["response"]["data"] = \
-            json.loads(cleanup_rawbytestr(content["response"]["data"]))
+            json.loads(cleanedup_rawbytestr)
 
     result["content"] = content
 
