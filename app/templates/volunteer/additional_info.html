@@ -35,11 +35,11 @@
         <form>
             <div class="form-group">
                 <b><label for="introduce">자기 소개</label></b>
-                <textarea rows="5" class="form-control input" id="introduce" placeholder="한 문단 정도 길이의 자기소개를 입력해주세요."></textarea>
+                <textarea rows="5" class="form-control input" id="introduce" placeholder="한 문단 정도 길이의 자기소개를 입력해주세요.">{{ speaker.introduce }}</textarea>
             </div>
             <div class="form-group">
                 <b><label for="history">약력</label></b>
-                <textarea rows="5" class="form-control input" id="history" placeholder="과거와 현재를 포함한 약력을 입력해주세요."></textarea>
+                <textarea rows="5" class="form-control input" id="history" placeholder="과거와 현재를 포함한 약력을 입력해주세요.">{{ speaker.history }}</textarea>
             </div>
             <div class="form-group">
                 <b><label for="title">강연 제목</label></b>
@@ -47,7 +47,7 @@
             </div>
             <div class="form-group">
                 <b><label for="description">강연 내용</label></b>
-                <textarea rows="5" class="form-control input" id="description" placeholder="강연을 한 문단 길이로 요약하여 설명해주세요."></textarea>
+                <textarea rows="5" class="form-control input" id="description" placeholder="강연을 한 문단 길이로 요약하여 설명해주세요.">{{ speaker.description }}</textarea>
             </div>
             <div class="form-group">
                 <b><label for="keynote_link">발표 자료 링크</label></b>
@@ -83,10 +83,7 @@
 
 <script>
     $(document).ready(function () {
-        $("#introduce").val("{{ speaker.introduce }}");
-        $("#history").val("{{ speaker.history }}");
         $("#title").val("{{ speaker.title }}");
-        $("#description").val("{{ speaker.description }}");
         {% if speaker.keynote_link != None %}
         $("#keynote_link").val("{{ speaker.keynote_link }}");
         {% endif %}
