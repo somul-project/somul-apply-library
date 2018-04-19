@@ -68,8 +68,6 @@ $(document).ready(function () {
 });
 
 function submit() {
-    
-    
     if (!validateNotEmpty()) return false;
     if (!validateEmail()) return false;
     if (!validatePhone()) return false;
@@ -91,9 +89,13 @@ function submit() {
         url: "/api/v1/user",
         data: JSON.stringify(dict),
         error: function(err) {
-            alert("오류가 발생하였습니다. 운영자에게 문의하십시오.");
+            alert("오류가 발생하였습니다. 다시 시도해주십시오.");
+            $("#application-submit").attr("disabled", false);
+            $("#application-submit").html("완료");
         },
         beforeSend: function() {
+            $("#application-submit").attr("disabled", true);
+            $("#application-submit").html("요청 중입니다...");
             $(".paper").hide();
             $(".spinner-preloader").show();
         },
