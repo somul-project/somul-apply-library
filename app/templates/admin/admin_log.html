@@ -34,15 +34,35 @@
                     {% endfor %}
                     <br/>
 
+                    CONTENT :<br/>
                     {% for key, value in log.content.items() %}
                         {% if key in ["response", "request",] %}
-                            {{ key.upper() }}: {{ value }}<br/><br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;{{ key.upper() }}:<br/>
+                            {% for req_key, req_value in value.items() %}
+                                {% if req_key not in ["data", ] %}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ req_key.upper() }}: {{ req_value }}<br/>
+                                {% else %}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ req_key.upper() }}:<br/>
+                                    {% for data_req in req_value %}
+                                        {% if req_value[data_req] %}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data_req }}: {{ req_value[data_req] }}<br/>
+                                        {% else %}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data_req }}<br/>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                            <br/>
                         {% endif %}
                     {% endfor %}
 
                     {% for key, value in log.content.items() %}
                         {% if key in ["headers", ] %}
-                            {{ key.upper() }}: {{ value }}<br/><br/>
+                            {{ key.upper() }}:<br/>
+                            {% for header in value %}
+                                &nbsp;&nbsp;&nbsp;&nbsp;{{ header }}<br/>
+                            {% endfor %}
+                            <br/>
                         {% endif %}
                     {% endfor %}
                     <br/>
