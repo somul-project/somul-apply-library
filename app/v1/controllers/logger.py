@@ -40,7 +40,6 @@ def raw_logitem_to_dict(logitem):
     return result
 
 
-
 class LoggerResource(Resource):
     def get(self):
         if not CredentialManager.get_is_admin():
