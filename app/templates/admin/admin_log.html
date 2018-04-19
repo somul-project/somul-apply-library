@@ -1,0 +1,57 @@
+<html lang="ko" class="gr__localhost">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/common.css') }}">
+
+    <title>도서관 매칭 검수 :: 5월, 소프트웨어에 물들다</title>
+</head>
+<body>
+<div class="container">
+    <div class="paper">
+        <h1>Log</h1>
+        <h4 class="comment">5월, 소프트웨어에 물들다 : 2018</h4>
+        <hr>
+        {% for log in logs %}
+            <div class="library card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {% for key, value in log.items() %}
+                            {% if key not in ["content",] %}
+
+                                {{ key.upper() }}: {{ value }}<br/>
+
+                            {% endif %}
+                        {% endfor %}
+                        <br/>
+                    </h4>
+
+                    {% for key, value in log.content.items() %}
+                        {% if key not in ["headers", "response", "request",] %}
+                            {{ key.upper() }}: {{ value }}<br/>
+                        {% endif %}
+                    {% endfor %}
+                    <br/>
+
+                    {% for key, value in log.content.items() %}
+                        {% if key in ["response", "request",] %}
+                            {{ key.upper() }}: {{ value }}<br/><br/>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for key, value in log.content.items() %}
+                        {% if key in ["headers", ] %}
+                            {{ key.upper() }}: {{ value }}<br/><br/>
+                        {% endif %}
+                    {% endfor %}
+                    <br/>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+</div>
+</body>
+</html>
