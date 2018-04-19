@@ -40,6 +40,7 @@ def raw_logitem_to_dict(logitem):
             json.loads(cleanedup_rawbytestr)
 
     result["content"] = content
+    result["created_at"] = str(result["created_at"])
 
     return result
 
