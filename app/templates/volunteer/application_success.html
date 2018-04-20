@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/volunteer/default.css') }}">
+
+    <title>소프트웨어에 물들다</title>
+</head>
+<body>
+
+<div class="container paper">
+    <div class="jumbotron shadow">
+        <div class="container">
+            <h1>신청이<br>완료되었습니다.</h1>
+        </div>
+        <hr>
+        <div class="container">
+            <p>24시간 안에 이메일 인증을 하고,<br>추가 정보를 입력해주세요.<br>
+            이메일 인증을 거치기 전에는 로그인이 되지 않습니다.
+            </p>
+            <a href="/volunteer/login"><button type="submit" class="btn btn-warning">추가정보 입력하기</button></a>
+        </div>
+    </div>
+
+</div>
+
+<!-- Optional JavaScript -—>
+<!—- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<script src="{{ url_for('static', filename='js/volunteer/validate.js') }}"></script>
+<script src="{{ url_for('static', filename='js/volunteer/application_success.js') }}"></script>
+
+</body>
+</html>

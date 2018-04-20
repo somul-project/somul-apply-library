@@ -1,0 +1,191 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    background: rgb(243, 239, 180);
+}
+
+#paper {
+    background: white;
+    margin: 48px auto;
+    padding: 40px;
+    max-width: 600px;
+
+    -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .24);
+    box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .24);
+}
+
+.wrapper {
+    margin-bottom: 36px;
+}
+
+.wrapper:nth-child(3) {
+    margin-top: 36px;
+}
+
+.wrapper:nth-last-child(1) {
+    margin-bottom: 0px;
+}
+
+/* 
+title
+*/
+h1 {
+    margin: 0;
+    font-size: 40px;
+    font-weight: 400;
+}
+
+/*
+정보 입력
+*/
+h2 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+hr {
+    color: gray;
+}
+
+label {
+    display: block;
+    margin-bottom: 12px;
+}
+
+label.big {
+    font-size: 12px;
+}
+
+label.small {
+    font-size: 9px;
+}
+
+input[type="checkbox"] {
+    float: left;
+}
+
+input[type="button"] {
+    border-radius: 2px;
+    padding: 12px;
+    width: 200px;
+    font-size: 12px;
+    margin: auto;
+    text-align: center;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    color: gray;
+    cursor: pointer;
+    margin-right: 12px;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    /* color: gray; */
+    outline: none;
+    border: none;
+    border-bottom: 1px solid gray !important;
+    padding: 3px 3px;
+    width: 100%;
+    font-size: 16px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    border-bottom: 1px solid black !important;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: gray;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: gray;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: gray;
+}
+
+.background-yellow {
+    background: #FFC312;
+}
+
+.background-blue {
+    background: #0652DD;
+    color: white;
+}
+
+.font-gray {
+    color: gray;
+}
+
+.drop-btn-wrapper {
+    width: 100%;
+    display: table;
+    cursor: pointer;
+}
+
+/* Dropdown Button */
+.dropbtn {
+    color: #000;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    float: left;
+    pointer-events: none;
+}
+
+.dropbtn-image {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100px;
+    pointer-events: none;
+}
+
+/* Dropdown button on hover & focus */
+.drop-btn-wrapper:hover, .drop-btn-wrapper:focus {
+    background-color: #eee;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #0652DD;
+    color: #fff;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+    display: block;
+}

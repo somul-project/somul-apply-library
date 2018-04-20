@@ -1,0 +1,127 @@
+<html lang="ko" class="gr__localhost">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/index.css') }}">
+
+    <title>도서관 매칭 검수 :: 5월, 소프트웨어에 물들다</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="paper">
+        <h1>도서관 매칭 정보 검수</h1>
+        <h4 class="comment">5월, 소프트웨어에 물들다 : 2018</h4>
+
+        <hr>
+
+        <h3>안내</h3>
+        <p>
+          새로 만들어진 강연자 매칭에 대해서 검수합니다. 승인 혹은 반려 버튼을 눌러 응답해주십시오.<br>
+          강연자를 반려하게 되면 리스트에서 해당 강연자가 사라지지만 매칭은 예약되어 있는 그대로 유지됩니다.<br>따라서 반려하시기 전에 해당 강연자의 연락처를 메모하시기 바랍니다.
+        </p>
+        
+        <hr>
+
+        <div class="library-container">
+          {% autoescape false %}
+          {% for speaker in speakers %}
+          <div class="library card">
+            <div class="card-body">
+              <h4 class="card-title">{{ speaker.user.name }} ({{ speaker.user.library_name }}, {{ speaker.session_time }})</h4>
+              <h5>강연자 연락처</h5>
+              <p class="card-text">
+                휴대전화 : {{ speaker.user.phone }}<br>
+                E-mail : {{ speaker.user.email }}
+              </p>
+              <h5>자기소개</h5>
+              <p class="card-text">
+                {{ speaker.introduce }}
+              </p>
+              <h5>약력</h5>
+              <p class="card-text">
+                {{ speaker.history }}
+              </p>
+              <h5>강의 정보</h5>
+              <h6>제목 : {{ speaker.title }}</h6>
+              {% autoescape false %}
+              <p class="card-text">{{ speaker.description }}</p>
+              {% endautoescape %}
+              {% if speaker.keynote_link != None %}
+              <a href="{{ speaker.keynote_link }}" target="_blank">발표 자료 링크</a><br><br>
+              {% endif %}
+              <a style="cursor: pointer;" onclick="approve({{ speaker._id }})" class="card-link text-primary">승인</a>
+              <a style="cursor: pointer;" onclick="reject({{ speaker._id }})" class="card-link text-danger">반려</a>
+            </div>
+          </div>
+          {% endfor %}
+          {% endautoescape %}
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+    
+    function approve(id) {
+      $.ajax({
+        type: "GET",
+        url: "/api/v1/admin/approve/" + id,
+        error: function(err) {
+            alert("서버에 장애가 발생하였습니다.\n잠시 후에 다시 시도하시거나 운영진에게 직접 접수해주세요.");
+            location.reload();
+        },
+        beforeSend: function() {
+            $(".paper").hide();
+            $(".spinner-preloader").show();
+        },
+        headers: {
+          "Secret-Key": "dhdnjfthanf"
+        },
+        success: function(data) {
+            alert("해당 강연자를 승인하였습니다.");
+            location.reload();
+        },
+        complete : function() {
+            $(".spinner-preloader").fadeOut("slow", function () {
+                $(".paper").fadeIn("slow");
+            });   
+        },
+        contentType: 'application/json; charset=UTF-8',
+        dataType: "json"
+      });
+    }
+
+    function reject(id) {
+      $.ajax({
+        type: "GET",
+        url: "/api/v1/admin/reject/" + id,
+        error: function(err) {
+            alert("서버에 장애가 발생하였습니다.\n잠시 후에 다시 시도하시거나 운영진에게 직접 접수해주세요.");
+            location.reload();
+        },
+        beforeSend: function() {
+            $(".paper").hide();
+            $(".spinner-preloader").show();
+        },
+        headers: {
+          "Secret-Key": "dhdnjfthanf"
+        },
+        success: function(data) {
+            alert("해당 강연자를 반려하였습니다.");
+            location.reload();
+        },
+        complete : function() {
+            $(".spinner-preloader").fadeOut("slow", function () {
+                $(".paper").fadeIn("slow");
+            });   
+        },
+        contentType: 'application/json; charset=UTF-8',
+        dataType: "json"
+      });
+    }
+
+    </script>
+  </body>
+</html>

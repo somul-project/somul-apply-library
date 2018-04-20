@@ -1,17 +1,15 @@
-from datetime import datetime
-
-from pytz import timezone
 from sqlalchemy import Text
 from sqlalchemy.dialects.mysql import TINYINT, INTEGER
 from sqlalchemy.orm import validates
 
 from app.utils.errors import InvalidArgumentError
-from app.database import db
+from app.database import db, TimestampMixin
 from app.utils.validators import is_valid_email, has_valid_length, \
     is_valid_phone
 
-PASSWORD_LENGTH_MINIMUM = 4
-PASSWORD_LENGTH_MAXIMUM = 8
+PASSWORD_LENGTH_MINIMUM = 8
+PASSWORD_LENGTH_MAXIMUM = 20
+TIMEZONE_ASIA_SEOUL = "Asia/Seoul"
 
 
 class Library(db.Model):
@@ -51,23 +49,10 @@ class Library(db.Model):
         return '<Library %r>' % self.name
 
 
-session_time_choices = ["09:00", "10:00"]
+session_time_choices = ["14:00", "15:00"]
 
 
-def now_at_seoul():
-    return datetime.now(tz=timezone('Asia/Seoul'))
-
-
-class TimestampMixin(object):
-    created_at = db.Column(db.DateTime,
-                           nullable=False,
-                           default=now_at_seoul)
-    updated_at = db.Column(db.DateTime,
-                           nullable=True,
-                           onupdate=now_at_seoul)
-
-
-class Speaker(db.Model, TimestampMixin):
+class User(db.Model, TimestampMixin):
     _id = db.Column('id', db.Integer, primary_key=True,
                     autoincrement=True)
     name = db.Column(db.String(30), nullable=False)
@@ -75,15 +60,18 @@ class Speaker(db.Model, TimestampMixin):
     phone = db.Column(db.String(30), nullable=False)
 
     password = db.Column(db.String(30), nullable=False)
-    is_email_verified = db.Column(db.Boolean, default=False)
-    email_sended_at = db.Column(db.DateTime, nullable=True)
-    session_time = db.Column(db.Enum(*session_time_choices),
-                             nullable=False)
+    has_experienced_somul = db.Column(db.Boolean, nullable=False,
+                                      default=False)
     library_id = db.Column(INTEGER(11, unsigned=True),
                            db.ForeignKey('Libraries.id'),
-                           nullable=False)
+                           nullable=True)
     library = db.relationship('Library', lazy=True,
-                              backref=db.backref('speakers', lazy=True))
+                              backref=db.backref('users', lazy=True))
+
+    verifyemails = db.relationship('VerifyEmail',
+                                   backref=db.backref('user', uselist=False),
+                                   lazy='dynamic',
+                                   cascade="delete")
 
     @validates('name')
     def validate_not_empty(self, key, field):
@@ -118,6 +106,54 @@ class Speaker(db.Model, TimestampMixin):
                 "{} must be fitted in phone number format.".format(key))
 
         return field
+
+    def __repr__(self):
+        return '<%r %r>' % (self.__class__.__name__, self.name)
+
+
+class SpeakerInfo(db.Model, TimestampMixin):
+    _id = db.Column('id', db.Integer, primary_key=True,
+                    autoincrement=True)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('user.id'),
+                        nullable=False)
+    user = db.relationship('User', lazy=True,
+                           backref=db.backref('speakerinfo',
+                                              lazy=True, uselist=False))
+
+    session_time = db.Column(db.String(15), nullable=False, default="")
+    introduce = db.Column(db.Text, nullable=False, default="")
+    history = db.Column(db.Text, nullable=False, default="")
+    keynote_link = db.Column(db.Text, nullable=True)
+    admin_approved = db.Column(db.Boolean, nullable=True)
+
+    title = db.Column(db.String(256), nullable=False, default="")
+    description = db.Column(db.Text, nullable=False, default="")
+
+    @validates('session_time')
+    def validate_session_time(self, key, field):
+        if field not in session_time_choices:
+            raise InvalidArgumentError("{} must be in {}."
+                                       .format(key, session_time_choices))
+
+        return field
+
+    def __repr__(self):
+        return '<%r %r>' % (self.__class__.__name__, self.name)
+
+
+class VerifyEmail(db.Model):
+    _id = db.Column('id', db.Integer, primary_key=True,
+                    autoincrement=True)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('user.id'),
+                        nullable=False)
+
+    key = db.Column(db.String(40), unique=True, nullable=False, default="")
+    is_verified = db.Column(db.Boolean, nullable=False, default=False)
+    sended_at = db.Column(db.DateTime, nullable=True)
+    verified_at = db.Column(db.DateTime, nullable=True)
+    expired = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
         return '<%r %r>' % (self.__class__.__name__, self.name)

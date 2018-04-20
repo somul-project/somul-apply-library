@@ -25,6 +25,34 @@ class WrongSecretkeyError(HTTPException):
     code = 400
 
 
+class UnauthorizedError(HTTPException):
+    code = 400
+
+
+class UserDoesntExistsError(HTTPException):
+    code = 400
+
+
+class UserPasswordIncorrectError(HTTPException):
+    code = 400
+
+
+class SigninRequiredError(HTTPException):
+    code = 400
+
+
+class UserSessionEmptyError(HTTPException):
+    code = 400
+
+
+class EmailNotSendedError(HTTPException):
+    code = 400
+
+
+class EmailNotVerifiedError(HTTPException):
+    code = 400
+
+
 def abort_with_integrityerror(e):
     if e.orig.args[0] == 1452:
         raise InvalidRelationDataError(str(e.orig.args[1]))

@@ -3,10 +3,11 @@ from flask_restful import (Resource, reqparse, fields,
                            marshal_with, Api, marshal)
 from sqlalchemy.exc import IntegrityError
 
-from app.database import db
+from app.database import db, get_or_404
 from app.database.models import Library
+from app.managers.credential import CredentialManager
 from app.utils.errors import abort_with_integrityerror
-from app.v1.controllers import get_or_404, get_is_admin
+
 
 library_fields = {
     '_id': fields.Integer,
@@ -98,14 +99,11 @@ library_reqparser.add_argument('req_speaker', type=str, trim=True,
 
 
 class LibraryListResource(Resource):
-    def __init__(self):
-        super().__init__()
-
     def get(self):
         libraries = Library.query.all()
 
         resp_fields = library_fields
-        if get_is_admin():
+        if CredentialManager.get_is_admin():
             resp_fields = {**library_fields, **library_protected_fields}
 
         return marshal(libraries, resp_fields)
@@ -136,7 +134,7 @@ class LibraryResource(Resource):
         library = get_or_404(Library, pk)
 
         resp_fields = library_fields
-        if get_is_admin():
+        if CredentialManager.get_is_admin():
             resp_fields = {**library_fields, **library_protected_fields}
 
         return marshal(library, resp_fields)
@@ -184,12 +182,12 @@ libraries_api = Blueprint('resources.libraries', __name__)
 api = Api(libraries_api)
 api.add_resource(
     LibraryListResource,
-    '/library',
+    '',
     endpoint='libraries'
 )
 
 api.add_resource(
     LibraryResource,
-    '/library/<int:pk>',
+    '/<int:pk>',
     endpoint='library'
 )

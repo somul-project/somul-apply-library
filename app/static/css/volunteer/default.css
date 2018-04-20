@@ -1,0 +1,111 @@
+html, body {
+    background: rgb(243, 239, 180);
+}
+
+h1 {
+    font-weight: 400;
+    letter-spacing: -.1em;
+}
+
+.paper {
+    margin: 60px auto;
+}
+
+.container:nth-child(1) {
+    margin-bottom: 50px;
+}
+
+.container:last-child {
+    margin-top: 30px;
+}
+
+.jumbotron {
+    background: #fff;
+}
+
+p.text-muted > b {
+    color: #000000;
+}
+
+@media screen and (max-width: 600px) {
+    .card-columns {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 900px) {
+    .card-columns {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+    }
+}
+
+@media screen and (min-width: 901px) {
+    .card-columns {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+    }
+}
+
+.preloader-wrapper {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 60px;
+    right: 0;
+    margin: auto;
+    z-index: 5;
+}
+
+.spinner-preloader {
+    width: 40px;
+    height: 40px;
+
+    position: relative;
+    margin: 20% auto;
+}
+
+.double-bounce1, .double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #333;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+    animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+    0%, 100% {
+        -webkit-transform: scale(0.0)
+    }
+    50% {
+        -webkit-transform: scale(1.0)
+    }
+}
+
+@keyframes sk-bounce {
+    0%, 100% {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+    }
+    50% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+    }
+}
