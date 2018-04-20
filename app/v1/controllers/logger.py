@@ -9,15 +9,13 @@ from app.managers.credential import CredentialManager
 
 
 def cleanup_rawbytestr(raw_data):
-    special_charactor_removed = raw_data \
-        .replace("\\n", "") \
-        .replace("\\u", "u") \
-        .replace("\\'", "\'") \
-        .replace("b'{", "{") \
-        .replace("b'[", "[") \
-        .replace("]'", "]") \
-        .replace("}'", "}")
-    return special_charactor_removed
+    raw_data = raw_data[2:-1]
+    raw_data = raw_data.replace('\\"', '"')
+    raw_data = raw_data.replace("\\'", "'")
+    raw_data = raw_data.replace('\\\\n', "")
+    raw_data = raw_data.replace('\\n', "")
+
+    return raw_data
 
 
 def raw_logitem_to_dict(logitem):
