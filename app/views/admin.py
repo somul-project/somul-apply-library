@@ -1,7 +1,6 @@
 from flask import render_template, Blueprint
 
 from app.database.models import SpeakerInfo
-import json
 
 admin = Blueprint('views.admin', __name__)
 
