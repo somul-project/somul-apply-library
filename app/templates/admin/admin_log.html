@@ -5,13 +5,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/common.css') }}">
 
-    <title>도서관 매칭 검수 :: 5월, 소프트웨어에 물들다</title>
+    <title>LOG :: 5월, 소프트웨어에 물들다</title>
 </head>
 <body>
 <div class="container">
     <div class="paper">
         <h1>Log</h1>
         <h4 class="comment">5월, 소프트웨어에 물들다 : 2018</h4>
+        <h4 class="comment">
+            {% if results["has_prev"] %}
+                <a href="{{ url_for('views.admin.log', Secret_Key=secret_key, page=(results["prev_num"])) }}">Prev({{ results["prev_num"] }})</a>
+            {% endif %}
+            Page {{ results["page"] }}/{{ results["pages"] }}
+            {% if results["has_next"] %}
+                <a href="{{ url_for('views.admin.log', Secret_Key=secret_key, page=(results["next_num"])) }}">Next({{ results["next_num"] }})</a>
+            {% endif %}
+        </h4>
         <hr>
         {% for log in logs %}
             <div class="library card">

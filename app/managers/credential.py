@@ -6,9 +6,11 @@ from app.config import Config
 from app.utils.errors import WrongSecretkeyError
 
 
-HEADER_SECRET_KEY = "Secret-Key"
+HEADER_SECRET_KEYS = ["Secret-Key", "Secret_Key"]
 secretkey_reqparser = reqparse.RequestParser()
-secretkey_reqparser.add_argument(HEADER_SECRET_KEY, type=str,
+secretkey_reqparser.add_argument(HEADER_SECRET_KEYS[0], type=str,
+                                 location=['headers', 'args'])
+secretkey_reqparser.add_argument(HEADER_SECRET_KEYS[1], type=str,
                                  location=['headers', 'args'])
 
 
@@ -20,16 +22,22 @@ class CredentialManager:
         return sha256(encoded).digest()
 
     @classmethod
-    def get_is_admin(cls):
+    def get_secret_key(cls):
         args = secretkey_reqparser.parse_args()
-        if args[HEADER_SECRET_KEY] is None:
-            return False
+        if args[HEADER_SECRET_KEYS[0]] is not None:
+            return args[HEADER_SECRET_KEYS[0]]
+        else:
+            return args[HEADER_SECRET_KEYS[1]]
 
-        disgested = cls.digest_from_plainstr(args[HEADER_SECRET_KEY])
+    @classmethod
+    def get_is_admin(cls):
+        secret_key = cls.get_secret_key()
+
+        disgested = cls.digest_from_plainstr(secret_key)
         stored_digested = cls.digest_from_plainstr(Config.admin_key)
 
         if disgested == stored_digested:
             return True
         else:
             raise WrongSecretkeyError(
-                "{} is incorrect.".format(HEADER_SECRET_KEY))
+                "{} is incorrect.".format(secret_key))

@@ -32,5 +32,10 @@ def index():
 
 @admin.route("/log")
 def log():
+    from app.managers.credential import CredentialManager
+    secret_key = CredentialManager.get_secret_key()
     results = LoggerResource().get()
-    return render_template("admin/admin_log.html", logs=list(results))
+    return render_template("admin/admin_log.html",
+                           secret_key=secret_key,
+                           results=results,
+                           logs=results["items"])
