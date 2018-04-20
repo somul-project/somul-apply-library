@@ -51,7 +51,7 @@ class LoggerResource(Resource):
         super().__init__()
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("page", type=int,
-                                 location=['args',],
+                                 location=['args', ],
                                  default=0)
 
     def get(self):
@@ -59,7 +59,8 @@ class LoggerResource(Resource):
             raise UnauthorizedError("Unauthorized.")
         args = self.parser.parse_args()
         print(args["page"])
-        logs = Log.query.order_by(Log._id.desc()).paginate(args["page"], self.PER_PAGE, False)
+        logs = Log.query.order_by(Log._id.desc())\
+            .paginate(args["page"], self.PER_PAGE, False)
 
         results = []
         for item in logs.items:

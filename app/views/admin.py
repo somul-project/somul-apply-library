@@ -25,7 +25,7 @@ def index():
             "title": speaker.title.replace("\n", "<br>"),
             "description": speaker.description.replace("\n", "<br>")
         })
-    
+
     return render_template("admin/admin_matching.html",
                            speakers=list(speakers))
 
