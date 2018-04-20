@@ -11,6 +11,7 @@ from app.managers.credential import CredentialManager
 def cleanup_rawbytestr(raw_data):
     raw_data = raw_data[2:-1]
     raw_data = raw_data.replace('\\"', '"')
+    raw_data = raw_data.replace('\\\\u', '\\u')
     raw_data = raw_data.replace("\\'", "'")
     raw_data = raw_data.replace('\\\\n', "")
     raw_data = raw_data.replace('\\n', "")
