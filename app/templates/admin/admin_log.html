@@ -1,0 +1,77 @@
+<html lang="ko" class="gr__localhost">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/common.css') }}">
+
+    <title>도서관 매칭 검수 :: 5월, 소프트웨어에 물들다</title>
+</head>
+<body>
+<div class="container">
+    <div class="paper">
+        <h1>Log</h1>
+        <h4 class="comment">5월, 소프트웨어에 물들다 : 2018</h4>
+        <hr>
+        {% for log in logs %}
+            <div class="library card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {% for key, value in log.items() %}
+                            {% if key not in ["content",] %}
+
+                                {{ key.upper() }}: {{ value }}<br/>
+
+                            {% endif %}
+                        {% endfor %}
+                        <br/>
+                    </h4>
+
+                    {% for key, value in log.content.items() %}
+                        {% if key not in ["headers", "response", "request",] %}
+                            {{ key.upper() }}: {{ value }}<br/>
+                        {% endif %}
+                    {% endfor %}
+                    <br/>
+
+                    CONTENT :<br/>
+                    {% for key, value in log.content.items() %}
+                        {% if key in ["response", "request",] %}
+                            &nbsp;&nbsp;&nbsp;&nbsp;{{ key.upper() }}:<br/>
+                            {% for req_key, req_value in value.items() %}
+                                {% if req_key not in ["data", ] %}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ req_key.upper() }}: {{ req_value }}<br/>
+                                {% else %}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ req_key.upper() }}:<br/>
+                                    {% for data_req in req_value %}
+                                        {% if req_value[data_req] %}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data_req }}: {{ req_value[data_req] }}<br/>
+                                        {% else %}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data_req }}<br/>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                            <br/>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for key, value in log.content.items() %}
+                        {% if key in ["headers", ] %}
+                            {{ key.upper() }}:<br/>
+                            {% for header in value %}
+                                &nbsp;&nbsp;&nbsp;&nbsp;{{ header }}<br/>
+                            {% endfor %}
+                            <br/>
+                        {% endif %}
+                    {% endfor %}
+                    <br/>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+</div>
+</body>
+</html>

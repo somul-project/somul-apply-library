@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint
 
 from app.database.models import SpeakerInfo
+from app.v1.controllers.logger import LoggerResource
 
 admin = Blueprint('views.admin', __name__)
 
@@ -24,4 +25,12 @@ def index():
             "title": speaker.title.replace("\n", "<br>"),
             "description": speaker.description.replace("\n", "<br>")
         })
-    return render_template("admin_matching.html", speakers=speaker_list)
+    
+    return render_template("admin/admin_matching.html",
+                           speakers=list(speakers))
+
+
+@admin.route("/log")
+def log():
+    results = LoggerResource().get()
+    return render_template("admin/admin_log.html", logs=list(results))
