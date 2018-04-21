@@ -25,12 +25,17 @@ def index():
             "title": speaker.title.replace("\n", "<br>"),
             "description": speaker.description.replace("\n", "<br>")
         })
-    
+
     return render_template("admin/admin_matching.html",
                            speakers=list(speakers))
 
 
 @admin.route("/log")
 def log():
+    from app.managers.credential import CredentialManager
+    secret_key = CredentialManager.get_secret_key()
     results = LoggerResource().get()
-    return render_template("admin/admin_log.html", logs=list(results))
+    return render_template("admin/admin_log.html",
+                           secret_key=secret_key,
+                           results=results,
+                           logs=results["items"])

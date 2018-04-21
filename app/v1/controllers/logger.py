@@ -1,7 +1,7 @@
 import json
 
 from flask import Blueprint
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
 
 from app.database.logger_models import Log
 from app.utils.errors import UnauthorizedError
@@ -9,15 +9,14 @@ from app.managers.credential import CredentialManager
 
 
 def cleanup_rawbytestr(raw_data):
-    special_charactor_removed = raw_data \
-        .replace("\\n", "") \
-        .replace("\\u", "u") \
-        .replace("\\'", "\'") \
-        .replace("b'{", "{") \
-        .replace("b'[", "[") \
-        .replace("]'", "]") \
-        .replace("}'", "}")
-    return special_charactor_removed
+    raw_data = raw_data[2:-1]
+    raw_data = raw_data.replace('\\"', '"')
+    raw_data = raw_data.replace('\\\\u', '\\u')
+    raw_data = raw_data.replace("\\'", "'")
+    raw_data = raw_data.replace('\\\\n', "")
+    raw_data = raw_data.replace('\\n', "")
+
+    return raw_data
 
 
 def raw_logitem_to_dict(logitem):
@@ -46,17 +45,37 @@ def raw_logitem_to_dict(logitem):
 
 
 class LoggerResource(Resource):
+    PER_PAGE = 20
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument("page", type=int,
+                                 location=['args', ],
+                                 default=0)
+
     def get(self):
         if not CredentialManager.get_is_admin():
             raise UnauthorizedError("Unauthorized.")
-
-        logs = Log.query.order_by(Log._id.desc()).all()
+        args = self.parser.parse_args()
+        print(args["page"])
+        logs = Log.query.order_by(Log._id.desc())\
+            .paginate(args["page"], self.PER_PAGE, False)
 
         results = []
-        for item in logs:
+        for item in logs.items:
             results.append(raw_logitem_to_dict(item))
 
-        return results
+        return {
+            "has_next": logs.has_next,
+            "has_prev": logs.has_prev,
+            "items": results,
+            "next_num": logs.next_num,
+            "page": logs.page,
+            "pages": logs.pages,
+            "prev_num": logs.prev_num,
+            "total": logs.total,
+        }
 
 
 logger_api = Blueprint('resources.logger', __name__)
