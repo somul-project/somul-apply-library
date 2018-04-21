@@ -65,49 +65,47 @@ function sendConfirmMail() {
 $(document).ready(function () {
     $(".paper").show();
     $(".spinner-preloader").hide();
-});
 
-function submit() {
-    if (!validateNotEmpty()) return false;
-    if (!validateEmail()) return false;
-    if (!validatePhone()) return false;
-    if (!validatePasswordCheck()) return false;
-    if (!validateCheckBox()) return false;
-    
-    // send
-    
-    var dict = {
-        'name': $('#name').val(),
-        'email': $('#email').val(),
-        'phone': $('#phone').val(),
-        'password': $('#password').val(),
-        'has_experienced_somul': $('#option1').hasClass('active'),
-    };
-    
-    $.ajax({
-        type: "POST",
-        url: "/api/v1/user",
-        data: JSON.stringify(dict),
-        error: function(err) {
-            alert("오류가 발생하였습니다. 다시 시도해주십시오.");
-            $("#application-submit").attr("disabled", false);
-            $("#application-submit").html("완료");
-        },
-        beforeSend: function() {
-            $("#application-submit").attr("disabled", true);
-            $("#application-submit").html("요청 중입니다...");
-            $(".paper").hide();
-            $(".spinner-preloader").show();
-        },
-        success: function(data) {
-            location.href = "/volunteer/success";
-        },
-        complete : function() {
-            $(".spinner-preloader").fadeOut("slow", function () {
-                $(".paper").fadeIn("slow");
-            });   
-        },
-        contentType: 'application/json; charset=UTF-8',
-        dataType: "json"
-    });
-}
+    $("#application-submit").click(function () {
+        if (!validateNotEmpty()) return false;
+        if (!validateEmail()) return false;
+        if (!validatePhone()) return false;
+        if (!validatePasswordCheck()) return false;
+        if (!validateCheckBox()) return false;
+        
+        var dict = {
+            'name': $('#name').val(),
+            'email': $('#email').val(),
+            'phone': $('#phone').val(),
+            'password': $('#password').val(),
+            'has_experienced_somul': $('#option1').hasClass('active'),
+        };
+        
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/user",
+            data: JSON.stringify(dict),
+            error: function(err) {
+                alert("오류가 발생하였습니다. 다시 시도해주십시오.");
+                $("#application-submit").attr("disabled", false);
+                $("#application-submit").html("완료");
+            },
+            beforeSend: function() {
+                $("#application-submit").attr("disabled", true);
+                $("#application-submit").html("요청 중입니다...");
+                $(".paper").hide();
+                $(".spinner-preloader").show();
+            },
+            success: function(data) {
+                location.href = "/volunteer/success";
+            },
+            complete : function() {
+                $(".spinner-preloader").fadeOut("slow", function () {
+                    $(".paper").fadeIn("slow");
+                });   
+            },
+            contentType: 'application/json; charset=UTF-8',
+            dataType: "json"
+        });
+    })
+});
