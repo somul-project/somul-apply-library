@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/volunteer/default.css') }}">
+
+    <title>소프트웨어에 물들다</title>
+
+    <style>
+        .library {
+            margin-bottom: 32px;
+        }
+
+        .library:last-child {
+            margin-bottom: 0px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container paper">
+        <div class="jumbotron shadow">
+            <div class="container">
+                <h1>도서관 상황판<br>(관리자용)</h1>
+            </div>
+            <hr>
+            <div class="container">
+                {% for library in libraries %}
+                <div class="card library">
+                    <div class="card-body">
+                        <div>
+                            <h3 class="card-title">{{ library.name }}</h3>
+                            <p class="card-text">
+                                {{ library.location.road }} {{ library.location.detail }}                
+                            </p>
+                        </div>
+                        <hr>
+                        <div>
+                            <h5 class="card-text">도서관 담당자 정보</h5>
+                            <div>
+                                이름 : {{ library.manager.name }}<br>
+                                전화번호 : {{ library.manager.phone }}<br>
+                                E-mail : {{ library.manager.email }}
+                            </div>
+                        </div>
+                        <br>
+                        <div>
+                            <h5 class="card-text">강연자 신청 상황</h5>
+                            <div>
+                                <h6>2시 강연</h6>
+                                {% if library.speakers["14:00"] %}
+                                    승인 여부 : 
+                                    {% if library.speakers["14:00"].admin_approved == 0 %}
+                                        승인 완료
+                                    {% elif library.speakers["14:00"].admin_approved == 1 %}
+                                        반려됨
+                                    {% else %}
+                                        예약 대기 중
+                                    {% endif %}
+                                    <br>
+                                    {% autoescape false %}
+                                    강의 제목 : {{ library.speakers["14:00"].title }}<br>
+                                    강의 내용 :<br>
+                                    {{ library.speakers["14:00"].description }}
+                                    <br><br>
+                                    강연자 : {{ library.speakers["14:00"].name }}<br>
+                                    전화번호 : {{ library.speakers["14:00"].phone }}<br>
+                                    E-mail : {{ library.speakers["14:00"].email }}<br><br>
+                                    강연자 소개 : <br>
+                                    {{ library.speakers["14:00"].introduce }}
+                                    <br><br>
+                                    강연자 약력 : <br>
+                                    {{ library.speakers["14:00"].history }}
+                                    {% endautoescape %}
+                                    <br><br>
+                                    발표 자료 링크 : 
+                                    {% if library.speakers["14:00"].keynote_link %}
+                                    <a target="_blank" href="{{ library.speakers["14:00"].keynote_link }}">링크</a>
+                                    {% else %}
+                                    없음
+                                    {% endif %}
+                                {% else %}
+                                    아직 매칭되지 않음
+                                {% endif %}
+                                <br><br>
+                                <h6>3시 강연</h6>
+                                {% if library.speakers["15:00"] %}
+                                    승인 여부 : 
+                                    {% if library.speakers["15:00"].admin_approved == 0 %}
+                                        승인 완료
+                                    {% elif library.speakers["15:00"].admin_approved == 1 %}
+                                        반려됨
+                                    {% else %}
+                                        예약 대기 중
+                                    {% endif %}
+                                    <br>
+                                    {% autoescape false %}
+                                    강의 제목 : {{ library.speakers["15:00"].title }}<br>
+                                    강의 내용 :<br>
+                                    {{ library.speakers["15:00"].description }}
+                                    <br><br>
+                                    강연자 : {{ library.speakers["15:00"].name }}<br>
+                                    전화번호 : {{ library.speakers["15:00"].phone }}<br>
+                                    E-mail : {{ library.speakers["15:00"].email }}<br><br>
+                                    강연자 소개 : <br>
+                                    {{ library.speakers["15:00"].introduce }}
+                                    <br><br>
+                                    강연자 약력 : <br>
+                                    {{ library.speakers["15:00"].history }}
+                                    {% endautoescape %}
+                                    <br><br>
+                                    발표 자료 링크 : 
+                                    {% if library.speakers["15:00"].keynote_link %}
+                                    <a target="_blank" href="{{ library.speakers["15:00"].keynote_link }}">링크</a>
+                                    {% else %}
+                                    없음
+                                    {% endif %}
+                                {% else %}
+                                    아직 매칭되지 않음
+                                {% endif %}
+                            </div>
+                        </div>
+                        <br>
+                        <div>
+                            <h5 class="card-text">봉사자 신청 상황</h5>
+                            <div>
+                                {% for volunteer in library.volunteers %}
+                                    <h6>{{ volunteer.name }}</h6>
+                                    전화번호 : {{ volunteer.phone }}<br>
+                                    E-mail : {{ volunteer.email }}<br><br>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+</body>
+</html>
