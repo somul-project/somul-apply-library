@@ -29,7 +29,7 @@ def register_session(args):
 
 @library.route("/")
 def index():
-    return render_template("library_done.html")
+    return render_template("library_application.html")
 
 
 @library.route("/success")
