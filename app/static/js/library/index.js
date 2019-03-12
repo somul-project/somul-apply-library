@@ -134,14 +134,14 @@ $(document).ready(function() {
     $('#loader').fadeIn("fast", function(){});
     $.ajax({
         type: "POST",
-        url: '/api/v1/library/apply',
+        url: '/library/apply',
         dataType: 'json',
         async: false,
         data: JSON.stringify(payload),
         contentType: 'application/json',
         success: function (data) {
-          if (data.result == 0) location.href = "/success";
-          else location.href = "/failure";
+          if (data.result == 0) location.href = "/library/success";
+          else location.href = "/library/failure";
         }
     });
   });

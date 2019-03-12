@@ -73,7 +73,7 @@ def applylist():
         print(traceback.format_exc())
 
 
-@library.route("/apply", methods=["POST"])
+@library.route("/apply", methods=['GET', "POST"])
 def apply():
     try:
         args = json.loads(request.data.decode('utf-8'))
@@ -86,7 +86,7 @@ def apply():
 
     register_session(args)
 
-    db.add_all([
+    db.session.add_all([
         Library(
             name=args["name"],
             location_road=args["roadAddress"],
@@ -107,13 +107,13 @@ def apply():
     ])
 
     try:
-        db.commit()
+        db.session.commit()
 
         return json.dumps({
             "result": 0
         })
     except:  # noqa: E722
-        db.rollback()
+        db.session.rollback()
         print("Unexpected DB server error")
         return json.dumps({
             "result": 1,
