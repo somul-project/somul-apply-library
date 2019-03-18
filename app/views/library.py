@@ -29,8 +29,16 @@ def register_session(args):
 
 @library.route("/")
 def index():
-    return render_template("library_application.html")
-
+    try:
+        libraries = Library.query.all()
+        return (
+            render_template("library_application.html") if len(list(libraries)) < 50
+            else render_template("library_done.html",
+                                length=len(list(libraries))
+                                )
+        )
+    except:  # noqa: E722
+        print(traceback.format_exc())
 
 @library.route("/success")
 def success():
