@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import traceback
 
@@ -29,16 +30,20 @@ def register_session(args):
 
 @library.route("/")
 def index():
-    try:
-        libraries = Library.query.all()
-        return (
-            render_template("library_application.html") if len(list(libraries)) < 50
-            else render_template("library_done.html",
-                                length=len(list(libraries))
-                                )
-        )
-    except:  # noqa: E722
-        print(traceback.format_exc())
+    nowTime = datetime.now()
+    deadline = datetime(2019, 4, 7, 23, 59, 59)
+
+    rTemplate = render_template("library_application.html")
+    if deadline > nowTime:
+        try:
+            libraries = Library.query.all()
+
+            if len(list(libraries)) > 50:
+                rTemplate =  render_template("library_done.html",
+                                            length=len(list(libraries)))
+        except:  # noqa: E722
+            print(traceback.format_exc())
+    return rTemplate
 
 @library.route("/success")
 def success():
