@@ -179,8 +179,16 @@ class LibraryResource(Resource):
 
 
 class LibraryDetailResource(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('phone_number', type=str, trim=True,
+                            location=['form', 'json'],
+                            required=True, nullable=False,
+                            help='No library name provided')
 
-    def get(self, phone_number):
+        args = parser.parse_args()
+        phone_number = args["phone_number"]
+
         library = Library.query.filter_by(manager_phone=phone_number).first()
 
         resp_library_fields = {**library_fields, **library_protected_fields}
@@ -242,6 +250,6 @@ api.add_resource(
 
 api.add_resource(
     LibraryDetailResource,
-    '/detail/<string:phone_number>',
+    '/detail',
     endpoint='detail'
 )
