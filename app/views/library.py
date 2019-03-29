@@ -6,6 +6,7 @@ from flask import request, render_template, session, Blueprint
 
 from app import db
 from app.database.models import Library
+from app.config import Config
 
 library = Blueprint('views.library', __name__)
 
@@ -76,6 +77,16 @@ def failure():
 @library.route("/applylist")
 def applylist():
     # TODO(@harrydrippin): Basic Authentication 적용
+    secret = request.args.get('secret')
+
+    # should write secret code
+    if secret is None:
+        return '', 404
+
+    # wrong secret code
+    if secret != Config.secret_auth_code:
+        return '', 404
+
     try:
         libraries = Library.query.all()
 

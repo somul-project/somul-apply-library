@@ -18,3 +18,4 @@ class Config:
         = bool(os.environ.get("SQLALCHEMY_TRACK_MODIFICATIONS"))
     SQLALCHEMY_ECHO = bool(os.environ.get("SQLALCHEMY_ECHO"))
     sendgrid_api_key = os.environ.get("SENDGRID_API_KEY")
+    secret_auth_code = os.environ.get("SECRET_AUTH_CODE")

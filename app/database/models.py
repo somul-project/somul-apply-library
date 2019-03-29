@@ -139,6 +139,16 @@ class SpeakerInfo(db.Model, TimestampMixin):
     title = db.Column(db.String(256), nullable=False, default="")
     description = db.Column(db.Text, nullable=False, default="")
 
+    speaker_fields = {
+        'user': fields.Nested(User.user_fields),
+        'introduce': fields.String,
+        'history': fields.String,
+        'keynote_link': fields.String,
+        'admin_approved': fields.Boolean,
+        'title': fields.String,
+        'description': fields.String
+    }
+
     @validates('session_time')
     def validate_session_time(self, key, field):
         if field not in session_time_choices:
