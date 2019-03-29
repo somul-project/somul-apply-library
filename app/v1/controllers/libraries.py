@@ -179,10 +179,11 @@ class LibraryResource(Resource):
 
 
 class LibraryDetailResource(Resource):
+
     def get(self, phone_number):
         library = Library.query.filter_by(manager_phone=phone_number).first()
 
-        resp_fields = library_fields
+        resp_library_fields = {**library_fields, **library_protected_fields}
 
         if Library is None:
             return 'Not Exist Library', 500
@@ -193,15 +194,25 @@ class LibraryDetailResource(Resource):
         speakers = []
         volunteers = []
         for user in users:
-            # user._id
             is_speaker = SpeakerInfo.query.filter_by(user_id=user._id).first() is None
             if is_speaker:
                 volunteers.append(user)
             else:
                 speakers.append(user)
 
+        library = marshal(library, resp_library_fields)
+        bool_to_string_arg_arr = [
+            "fac_beam_screen",
+            "fac_sound",
+            "fac_record",
+            "fac_placard",
+            "fac_self_promo"
+        ]
+        for arg in bool_to_string_arg_arr:
+            library[arg] = "가능" if library[arg] else "불가능"
+
         ret = {
-            'library': marshal(library, resp_fields),
+            'library': library,
             'speakers':
                 list(map(lambda u: marshal(u, resp_user_filed), speakers)),
             'volunteers':
