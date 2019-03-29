@@ -178,6 +178,13 @@ class LibraryResource(Resource):
         return '', 204
 
 
+class LibraryDetailResource(Resource):
+    def get(self, phone_number):
+        library = Library.query.filter_by(manager_phone=phone_number).first()
+        print(library)
+        return "test", 200
+
+
 libraries_api = Blueprint('resources.libraries', __name__)
 api = Api(libraries_api)
 api.add_resource(
@@ -190,4 +197,10 @@ api.add_resource(
     LibraryResource,
     '/<int:pk>',
     endpoint='library'
+)
+
+api.add_resource(
+    LibraryDetailResource,
+    '/detail/<string:phone_number>',
+    endpoint='detail'
 )
