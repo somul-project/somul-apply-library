@@ -1,5 +1,6 @@
-.volunteer-cards > .card {
-    margin-top: 7px;
+.volunteer-cards > .card,
+.speaker-cards > .card {
+    margin-bottom: 7px;
 }
 
 #search-result {

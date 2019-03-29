@@ -9,6 +9,18 @@
   <title>도서관 현황 조회 :: 5월, 소프트웨어에 물들다</title>
 </head>
 <body>
+  <div id="loader">
+    <div class="loader">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
   <div class="container">
     <div class="paper">
       <h1>도서관 현황 조회</h1>
@@ -23,8 +35,11 @@
           </div>
         </div>
       </div>
+      <hr>
+      <div id="search-fail" style="display: none">
+        <span class="comment">존재하지 않는 번호입니다. 입력을 확인해주세요.</span>
+      </div>
       <div id="search-result">
-        <hr>
         <div>
           <h4 id="library-name"></h4>
           <span class="comment">검색 결과입니다. 클릭해서 매칭 된 봉사자를 확인해주세요.</span>
@@ -92,6 +107,10 @@
             </tbody>
           </table>
         </div>
+        <br>
+        <h5>강연자 정보</h5>
+        <div class="speaker-cards" id="speaker-list"></div>
+        <br>
         <h5>봉사자 정보</h5>
         <div class="volunteer-cards" id="volunteer-list"></div>
       </div>
