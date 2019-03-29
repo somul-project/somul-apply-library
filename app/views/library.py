@@ -86,6 +86,11 @@ def applylist():
         print(traceback.format_exc())
 
 
+@library.route("/detail")
+def detail():
+    return render_template("library_detail.html")
+
+
 @library.route("/apply", methods=['GET', "POST"])
 def apply():
     try:

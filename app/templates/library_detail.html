@@ -1,0 +1,104 @@
+<html lang="en" class="gr__localhost">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/library/common.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/library/detail.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/library/list.css') }}">
+  <title>도서관 현황 조회 :: 5월, 소프트웨어에 물들다</title>
+</head>
+<body>
+  <div class="container">
+    <div class="paper">
+      <h1>도서관 현황 조회</h1>
+      <h4 class="comment">5월, 소프트웨어에 물들다 : 2019</h4>
+      <hr>
+      <div>
+        <span class="comment">신청시 입력한 담당자 전화번호를 입력해 검색해주세요.</span>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="phoneNumber" placeholder="담당자 전화번호" placeholder="Recipient's username">
+          <div class="input-group-append">
+            <button class="btn btn-primary " type="button" id="searchLibrary">검색</button>
+          </div>
+        </div>
+      </div>
+      <div id="search-result">
+        <hr>
+        <div>
+          <h4 id="library-name"></h4>
+          <span class="comment">검색 결과입니다. 클릭해서 매칭 된 봉사자를 확인해주세요.</span>
+        </div>
+        <h5>도서관 정보</h5>
+        <div id="library-detail">
+          <table class="table table-bordered table-striped">
+            <tbody>
+              <tr id="location_road">
+                <th scope="row">도로명 주소</th>
+                <td></td>
+              </tr>
+              <tr id="location_number">
+                <th scope="row">지번 주소</th>
+                <td></td>
+              </tr>
+              <tr id="location_detail">
+                <th scope="row">상세 주소</th>
+                <td></td>
+              </tr>
+              <tr id="manager_name">
+                <th scope="row">담당자 이름</th>
+                <td></td>
+              </tr>
+              <tr id="manager_email">
+                <th scope="row">담당자 E-mail</th>
+                <td></td>
+              </tr>
+              <tr id="manager_phone">
+                <th scope="row">담당자 전화번호</th>
+                <td></td>
+              </tr>
+              <tr id="audiences">
+                <th scope="row">예상 청중 규모</th>
+                <td></td>
+              </tr>
+              <tr id="fac_beam_screen">
+                <th scope="row">시설: 빔프로젝터 / 스크린</th>
+                <td></td>
+              </tr>
+              <tr id="fac_sound">
+                <th scope="row">시설: 음향 시설</th>
+                <td></td>
+              </tr>
+              <tr id="fac_record">
+                <th scope="row">시설: 녹화 시설</th>
+                <td></td>
+              </tr>
+              <tr id="fac_placard">
+                <th scope="row">시설: 플래카드</th>
+                <td></td>
+              </tr>
+              <tr id="fac_self_promo">
+                <th scope="row">시설: 자체 홍보</th>
+                <td></td>
+              </tr>
+              <tr id="fac_other">
+                <th scope="row">기타 제공 가능 시설</th>
+                <td></td>
+              </tr>
+              <tr id="req_speaker">
+                <th scope="row">봉사자 요구 사항</th>
+                <td></td>
+              </tr> 
+            </tbody>
+          </table>
+        </div>
+        <h5>봉사자 정보</h5>
+        <div class="volunteer-cards" id="volunteer-list"></div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/library/detail.js') }}"></script>
+</body>
+</html>
