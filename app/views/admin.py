@@ -1,13 +1,25 @@
-from flask import render_template, Blueprint
+from flask import request, render_template, Blueprint
 
 from app.database.models import SpeakerInfo
 from app.v1.controllers.logger import LoggerResource
+from app.config import Config
 
 admin = Blueprint('views.admin', __name__)
 
 
 @admin.route("/")
 def index():
+
+    secret = request.args.get('secret')
+
+    # should write secret code
+    if secret is None:
+        return '', 404
+
+    # wrong secret code
+    if secret != Config.secret_auth_code:
+        return '', 404
+
     speakers = SpeakerInfo.query.filter_by(admin_approved=None)
     speaker_list = list()
     for speaker in speakers:
