@@ -208,8 +208,6 @@ class LibraryDetailResource(Resource):
             if speaker is None:
                 volunteers.append(user)
             else:
-                print(marshal(speaker, resp_speaker_field))
-                print(marshal(user, resp_user_field))
                 speakers.append(speaker)
 
         library = marshal(library, resp_library_fields)
@@ -230,6 +228,9 @@ class LibraryDetailResource(Resource):
             'volunteers':
                 list(map(lambda u: marshal(u, resp_user_field), volunteers)),
         }
+
+        for speaker in ret["speakers"]:
+            speaker["admin_approved"] = speaker["admin_approved"] is not None
 
         return ret, 200
 
