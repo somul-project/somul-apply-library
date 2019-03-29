@@ -7,6 +7,8 @@ from app.database import db, TimestampMixin
 from app.utils.validators import is_valid_email, has_valid_length, \
     is_valid_phone
 
+from flask_restful import fields
+
 PASSWORD_LENGTH_MINIMUM = 8
 PASSWORD_LENGTH_MAXIMUM = 20
 TIMEZONE_ASIA_SEOUL = "Asia/Seoul"
@@ -72,6 +74,13 @@ class User(db.Model, TimestampMixin):
                                    backref=db.backref('user', uselist=False),
                                    lazy='dynamic',
                                    cascade="delete")
+
+    user_fields = {
+        '_id': fields.Integer,
+        'name': fields.String,
+        'email': fields.String,
+        'phone': fields.String,
+    }
 
     @validates('name')
     def validate_not_empty(self, key, field):
