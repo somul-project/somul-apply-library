@@ -4,7 +4,7 @@ from flask_restful import (Resource, reqparse, fields,
 from sqlalchemy.exc import IntegrityError
 
 from app.database import db, get_or_404
-from app.database.models import Library
+from app.database.models import Library, SpeakerInfo, User
 from app.managers.credential import CredentialManager
 from app.utils.errors import abort_with_integrityerror
 
@@ -181,8 +181,34 @@ class LibraryResource(Resource):
 class LibraryDetailResource(Resource):
     def get(self, phone_number):
         library = Library.query.filter_by(manager_phone=phone_number).first()
-        print(library)
-        return "test", 200
+
+        resp_fields = library_fields
+
+        if Library is None:
+            return 'Not Exist Library', 500
+
+        users = User.query.filter_by(library_id=library._id)
+        resp_user_filed = User.user_fields
+
+        speakers = []
+        volunteers = []
+        for user in users:
+            # user._id
+            is_speaker = SpeakerInfo.query.filter_by(user_id=user._id).first() is None
+            if is_speaker:
+                volunteers.append(user)
+            else:
+                speakers.append(user)
+
+        ret = {
+            'library': marshal(library, resp_fields),
+            'speakers':
+                list(map(lambda u: marshal(u, resp_user_filed), speakers)),
+            'volunteers':
+                list(map(lambda u: marshal(u, resp_user_filed), volunteers)),
+        }
+
+        return ret, 200
 
 
 libraries_api = Blueprint('resources.libraries', __name__)
