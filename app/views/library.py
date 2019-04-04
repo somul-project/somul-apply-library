@@ -39,7 +39,7 @@ def index():
         try:
             libraries = Library.query.all()
 
-            if len(list(libraries)) > 50:
+            if len(list(libraries)) >= 50:
                 rTemplate =  render_template("library_done.html",
                                             length=len(list(libraries)))
         except:  # noqa: E722
