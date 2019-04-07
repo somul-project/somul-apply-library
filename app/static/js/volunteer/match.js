@@ -3,7 +3,7 @@ function libraryInfoModal(id) {
         type: "GET",
         url: "/api/v1/library/" + id,
         success: function(data) {
-            console.log(data);
+            // console.log(data);
             Object.keys(data).forEach(function (value, index, array) {
                 var val = data[value];
                 if (value.search("fac_other") != -1 || value.search("req_speaker") != -1) {
