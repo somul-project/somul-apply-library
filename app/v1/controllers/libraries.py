@@ -134,8 +134,8 @@ class LibraryResource(Resource):
         library = get_or_404(Library, pk)
 
         resp_fields = library_fields
-        if CredentialManager.get_is_admin():
-            resp_fields = {**library_fields, **library_protected_fields}
+        # if CredentialManager.get_is_admin():
+        #     resp_fields = {**library_fields, **library_protected_fields}
 
         return marshal(library, resp_fields)
 
