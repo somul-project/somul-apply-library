@@ -8,7 +8,7 @@ volunteer = Blueprint('views.volunteer', __name__)
 
 @volunteer.route("/")
 def application():
-    return render_template("volunteer/application_soon.html")
+    return render_template("volunteer/application.html")
 
 
 @volunteer.route("/login")
