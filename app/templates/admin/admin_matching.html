@@ -30,6 +30,10 @@
           <div class="library card">
             <div class="card-body">
               <h4 class="card-title">{{ speaker.user.name }} ({{ speaker.user.library_name }}, {{ speaker.session_time }})</h4>
+              <h5>참가 경험</h5>
+              <p class="card-text">
+                  {{ "있음" if speaker.user.has_experienced_somul else "없음" }}
+              </p>
               <h5>강연자 연락처</h5>
               <p class="card-text">
                 휴대전화 : {{ speaker.user.phone }}<br>

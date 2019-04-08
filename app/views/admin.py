@@ -28,7 +28,8 @@ def index():
                 "name": speaker.user.name,
                 "library_name": speaker.user.library.name,
                 "phone": speaker.user.phone,
-                "email": speaker.user.email
+                "email": speaker.user.email,
+                "has_experienced_somul": speaker.user.has_experienced_somul
             },
             "_id": speaker._id,
             "session_time": speaker.session_time,
