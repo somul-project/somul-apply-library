@@ -41,6 +41,40 @@ def index():
     return render_template("admin/admin_matching.html",
                            speakers=list(speakers))
 
+@admin.route("/approve")
+def approve():
+
+    secret = request.args.get('secret')
+
+    # should write secret code
+    if secret is None:
+        return '', 404
+
+    # wrong secret code
+    if secret != Config.secret_auth_code:
+        return '', 404
+
+    speakers = SpeakerInfo.query.filter_by(admin_approved=0)
+    speaker_list = list()
+    for speaker in speakers:
+        speaker_list.append({
+            "user": {
+                "name": speaker.user.name,
+                "library_name": speaker.user.library.name,
+                "phone": speaker.user.phone,
+                "email": speaker.user.email
+            },
+            "_id": speaker._id,
+            "session_time": speaker.session_time,
+            "introduce": speaker.introduce.replace("\n", "<br>"),
+            "history": speaker.history.replace("\n", "<br>"),
+            "title": speaker.title.replace("\n", "<br>"),
+            "description": speaker.description.replace("\n", "<br>")
+        })
+
+    return render_template("admin/admin_matching_approve.html",
+                           speakers=list(speakers))
+
 
 @admin.route("/log")
 def log():
