@@ -40,7 +40,6 @@ $(document).ready(function() {
                 showPreloader();
             },
             success: function(response) {  
-                console.log(response);              
                 // Library
                 $library_name.text(response["library"]["location_detail"]);
                 $.each(response["library"], (key, value) => {
