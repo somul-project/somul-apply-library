@@ -39,7 +39,8 @@ $(document).ready(function() {
                 hideComment();
                 showPreloader();
             },
-            success: function(response) {                
+            success: function(response) {  
+                console.log(response);              
                 // Library
                 $library_name.text(response["library"]["location_detail"]);
                 $.each(response["library"], (key, value) => {
@@ -75,6 +76,7 @@ $(document).ready(function() {
                         var card = '<div class="card">';
                         card += '<div class="card-body">';
                         card += '<h5 class="card-title">' + speaker["user"]["name"] + '</h5>';
+                        card += '<p class="card-text"> Session Time : ' + speaker["session_time"] + '</p>';
                         card += '<p class="card-text"> Email : ' + speaker["user"]["email"] + '</p>';
                         card += '<p class="card-text"> Phone : ' + speaker["user"]["phone"] + '</p>';
                         card += '<p class="card-text"> Title : ' + speaker["title"] + '</p>';

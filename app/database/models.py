@@ -146,7 +146,8 @@ class SpeakerInfo(db.Model, TimestampMixin):
         'keynote_link': fields.String,
         'admin_approved': fields.Boolean,
         'title': fields.String,
-        'description': fields.String
+        'description': fields.String,
+        'session_time': fields.String
     }
 
     @validates('session_time')
