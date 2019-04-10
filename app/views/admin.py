@@ -40,7 +40,7 @@ def index():
         })
 
     return render_template("admin/admin_matching.html",
-                           speakers=list(speakers))
+                           speakers=speaker_list)
 
 @admin.route("/approve")
 def approve():
@@ -75,7 +75,7 @@ def approve():
         })
 
     return render_template("admin/admin_matching_approve.html",
-                           speakers=list(speakers))
+                           speakers=speaker_list)
 
 
 @admin.route("/log")
