@@ -80,6 +80,12 @@ def library_list():
 
     lib_dict = dict()
 
+    count = {
+        "apply": 0,
+        "approve": 0,
+        "volunteer": 0
+    }
+
     for library in libraries:
         session_dict = {
             "name": library.name,
@@ -91,9 +97,11 @@ def library_list():
 
         for user in library.users:
             if user.speakerinfo:
+                count["apply"] += 1
                 time = user.speakerinfo.session_time
                 admin_approved = user.speakerinfo.admin_approved
                 if admin_approved == 0:
+                    count["approve"] += 1
                     availability = 2
                 elif admin_approved is None or admin_approved == 1:
                     availability = 1
@@ -102,11 +110,12 @@ def library_list():
 
                 session_dict[time] = availability
             else:
+                count["volunteer"] += 1
                 session_dict["volunteer"] += 1
 
         lib_dict[library._id] = session_dict.copy()
 
-    print(lib_dict)
+    # print(lib_dict)
 
     return render_template("volunteer/match.html",
-                           libraries=libraries, lib_dict=lib_dict)
+                           libraries=libraries, lib_dict=lib_dict, count=count)
