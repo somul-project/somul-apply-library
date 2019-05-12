@@ -31,19 +31,7 @@ def register_session(args):
 
 @library.route("/")
 def index():
-    nowTime = datetime.now()
-    deadline = datetime(2019, 4, 7, 23, 59, 59)
-
-    rTemplate = render_template("library_application.html")
-    if deadline > nowTime:
-        try:
-            libraries = Library.query.all()
-
-            if len(list(libraries)) >= 50:
-                rTemplate =  render_template("library_done.html",
-                                            length=len(list(libraries)))
-        except:  # noqa: E722
-            print(traceback.format_exc())
+    rTemplate = render_template("library_done.html")
     return rTemplate
 
 @library.route("/success")

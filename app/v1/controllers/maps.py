@@ -9,6 +9,8 @@ map_fields = {
     'name': fields.String,
     'location_road': fields.String,
     'province': fields.String,
+    'latitude': fields.Float,
+    'longitude': fields.Float,
 }
 
 

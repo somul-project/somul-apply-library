@@ -1,5 +1,5 @@
 from sqlalchemy import Text
-from sqlalchemy.dialects.mysql import TINYINT, INTEGER
+from sqlalchemy.dialects.mysql import TINYINT, INTEGER, DOUBLE
 from sqlalchemy.orm import validates
 
 from app.utils.errors import InvalidArgumentError
@@ -39,6 +39,9 @@ class Library(db.Model):
 
     fac_other = db.Column('fac_other', Text)
     req_speaker = db.Column('req_speaker', Text)
+
+    latitude = db.Column('latitude', DOUBLE)
+    longitude = db.Column('longitude', DOUBLE)
 
     @validates('name')
     def validate_not_empty(self, key, field):
